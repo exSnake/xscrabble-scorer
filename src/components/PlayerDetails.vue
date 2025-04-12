@@ -1,104 +1,83 @@
 <script setup>
-import { TButton, TInput } from "@variantjs/vue";
-import { computed, toRefs, ref } from "vue";
+import { useLocaleStore } from "@/stores/LocaleStore";
+import { computed } from "vue";
 
-const showWords = ref(true);
-const props = defineProps({
+const localeStore = useLocaleStore();
+const { t } = localeStore;
+
+defineProps({
   player: Object,
 });
 
-const emit = defineEmits(["delete", "activate", "deleteWord"]);
+const emit = defineEmits(["delete", "deleteWord", "activate"]);
 
-const { player } = toRefs(props);
-
-const handleDeleteWord = (id) => {
-  emit("deleteWord", { id: id, player: player.value });
-};
-
-const handleDeleteSelf = () => {
-  emit("delete", player.value);
-};
-
-const points = computed(() => {
-  return player.value.words.reduce(
-    (prev, next) => prev + parseInt(next.points),
-    0
-  );
-});
-
-const handlePlayerClick = () => {
-  // if already active, toggle words, else emit activate event
-  if (player.value.active) {
-    showWords.value = !showWords.value;
-  } else {
-    emit("activate", player.value);
-  }
+const getTotalPoints = (player) => {
+  return player.words.reduce((acc, word) => acc + word.points, 0);
 };
 </script>
 
 <template>
   <div
+    class="rounded-lg bg-white p-4 shadow-md dark:bg-gray-800 cursor-pointer"
     :class="{
-      'dark:bg-gray-600 bg-gray-200 rounded-lg': true,
-      'ring ring-emerald-300': player.active,
+      'border-2 border-blue-500 dark:border-blue-400': player.active,
+      'border-2 border-gray-200 dark:border-gray-700': !player.active,
     }"
-    @click="handlePlayerClick"
+    @click="$emit('activate')"
   >
-    <!-- Header -->
-    <div
-      :class="{
-        'flex justify-between items-center px-4 py-2 overflow-hidden bg-gray-400 text-white font-bold text-lg': true,
-        'rounded-t-lg': player.words.length > 0,
-        'rounded-lg': player.words.length === 0 || !showWords,
-      }"
-    >
-      <div>{{ player.name }}</div>
-      <div class="flex items-center gap-4 cursor-pointer">
-        <div>Points: {{ points }}</div>
+    <div class="flex justify-between items-center mb-2">
+      <div class="flex items-center">
         <div
-          @click="handleDeleteSelf"
-          class="text-white bg-red-800 px-2 py-1 rounded-lg font-bold"
+          class="mr-2 h-2 w-2 rounded-full"
+          :class="{
+            'bg-green-500': player.active,
+            'bg-gray-400': !player.active,
+          }"
+        ></div>
+        <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
+          {{ player.name }}
+        </h2>
+      </div>
+      <div class="flex items-center gap-2">
+        <div
+          class="rounded-full bg-blue-100 py-1 px-2 text-xs font-semibold text-blue-800 dark:bg-blue-900 dark:text-blue-200"
         >
-          X
+          {{ getTotalPoints(player) }}
+          <span class="opacity-70 text-[8px]">{{ t('general.points') }}</span>
         </div>
+        <button
+          class="rounded p-1 text-gray-600 hover:bg-gray-200 hover:text-red-700 dark:text-gray-200 dark:hover:bg-gray-700 dark:hover:text-red-400"
+          @click.stop="$emit('delete')"
+        >
+          <LucideTrash2 class="h-4 w-4" />
+        </button>
       </div>
     </div>
-    <!-- Words Rows -->
-    <Transition>
-      <div class="text-sm" v-if="showWords">
-        <div
-          v-for="(word, index) in player.words"
-          :key="word.id"
-          class="flex justify-between items-center space-y-2"
-        >
-          <div
-            :class="{
-              'flex justify-between w-full py-2 items-center px-4': true,
-              'border-b border-white dark:border-gray-400':
-                player.words.length - 1 !== index,
-            }"
+
+    <div class="mt-4 space-y-2">
+      <div
+        v-for="word in player.words"
+        :key="word.id"
+        class="flex items-center justify-between rounded-md bg-gray-50 p-2 dark:bg-gray-700"
+      >
+        <span class="text-gray-600 dark:text-gray-300">{{ word.text }}</span>
+        <div class="flex items-center gap-1">
+          <span class="text-blue-600 dark:text-blue-300">{{ word.points }}</span>
+          <button
+            class="ml-2 rounded p-1 text-gray-400 hover:text-red-600 transition-colors dark:text-gray-500 dark:hover:text-red-400"
+            @click.stop="$emit('deleteWord', { id: word.id, player })"
           >
-            <div>
-              <div class="uppercase">{{ word.text }}</div>
-            </div>
-            <div class="flex space-x-2">
-              <div class="flex items-center">
-                <input
-                  class="text-right p-1 rounded-lg w-12 dark:bg-gray-500 dark:text-white"
-                  v-model="word.points"
-                />
-              </div>
-              <div
-                @click.stop="() => handleDeleteWord(word.id)"
-                class="text-white bg-red-800 px-2 py-1 rounded-lg font-bold"
-              >
-                X
-              </div>
-            </div>
-          </div>
+            <LucideCircleX class="h-4 w-4" />
+          </button>
         </div>
       </div>
-    </Transition>
+      <div
+        v-if="player.words.length === 0"
+        class="flex justify-center py-3 text-sm italic text-gray-400 dark:text-gray-500"
+      >
+        {{ t('scorer.noWordsYet') }}
+      </div>
+    </div>
   </div>
 </template>
 

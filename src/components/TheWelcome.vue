@@ -1,12 +1,3 @@
-<script setup>
-import WelcomeItem from "./WelcomeItem.vue";
-import DocumentationIcon from "./icons/IconDocumentation.vue";
-import ToolingIcon from "./icons/IconTooling.vue";
-import EcosystemIcon from "./icons/IconEcosystem.vue";
-import CommunityIcon from "./icons/IconCommunity.vue";
-import SupportIcon from "./icons/IconSupport.vue";
-</script>
-
 <template>
   <header
     class="items-center dark:bg-gray-600 bg-white flex max-w-[480px] w-full flex-col mx-auto px-8 py-12"
@@ -15,10 +6,7 @@ import SupportIcon from "./icons/IconSupport.vue";
       :to="{ name: 'scorer' }"
       class="dark:bg-gray-900 bg-gray-200 rounded mt-6 px-6 py-4 flex justify-center items-stretch gap-2.5"
     >
-      <font-awesome-icon
-        icon="fa-solid fa-play"
-        class="w-7 h-7 text-pink-700"
-      />
+      <LucidePlay class="w-7 h-7 text-pink-700" />
       <div
         class="self-center my-auto text-3xl font-medium leading-6 tracking-wider dark:text-zinc-300 whitespace-nowrap"
       >
@@ -43,10 +31,7 @@ import SupportIcon from "./icons/IconSupport.vue";
       href="https://github.com/exSnake/scrabble-scorer"
       target="_blank"
     >
-      <font-awesome-icon
-        icon="fa-brands fa-github"
-        class="w-12 h-12 text-white"
-      />
+      <LucideGithub class="w-12 h-12 text-white" />
       <div
         class="my-auto text-5xl font-medium leading-6 tracking-wider text-zinc-300"
       >

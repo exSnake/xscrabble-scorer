@@ -7,7 +7,8 @@
     "dev:host": "vite --host",
     "build": "vite build",
     "preview": "vite preview",
-    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
+    "release": "standard-version"
   },
   "dependencies": {
     "@chenfengyuan/vue-countdown": "^2.1.0",
@@ -23,9 +24,10 @@
     "@vueuse/core": "^9.9.0",
     "body-scroll-lock": "^4.0.0-beta.0",
     "flowbite": "^1.5.5",
+    "lucide-vue-next": "^0.487.0",
     "oh-vue-icons": "^1.0.0-rc3",
     "pinia": "^2.0.28",
-    "vue": "^3.2.45",
+    "vue": "^3.5.0",
     "vue-router": "^4.1.6",
     "vue-timer-hook": "^1.0.37",
     "vue3-toastify": "^0.1.11"
@@ -40,6 +42,7 @@
     "eslint-plugin-vue": "^9.3.0",
     "postcss": "^8.4.20",
     "prettier": "^2.7.1",
+    "standard-version": "^9.5.0",
     "tailwindcss": "^3.2.4",
     "vite": "^4.0.0"
   }

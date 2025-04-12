@@ -4,28 +4,24 @@ import { variantJS } from "@variantjs/vue";
 import VueCountdown from "@chenfengyuan/vue-countdown";
 import Vue3Toasity from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
-import { OhVueIcon, addIcons } from "oh-vue-icons";
+
+// Importa Lucide Vue
 import {
-  MdPauseRound,
-  MdPlayarrowRound,
-  MdRestartaltRound,
-} from "oh-vue-icons/icons";
+  LucidePlay,
+  LucidePause,
+  LucideRefreshCw,
+  LucideGithub,
+  LucideUser,
+  LucideMenu,
+  LucideMoon,
+  LucideSun,
+  LucideTrash2,
+  LucideX,
+  LucidePlus,
+  LucideCircleX,
+  LucideUserPlus,
+} from "lucide-vue-next";
 
-/* import the fontawesome core */
-import { library } from "@fortawesome/fontawesome-svg-core";
-
-/* import font awesome icon component */
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-
-/* import specific icons */
-import { faUserSecret, faPlay } from "@fortawesome/free-solid-svg-icons";
-
-import { faGithub } from "@fortawesome/free-brands-svg-icons";
-
-/* add icons to the library */
-library.add(faUserSecret, faPlay, faGithub);
-
-addIcons(MdRestartaltRound, MdPauseRound, MdPlayarrowRound);
 import App from "./App.vue";
 import router from "./router";
 
@@ -38,8 +34,22 @@ const configuration = {
 };
 
 app.component(VueCountdown.name, VueCountdown);
-app.component("font-awesome-icon", FontAwesomeIcon);
-app.component("v-icon", OhVueIcon);
+
+// Registra i componenti Lucide
+app.component("LucidePlay", LucidePlay);
+app.component("LucidePause", LucidePause);
+app.component("LucideRefreshCw", LucideRefreshCw);
+app.component("LucideGithub", LucideGithub);
+app.component("LucideUser", LucideUser);
+app.component("LucideMenu", LucideMenu);
+app.component("LucideMoon", LucideMoon);
+app.component("LucideSun", LucideSun);
+app.component("LucideTrash2", LucideTrash2);
+app.component("LucideX", LucideX);
+app.component("LucidePlus", LucidePlus);
+app.component("LucideCircleX", LucideCircleX);
+app.component("LucideUserPlus", LucideUserPlus);
+
 app.use(variantJS, configuration);
 app.use(Vue3Toasity, { autoClose: 3000 });
 app.use(createPinia());

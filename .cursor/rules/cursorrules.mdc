@@ -1,0 +1,13 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+
+# Your rule content
+
+Non avviare mai con npm run dev alla fine della scrittura del codice, il progetto è gia avviato in un terminale
+Puoi accedere a qualsiasi file di [App.vue](mdc:src/App.vue) [ScorerView.vue](mdc:src/views/ScorerView.vue) [ScorerAddWord.vue](mdc:src/components/ScorerAddWord.vue) [PlayerDetails.vue](mdc:src/components/PlayerDetails.vue) [TheWelcome.vue](mdc:src/components/TheWelcome.vue) [WelcomeItem.vue](mdc:src/components/WelcomeItem.vue) [index.js](mdc:src/router/index.js) e altri...
+
+- You can @ files here
+- You can use markdown but dont have to

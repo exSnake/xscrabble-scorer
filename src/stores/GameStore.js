@@ -3,12 +3,14 @@ import { defineStore } from "pinia";
 import { useTimer } from "vue-timer-hook";
 import { useStorage } from "@vueuse/core";
 import { toast } from "vue3-toastify";
+import { useLocaleStore } from "./LocaleStore";
+
 export const useGameStore = defineStore("game", () => {
   //#region State
 
   const bonus = ref(useStorage("bonus", 50));
   const maxWordLength = ref(useStorage("maxWordLength", 10));
-  const language = ref(useStorage("language", "it"));
+  const language = ref(useStorage("scoreLanguage", "it"));
   const players = ref(useStorage("players", [], localStorage, { deep: true }));
   const seconds = ref(useStorage("seconds", 90));
   const settings = ref(null);
@@ -46,13 +48,13 @@ export const useGameStore = defineStore("game", () => {
   }
 
   function addPlayer(name) {
-    // if it's empty, don't add it and show toast message
+    const localeStore = useLocaleStore();
+    
     if (!name) {
-      toast.error("Insert a name");
+      toast.error(localeStore.t("error.emptyName"));
       return;
     }
 
-    // get id of the player to add, for each player get the max id and add 1
     const id = players.value.reduce((max, player) => {
       return player.id > max ? player.id : max;
     }, 0);
@@ -63,15 +65,16 @@ export const useGameStore = defineStore("game", () => {
       active: false,
       words: [],
     });
-    // if it was the first player, activate it
     if (players.value.length === 1) {
       activatePlayer(players.value[0]);
     }
   }
 
   function addWord(word) {
+    const localeStore = useLocaleStore();
+    
     if (!word.text) {
-      toast.error("Insert a non empty word");
+      toast.error(localeStore.t("error.emptyWord"));
       return;
     }
 
