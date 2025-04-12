@@ -54,4 +54,31 @@ export default {
     pt: "Portoghesino",
     sahibba: "Sahibboso!",
   },
+  home: {
+    title: "XSCRABBLER",
+    subtitle: "CALCOLATORINO DI PUNTEGGIOLI",
+    quickStart: "INIZIETTA È GRATISELLO!",
+    features: "Caratteristichine",
+    multipleLanguages: "Linguaggini multipli",
+    multipleLanguagesDesc:
+      "Supportina italianino, inglesino, francesino, spagnolino e tantissime altre linguette",
+    wordBonus: "Bonusini parolosi",
+    wordBonusDesc: "Calcolina facilmente bonusetti di paroliose e letterucce",
+    timer: "Contatemporino",
+    timerDesc: "Contatemporino integratello per partitine competitive",
+    playerTracking: "Gestioncina giocatorelli",
+    playerTrackingDesc:
+      "Tienina traccia dei punteggioli di tutti i giocatorini",
+    customizable: "Personalizzabilino",
+    customizableDesc:
+      "Personalizzina bonusini, contatemporino e altre impostazionelle",
+    openSource: "Codice Apertino",
+    openSourceDesc: "Contribuiscina al progettino su GitHubino",
+    getStarted: "Inizietta adessino",
+    aboutTitle: "Cos'è xScrabblino?",
+    aboutDesc:
+      "xScrabblino è un calcolatorino di punteggioli modernino per Scrabblino, Scarabeino e giochini di paroliose similari. Ti permettina di tenere traccina dei punteggioli, applicare bonusini e gestire il tempino di giochino.",
+    footer: "Sviluppatino con ❤️ per gli amantini dei giochini di paroliose",
+    madeBy: "Realizzatino da",
+  },
 };

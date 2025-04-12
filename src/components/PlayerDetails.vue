@@ -13,6 +13,35 @@ defineEmits(["delete", "deleteWord", "activate"]);
 const getTotalPoints = (player) => {
   return player.words.reduce((acc, word) => acc + word.points, 0);
 };
+
+const getBonusClass = (bonus) => {
+  switch (bonus) {
+    case 0:
+      return "bg-amber-200 text-gray-500 border-gray-400"; // Jolly
+    case 2:
+      return "bg-blue-400 text-gray-700 border-blue-500"; // Doppio
+    case 3:
+      return "bg-blue-700 text-white border-blue-800"; // Triplo
+    default:
+      return "bg-amber-200 text-gray-700 border-amber-400"; // Normale
+  }
+};
+
+const getWordBonusClass = (word) => {
+  if (word.hasExtraBonus) {
+    return word.wordBonus === 2
+      ? "border-l-4 border-l-green-500 border-t-4 border-t-yellow-400 border-b-4 border-b-yellow-400 border-r-4 border-r-yellow-400"
+      : word.wordBonus === 3
+      ? "border-l-4 border-l-green-500 border-t-4 border-t-red-600 border-b-4 border-b-red-600 border-r-4 border-r-red-600"
+      : "border-l-4 border-l-green-500";
+  } else {
+    return word.wordBonus === 2
+      ? "border-2 border-yellow-400"
+      : word.wordBonus === 3
+      ? "border-2 border-red-600"
+      : "";
+  }
+};
 </script>
 
 <template>
@@ -57,21 +86,46 @@ const getTotalPoints = (player) => {
       <div
         v-for="word in player.words"
         :key="word.id"
-        class="flex items-center justify-between rounded-md bg-gray-50 p-2 dark:bg-gray-700"
+        class="rounded-md p-2 transition-all duration-200"
+        :class="[getWordBonusClass(word), 'bg-gray-50 dark:bg-gray-700']"
       >
-        <span class="text-gray-600 dark:text-gray-300">{{ word.text }}</span>
-        <div class="flex items-center gap-1">
-          <span class="text-blue-600 dark:text-blue-300">{{
-            word.points
-          }}</span>
+        <div class="grid grid-cols-12 py-1 items-center">
+          <div class="col-span-10 flex flex-wrap gap-[2px]">
+            <template v-if="word.letters">
+              <div
+                v-for="(letter, index) in word.letters"
+                :key="index"
+                class="w-6 h-6 flex flex-col items-center justify-center border-[1.5px] rounded text-xs select-none relative"
+                :class="getBonusClass(letter.bonus)"
+              >
+                <span class="font-bold">{{ letter.char }}</span>
+                <span
+                  v-if="letter.bonus !== 0"
+                  class="absolute bottom-0 right-0 text-[7px] font-semibold"
+                >
+                  {{ letter.points }}
+                </span>
+              </div>
+            </template>
+            <span v-else class="text-gray-600 dark:text-gray-300">{{
+              word.text
+            }}</span>
+          </div>
+          <span
+            class="text-blue-600 dark:text-blue-300 font-semibold bg-blue-100 dark:bg-blue-900 px-2 py-1 rounded-md text-center"
+          >
+            {{ word.points }}
+          </span>
+
           <button
-            class="ml-2 rounded p-1 text-gray-400 hover:text-red-600 transition-colors dark:text-gray-500 dark:hover:text-red-400"
+            class="ml-1 rounded p-1 text-gray-400 hover:text-red-600 transition-colors dark:text-gray-500 dark:hover:text-red-400 flex items-center justify-center"
             @click.stop="$emit('deleteWord', { id: word.id, player })"
           >
             <LucideCircleX class="h-4 w-4" />
           </button>
         </div>
       </div>
+
       <div
         v-if="player.words.length === 0"
         class="flex justify-center py-3 text-sm italic text-gray-400 dark:text-gray-500"

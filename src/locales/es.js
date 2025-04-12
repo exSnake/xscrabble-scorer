@@ -54,4 +54,30 @@ export default {
     pt: "Portugués",
     sahibba: "Sahibba",
   },
+  home: {
+    title: "XSCRABBLER",
+    subtitle: "CALCULADOR DE PUNTUACIÓN",
+    quickStart: "INICIA RÁPIDO",
+    features: "Características",
+    multipleLanguages: "Idiomas múltiples",
+    multipleLanguagesDesc:
+      "Soporta inglés, italiano, francés, español y muchas otras lenguas",
+    wordBonus: "Bonus de palabra",
+    wordBonusDesc: "Cálculo fácil de bonos de palabra y letra",
+    timer: "Temporizador",
+    timerDesc: "Temporizador integrado para partidas competitivas",
+    playerTracking: "Seguimiento de jugadores",
+    playerTrackingDesc:
+      "Mantener un seguimiento de las puntuaciones de todos los jugadores",
+    customizable: "Personalizable",
+    customizableDesc: "Personaliza bonos, temporizador y otras configuraciones",
+    openSource: "Código abierto",
+    openSourceDesc: "Contribuye al proyecto en GitHub",
+    getStarted: "Comienza ahora",
+    aboutTitle: "¿Qué es xScrabbler?",
+    aboutDesc:
+      "xScrabbler es un calculador de puntuación moderno para Scrabble, Scarabeo y juegos de palabras similares. Te permite mantener un seguimiento de las puntuaciones, calcular bonos y seguir el progreso del juego.",
+    footer: "Desarrollado con ❤️ para los amantes de los juegos de palabras",
+    madeBy: "Desarrollado por",
+  },
 };

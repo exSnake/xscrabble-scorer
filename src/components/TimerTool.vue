@@ -19,7 +19,7 @@ const props = defineProps({
   canAddPlayer: Boolean,
   initialTime: {
     type: Number,
-    default: 180, // 3 minuti in secondi di default
+    default: 180, // 3 minuti in secondi
   },
 });
 
@@ -28,19 +28,21 @@ const emit = defineEmits(["restart", "pause", "openAddPlayerModal"]);
 // Riferimenti audio
 const tenSecondsSound = ref(null);
 const endSound = ref(null);
+const audioContext = ref(null);
 const soundsPlayed = ref({
   tenSeconds: false,
   end: false,
+  lastSecond: null,
 });
 
 // Stato visuale
 const timerAnimation = ref("");
 const timerClass = ref("");
 
-// Memorizza il tempo iniziale effettivo
-const actualInitialTime = ref(props.initialTime || 180); // Initialize with props
+// Tempo iniziale effettivo
+const actualInitialTime = ref(props.initialTime || 180);
 
-// Riferimento per la viewport width
+// Viewport width
 const isSmallScreen = ref(false);
 
 // Dimensioni responsive SVG
@@ -48,29 +50,21 @@ const svgSize = computed(() => (isSmallScreen.value ? 180 : 240));
 const circleRadius = computed(() => (isSmallScreen.value ? 80 : 108));
 const circleCenterPoint = computed(() => svgSize.value / 2);
 
-// Inizializza il tempo iniziale effettivo quando il timer viene caricato
 onBeforeMount(() => {
   if (props.timer) {
-    console.log("props.timer", props.timer.minutes, props.timer.seconds);
     actualInitialTime.value = props.timer.minutes * 60 + props.timer.seconds;
   } else if (props.initialTime) {
     actualInitialTime.value = props.initialTime;
   }
 });
 
-// Expose a method for parent components to explicitly update when resetting
 const updateTimerReference = () => {
   if (props.timer) {
-    console.log(
-      "Updating timer reference to:",
-      props.timer.minutes * 60 + props.timer.seconds
-    );
     actualInitialTime.value = props.timer.minutes * 60 + props.timer.seconds;
   }
 };
 defineExpose({ updateTimerReference });
 
-// Calcolo progresso per barra circolare
 const totalSeconds = computed(() => {
   if (!props.timer) return 0;
   return props.timer.minutes * 60 + props.timer.seconds;
@@ -81,7 +75,6 @@ const timerColor = computed(() => {
 
   if (totalSeconds.value <= 10) return "text-red-600";
   if (totalSeconds.value <= 30) return "text-orange-500";
-  if (props.timer.isRunning) return "text-blue-600";
   return "text-blue-600";
 });
 
@@ -90,103 +83,157 @@ const progressColor = computed(() => {
 
   if (totalSeconds.value <= 10) return "stroke-red-600";
   if (totalSeconds.value <= 30) return "stroke-orange-500";
-  if (props.timer.isRunning) return "stroke-blue-600";
   return "stroke-blue-600";
 });
 
-// Calculate circumference based on this radius
 const circumference = computed(() => 2 * Math.PI * circleRadius.value);
 
-// Calculate the dash offset based on the progress
 const dashOffset = computed(() => {
-  if (!props.timer) return 0; // No offset (full circle) when timer is null
+  if (!props.timer) return 0;
   return circumference.value * (1 - progress.value / 100);
 });
 
-// Make sure progress is correctly calculated based on actualInitialTime
 const progress = computed(() => {
-  console.log("progress", totalSeconds.value, actualInitialTime.value);
-  if (!props.timer) return 100; // Full progress when timer is null
+  if (!props.timer) return 100;
   return (totalSeconds.value / actualInitialTime.value) * 100;
 });
 
-// Inizializza i suoni e controlla la dimensione dello schermo
+// Genera il tick con intensità variabile
+const playTickSound = () => {
+  if (!audioContext.value) return;
+
+  try {
+    const oscillator = audioContext.value.createOscillator();
+    const gainNode = audioContext.value.createGain();
+
+    let volume = 0.05;
+    let frequency = 600;
+
+    if (totalSeconds.value <= 10) {
+      volume = 0.1 + (10 - totalSeconds.value) * 0.02;
+      frequency = 800 + (10 - totalSeconds.value) * 40;
+    }
+
+    oscillator.type = "sine";
+    oscillator.frequency.value = frequency;
+
+    gainNode.gain.value = 0;
+    gainNode.gain.setValueAtTime(0, audioContext.value.currentTime);
+    gainNode.gain.linearRampToValueAtTime(
+      volume,
+      audioContext.value.currentTime + 0.01
+    );
+    gainNode.gain.linearRampToValueAtTime(
+      0,
+      audioContext.value.currentTime + 0.1
+    );
+
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.value.destination);
+
+    oscillator.start();
+    oscillator.stop(audioContext.value.currentTime + 0.1);
+  } catch (error) {
+    console.error("Errore nella riproduzione audio:", error);
+  }
+};
+
 onMounted(() => {
   tenSecondsSound.value = new Audio("/sounds/countdown.mp3");
   endSound.value = new Audio("/sounds/timer-end.mp3");
 
-  // Controlla la dimensione dello schermo
+  try {
+    window.AudioContext = window.AudioContext || window.webkitAudioContext;
+    audioContext.value = new AudioContext();
+  } catch (error) {
+    console.error("Web Audio API non supportata:", error);
+  }
+
+  if (endSound.value) endSound.value.volume = 1.0;
+
   checkScreenSize();
   window.addEventListener("resize", checkScreenSize);
 
-  // If the timer already exists when component mounts (e.g. after navigation),
-  // update the actualInitialTime to match what we expect the full value to be
   if (props.timer) {
-    // Check if the timer is not at full value
     const currentTotal = props.timer.minutes * 60 + props.timer.seconds;
-    console.log("Timer on mount:", currentTotal, "seconds");
 
-    // If totalSeconds is less than initialTime, it means the timer was running
-    // or partially depleted before remounting
     if (currentTotal < props.initialTime) {
-      console.log(
-        "Timer was partially depleted, using initialTime for progress reference"
-      );
       actualInitialTime.value = props.initialTime;
     } else {
-      // Timer is at full or greater than initialTime, use the current value
-      console.log(
-        "Timer at full value, using current time for progress reference"
-      );
       actualInitialTime.value = currentTotal;
     }
-
-    console.log("Set actualInitialTime to:", actualInitialTime.value);
   }
-
-  console.log("Initial state:", {
-    timer: props.timer,
-    actualInitialTime: actualInitialTime.value,
-    totalSeconds: totalSeconds.value,
-    progress: progress.value,
-    circumference: circumference.value,
-    dashOffset: dashOffset.value,
-  });
 });
 
-// Rimuovi eventListener al dismount del componente
 onBeforeUnmount(() => {
   window.removeEventListener("resize", checkScreenSize);
+
+  if (audioContext.value && audioContext.value.state !== "closed") {
+    audioContext.value.close().catch((error) => {
+      console.error("Errore nella chiusura del contesto audio:", error);
+    });
+  }
 });
 
-// Controlla la dimensione dello schermo
 function checkScreenSize() {
   isSmallScreen.value = window.innerWidth < 640;
 }
 
-// Osserva il timer per riprodurre i suoni e cambiare effetti visivi
 watch(
   () => props.timer,
   (newTimer, oldTimer) => {
     if (!newTimer) return;
 
+    const seconds = newTimer.minutes * 60 + newTimer.seconds;
+    const oldSeconds = oldTimer
+      ? oldTimer.minutes * 60 + oldTimer.seconds
+      : null;
+
+    // Rileva fine timer
+    const justReachedZero =
+      seconds === 0 && oldSeconds !== null && oldSeconds > 0;
+    const isAtZeroAndStopped =
+      seconds === 0 && oldTimer?.isRunning && !newTimer.isRunning;
+    const isTimerFinished = justReachedZero || isAtZeroAndStopped;
+
+    // Riproduci suoni di fine
+    if (seconds === 0 && !soundsPlayed.value.end) {
+      if (endSound.value) {
+        endSound.value.volume = 1.0;
+        endSound.value.load();
+        endSound.value.play().catch((error) => {
+          console.error("Errore nella riproduzione MP3:", error);
+        });
+
+        setTimeout(() => {
+          if (endSound.value) {
+            endSound.value.load();
+            endSound.value.play().catch((error) => {
+              console.error("Errore nella seconda riproduzione MP3:", error);
+            });
+          }
+        }, 700);
+      }
+
+      soundsPlayed.value.end = true;
+      timerAnimation.value = "end-animation";
+    }
+
+    // Gestione timer fermo
     if (!newTimer.isRunning) {
-      soundsPlayed.value = { tenSeconds: false, end: false };
-      timerAnimation.value = "";
+      if (!isTimerFinished && seconds !== 0) {
+        soundsPlayed.value = {
+          tenSeconds: false,
+          end: false,
+          lastSecond: null,
+        };
+      }
+      timerAnimation.value = seconds === 0 ? "end-animation" : "";
       timerClass.value = "";
-      console.log("Timer stopped");
       return;
     }
 
-    if (newTimer && newTimer.isRunning === false) {
-      // When timer is initialized but not running,
-      // make sure it shows the full time
-      console.log("Timer initialized");
-    }
-
-    const seconds = newTimer.minutes * 60 + newTimer.seconds;
-
-    // Imposta animazioni in base al tempo restante
+    // Animazioni per tempo restante
     if (seconds <= 10) {
       timerAnimation.value = "pulse-animation";
       timerClass.value = "timer-urgent";
@@ -198,25 +245,28 @@ watch(
       timerClass.value = "";
     }
 
-    // Riproduci suono quando mancano 10 secondi
+    // Suono 10 secondi
     if (seconds === 10 && !soundsPlayed.value.tenSeconds) {
       tenSecondsSound.value?.play();
       soundsPlayed.value.tenSeconds = true;
     }
 
-    // Riproduci suono quando termina
-    if (seconds === 0 && !soundsPlayed.value.end) {
-      endSound.value?.play();
-      soundsPlayed.value.end = true;
-      timerAnimation.value = "end-animation";
+    // Tick ogni secondo
+    if (newTimer.isRunning && seconds !== soundsPlayed.value.lastSecond) {
+      if (audioContext.value && audioContext.value.state === "suspended") {
+        audioContext.value.resume();
+      }
+
+      playTickSound();
+      soundsPlayed.value.lastSecond = seconds;
     }
 
-    // Ripristina soundsPlayed quando si riavvia il timer
+    // Reset suoni al riavvio
     if (
       newTimer.minutes === oldTimer?.minutes &&
       newTimer.seconds > oldTimer?.seconds
     ) {
-      soundsPlayed.value = { tenSeconds: false, end: false };
+      soundsPlayed.value = { tenSeconds: false, end: false, lastSecond: null };
     }
   },
   { deep: true }
@@ -228,7 +278,7 @@ watch(
     <div
       v-if="timer"
       :class="[
-        'flex flex-col items-center justify-center p-6 bg-white/[0.08] rounded-3xl backdrop-blur-lg transition-all duration-400 w-full max-w-[360px]',
+        'flex flex-col items-center justify-center p-6 bg-gray-50 dark:bg-gray-700 rounded-3xl backdrop-blur-lg transition-all duration-400 w-full max-w-[360px]',
         timerClass === 'timer-urgent'
           ? 'shadow-lg shadow-red-500/20'
           : timerClass === 'timer-warning'
@@ -322,7 +372,6 @@ watch(
 </template>
 
 <style scoped>
-/* Animazioni che non possono essere facilmente sostituite con Tailwind */
 @keyframes pulse {
   0% {
     transform: scale(1) translateX(-50%) translateY(-50%);

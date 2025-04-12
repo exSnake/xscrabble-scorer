@@ -20,6 +20,12 @@ import {
   LucidePlus,
   LucideCircleX,
   LucideUserPlus,
+  LucideStar,
+  LucideClock,
+  LucideUsers,
+  LucideSettings,
+  LucideCode,
+  LucideGlobe,
 } from "lucide-vue-next";
 
 import App from "./App.vue";
@@ -49,6 +55,12 @@ app.component("LucideX", LucideX);
 app.component("LucidePlus", LucidePlus);
 app.component("LucideCircleX", LucideCircleX);
 app.component("LucideUserPlus", LucideUserPlus);
+app.component("LucideStar", LucideStar);
+app.component("LucideClock", LucideClock);
+app.component("LucideUsers", LucideUsers);
+app.component("LucideSettings", LucideSettings);
+app.component("LucideCode", LucideCode);
+app.component("LucideGlobe", LucideGlobe);
 
 app.use(variantJS, configuration);
 app.use(Vue3Toasity, { autoClose: 3000 });

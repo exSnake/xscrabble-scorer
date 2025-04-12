@@ -82,6 +82,18 @@ export const useGameStore = defineStore("game", () => {
       id: activePlayer.value.words.length + 1,
       text: word.text,
       points: parseInt(word.points),
+      letters: [...word.text.toUpperCase()].map((char, i) => {
+        const charPoints = getCharacterPoints(char);
+        const letterBonus = word.bonusArray ? word.bonusArray[i] : 1;
+
+        return {
+          char: char,
+          points: charPoints,
+          bonus: letterBonus,
+        };
+      }),
+      wordBonus: word.wordBonus || 1,
+      hasExtraBonus: word.superBonus || false,
     });
 
     nextPlayer();

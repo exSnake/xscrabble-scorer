@@ -1,88 +1,180 @@
 <script setup>
 import { RouterLink, RouterView } from "vue-router";
 import { useDark, useToggle } from "@vueuse/core";
+import { useLocaleStore } from "@/stores/LocaleStore";
+import { ref, onMounted, watch } from "vue";
+
+const localeStore = useLocaleStore();
 
 const isDark = useDark({});
 const toggleDark = useToggle(isDark);
+
+// Gestione menu mobile
+const isMenuOpen = ref(false);
+const toggleMenu = () => {
+  isMenuOpen.value = !isMenuOpen.value;
+};
+
+// Chiudi il menu quando si cambia route
+watch(
+  () => RouterLink,
+  () => {
+    isMenuOpen.value = false;
+  }
+);
+
+// Chiudi il menu quando si fa click fuori
+onMounted(() => {
+  document.addEventListener("click", (e) => {
+    const menu = document.getElementById("navbar-menu");
+    const toggle = document.getElementById("menu-toggle");
+    if (menu && !menu.contains(e.target) && !toggle.contains(e.target)) {
+      isMenuOpen.value = false;
+    }
+  });
+});
 </script>
 
 <template>
-  <div class="dark:bg-gray-700 h-screen">
+  <div
+    class="min-h-screen bg-gradient-to-b from-white to-gray-50 dark:from-gray-800 dark:to-gray-900"
+  >
+    <!-- Navbar -->
     <nav
-      class="p-2 bg-gray-100 border-gray-200 dark:bg-gray-900 dark:border-gray-700"
+      class="sticky pl-4 top-0 z-30 backdrop-blur-md bg-white/90 dark:bg-gray-900/90 border-b border-gray-200 dark:border-gray-700 shadow-sm transition-all duration-200"
     >
       <div
-        class="container flex flex-wrap items-center justify-between mx-auto"
+        class="container mx-auto px-4 py-3 flex items-center justify-between"
       >
-        <a href="#" class="flex items-center">
-          <img
-            src="https://flowbite.com/docs/images/logo.svg"
-            class="h-6 mr-3 sm:h-10"
-            alt="Flowbite Logo"
-          />
-          <RouterLink
-            to="/"
-            class="self-center text-xl font-semibold whitespace-nowrap dark:text-white"
-            >xScrabbler
-          </RouterLink>
-        </a>
-        <button
-          data-collapse-toggle="navbar-dropdown"
-          type="button"
-          class="inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-          aria-controls="navbar-dropdown"
-          aria-expanded="false"
-        >
-          <span class="sr-only">Open main menu</span>
-          <LucideMenu class="w-6 h-6" />
-        </button>
+        <!-- Logo e titolo -->
+        <RouterLink to="/" class="flex items-center gap-2">
+          <div class="relative flex items-center">
+            <div
+              class="absolute w-8 h-8 bg-amber-200 rounded border-2 border-amber-400 flex items-center justify-center rotate-6 shadow-sm"
+            >
+              <span class="text-lg font-bold text-gray-800">S</span>
+            </div>
+            <div
+              class="absolute -right-2 w-8 h-8 bg-blue-400 rounded border-2 border-blue-500 flex items-center justify-center -rotate-6 shadow-sm z-10"
+            >
+              <span class="text-lg font-bold text-gray-800">X</span>
+            </div>
+          </div>
+          <span
+            class="text-xl font-bold ml-10 text-gray-900 dark:text-white tracking-tighter"
+          >
+            xScrabbler
+          </span>
+        </RouterLink>
+
+        <!-- Dark Mode Toggle -->
         <button
           type="button"
           @click="toggleDark()"
-          class="flex items-center p-2 ml-2 text-xs font-medium text-gray-700 bg-white border border-gray-200 rounded-lg toggle-dark-state-example hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-500 dark:bg-gray-800 focus:outline-none dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700"
+          class="z-40 p-3 rounded-full bg-gray-100 dark:bg-gray-700 shadow-lg hover:shadow-xl transition-all duration-300"
+          aria-label="Toggle dark mode"
         >
-          <LucideMoon v-if="isDark" class="w-4 h-4" />
-          <LucideSun v-if="!isDark" class="w-4 h-4" />
-          <span class="sr-only">Toggle dark/light mode</span>
+          <LucideMoon v-if="isDark" class="w-5 h-5 text-blue-600" />
+          <LucideSun v-if="!isDark" class="w-5 h-5 text-amber-500" />
         </button>
-        <div class="hidden w-full md:block md:w-auto" id="navbar-dropdown">
-          <ul
-            class="flex flex-col p-4 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700"
+
+        <!-- Menu Toggle (Mobile) -->
+        <button
+          id="menu-toggle"
+          @click="toggleMenu"
+          class="lg:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+          aria-label="Toggle menu"
+        >
+          <LucideMenu class="w-6 h-6 text-gray-700 dark:text-gray-300" />
+        </button>
+
+        <!-- Desktop Navigation -->
+        <div class="hidden lg:flex items-center space-x-1">
+          <RouterLink
+            to="/"
+            class="px-4 py-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-rose-50 dark:hover:bg-gray-800 font-medium transition-colors"
+            active-class="bg-rose-100 dark:bg-gray-700 text-rose-600 dark:text-white"
           >
-            <li>
-              <RouterLink
-                to="/"
-                class="flex items-center justify-between w-full py-2 pl-3 pr-4 font-medium rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:p-0 md:w-auto dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent"
-              >
-                Home
-              </RouterLink>
-            </li>
-            <li>
-              <RouterLink
-                to="/scorer"
-                class="flex items-center justify-between w-full py-2 pl-3 pr-4 font-medium rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:p-0 md:w-auto dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent"
-              >
-                Scorer
-              </RouterLink>
-            </li>
-            <li>
-              <RouterLink
-                to="/settings"
-                class="block py-2 pl-3 pr-4 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:p-0 md: dark:hover:bg-gray-700 md:dark:hover:bg-transparent"
-              >
-                Settings
-              </RouterLink>
-            </li>
-          </ul>
+            Home
+          </RouterLink>
+          <RouterLink
+            to="/scorer"
+            class="px-4 py-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-rose-50 dark:hover:bg-gray-800 font-medium transition-colors"
+            active-class="bg-rose-100 dark:bg-gray-700 text-rose-600 dark:text-white"
+          >
+            Scorer
+          </RouterLink>
+          <RouterLink
+            to="/settings"
+            class="px-4 py-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-rose-50 dark:hover:bg-gray-800 font-medium transition-colors"
+            active-class="bg-rose-100 dark:bg-gray-700 text-rose-600 dark:text-white"
+          >
+            Settings
+          </RouterLink>
+        </div>
+      </div>
+
+      <!-- Mobile Navigation -->
+      <div
+        id="navbar-menu"
+        :class="{
+          'translate-x-0 opacity-100': isMenuOpen,
+          '-translate-x-full opacity-0 lg:hidden': !isMenuOpen,
+        }"
+        class="fixed inset-0 z-20 w-full h-screen lg:hidden transition-all duration-300 transform ease-in-out bg-white/95 dark:bg-gray-900/95 backdrop-blur-md pt-20"
+      >
+        <div class="container mx-auto px-6 py-8">
+          <div class="flex flex-col space-y-3">
+            <RouterLink
+              to="/"
+              class="px-4 py-3 rounded-lg text-lg font-medium border-b border-gray-100 dark:border-gray-800 text-gray-700 dark:text-gray-300 hover:bg-rose-50 dark:hover:bg-gray-800"
+              @click="isMenuOpen = false"
+            >
+              Home
+            </RouterLink>
+            <RouterLink
+              to="/scorer"
+              class="px-4 py-3 rounded-lg text-lg font-medium border-b border-gray-100 dark:border-gray-800 text-gray-700 dark:text-gray-300 hover:bg-rose-50 dark:hover:bg-gray-800"
+              @click="isMenuOpen = false"
+            >
+              Scorer
+            </RouterLink>
+            <RouterLink
+              to="/settings"
+              class="px-4 py-3 rounded-lg text-lg font-medium border-b border-gray-100 dark:border-gray-800 text-gray-700 dark:text-gray-300 hover:bg-rose-50 dark:hover:bg-gray-800"
+              @click="isMenuOpen = false"
+            >
+              Settings
+            </RouterLink>
+          </div>
         </div>
       </div>
     </nav>
-    <RouterView />
+
+    <!-- Main Content -->
+    <main>
+      <RouterView />
+    </main>
   </div>
 </template>
 
 <style scoped>
-.active {
-  color: theme("colors.blue.600");
+.router-link-active {
+  color: theme("colors.rose.600");
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease-in-out;
 }
 </style>

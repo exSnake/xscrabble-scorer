@@ -27,7 +27,14 @@ defineProps({
 });
 
 const add = () => {
-  emit("add", word.value);
+  // Includi tutti i dettagli dei bonus con il word
+  const wordWithBonus = {
+    ...word.value,
+    bonusArray: [...bonusArray.value],
+    wordBonus: wordBonus.value,
+    superBonus: superBonus.value,
+  };
+  emit("add", wordWithBonus);
   init();
   // Focus sull'input dopo l'aggiunta
   setTimeout(() => {
@@ -130,12 +137,12 @@ onMounted(() => {
     <div class="w-full">
       <!-- Box di input interattivo con tessere -->
       <div
-        class="relative border-2 rounded-lg overflow-hidden w-full p-2 bg-blue-800 dark:bg-gray-800 focus-within:ring-2 focus-within:ring-blue-400 min-w-[300px]"
+        class="relative border-2 rounded-lg overflow-hidden w-full p-2 bg-gray-50 dark:bg-gray-800 focus-within:ring-2 focus-within:ring-blue-400 min-w-[300px] text-gray-500"
         :class="{
           'border-blue-600 dark:border-gray-600':
             wordBonus === 1 && !superBonus,
-          'border-yellow-400 bg-yellow-400': wordBonus === 2 && !superBonus,
-          'border-red-700 bg-red-700': wordBonus === 3 && !superBonus,
+          'border-yellow-400 ': wordBonus === 2 && !superBonus,
+          'border-red-700 ': wordBonus === 3 && !superBonus,
           'border-green-400': wordBonus === 1 && superBonus,
           'gradient-border-yellow-green': wordBonus === 2 && superBonus,
           'gradient-border-red-green': wordBonus === 3 && superBonus,
@@ -153,7 +160,7 @@ onMounted(() => {
         <input
           type="text"
           ref="wordInput"
-          class="w-full bg-transparent border-0 outline-none px-2 py-1 text-white mb-2 ring-0 border-none focus:ring-0 focus:border-none"
+          class="w-full bg-transparent border-0 outline-none px-2 py-1 dark:text-white mb-2 ring-0 border-none focus:ring-0 focus:border-none"
           :maxlength="WORD_MAX_LENGTH"
           :value="word.text"
           @input="updateText($event.target.value)"
@@ -227,7 +234,7 @@ onMounted(() => {
 
       <!-- Contatore punti (spostato fuori dal campo di input) -->
       <div
-        class="mt-2 px-3 py-2 bg-gray-800 dark:bg-gray-700 text-white rounded-md flex items-center justify-between"
+        class="mt-2 px-3 py-2 bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-white rounded-md flex items-center justify-between"
       >
         <span class="text-sm">{{ t("general.currentScore") }}</span>
         <div class="flex items-center">
@@ -308,11 +315,6 @@ input::placeholder {
 }
 
 /* Stili per i bordi sfumati */
-.gradient-border-yellow-green {
-  position: relative;
-  border: none !important;
-  background-color: #facc15 !important;
-}
 
 .gradient-border-yellow-green::before {
   content: "";
@@ -329,12 +331,6 @@ input::placeholder {
   pointer-events: none;
   border-radius: 0.5rem;
   z-index: 10;
-}
-
-.gradient-border-red-green {
-  position: relative;
-  border: none !important;
-  background-color: #b91c1c !important;
 }
 
 .gradient-border-red-green::before {
