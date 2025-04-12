@@ -49,7 +49,7 @@ export const useGameStore = defineStore("game", () => {
 
   function addPlayer(name) {
     const localeStore = useLocaleStore();
-    
+
     if (!name) {
       toast.error(localeStore.t("error.emptyName"));
       return;
@@ -72,7 +72,7 @@ export const useGameStore = defineStore("game", () => {
 
   function addWord(word) {
     const localeStore = useLocaleStore();
-    
+
     if (!word.text) {
       toast.error(localeStore.t("error.emptyWord"));
       return;

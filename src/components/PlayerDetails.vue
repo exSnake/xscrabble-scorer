@@ -1,6 +1,5 @@
 <script setup>
 import { useLocaleStore } from "@/stores/LocaleStore";
-import { computed } from "vue";
 
 const localeStore = useLocaleStore();
 const { t } = localeStore;
@@ -9,7 +8,7 @@ defineProps({
   player: Object,
 });
 
-const emit = defineEmits(["delete", "deleteWord", "activate"]);
+defineEmits(["delete", "deleteWord", "activate"]);
 
 const getTotalPoints = (player) => {
   return player.words.reduce((acc, word) => acc + word.points, 0);
@@ -43,7 +42,7 @@ const getTotalPoints = (player) => {
           class="rounded-full bg-blue-100 py-1 px-2 text-xs font-semibold text-blue-800 dark:bg-blue-900 dark:text-blue-200"
         >
           {{ getTotalPoints(player) }}
-          <span class="opacity-70 text-[8px]">{{ t('general.points') }}</span>
+          <span class="opacity-70 text-[8px]">{{ t("general.points") }}</span>
         </div>
         <button
           class="rounded p-1 text-gray-600 hover:bg-gray-200 hover:text-red-700 dark:text-gray-200 dark:hover:bg-gray-700 dark:hover:text-red-400"
@@ -62,7 +61,9 @@ const getTotalPoints = (player) => {
       >
         <span class="text-gray-600 dark:text-gray-300">{{ word.text }}</span>
         <div class="flex items-center gap-1">
-          <span class="text-blue-600 dark:text-blue-300">{{ word.points }}</span>
+          <span class="text-blue-600 dark:text-blue-300">{{
+            word.points
+          }}</span>
           <button
             class="ml-2 rounded p-1 text-gray-400 hover:text-red-600 transition-colors dark:text-gray-500 dark:hover:text-red-400"
             @click.stop="$emit('deleteWord', { id: word.id, player })"
@@ -75,7 +76,7 @@ const getTotalPoints = (player) => {
         v-if="player.words.length === 0"
         class="flex justify-center py-3 text-sm italic text-gray-400 dark:text-gray-500"
       >
-        {{ t('scorer.noWordsYet') }}
+        {{ t("scorer.noWordsYet") }}
       </div>
     </div>
   </div>

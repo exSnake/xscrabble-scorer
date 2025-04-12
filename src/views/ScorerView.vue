@@ -22,7 +22,9 @@ const {
   pauseTimer,
   restartTimer,
 } = game;
-const { activePlayer, canAddPlayer, players, timer } = storeToRefs(game);
+const timerTool = ref(null);
+const { activePlayer, canAddPlayer, players, seconds, timer } =
+  storeToRefs(game);
 
 const handleDeleteWord = ({ id, player }) => {
   deleteWord({ wordId: id, player });
@@ -40,7 +42,7 @@ const openAddPlayerModal = () => {
   showAddPlayerModal.value = true;
   // Focus sull'input dopo l'apertura del modale
   setTimeout(() => {
-    document.getElementById('newPlayerInput')?.focus();
+    document.getElementById("newPlayerInput")?.focus();
   }, 100);
 };
 
@@ -52,6 +54,11 @@ const closeAddPlayerModal = () => {
 const handleAddWord = (word) => {
   addWord(word);
 };
+
+const handleRestartTimer = () => {
+  restartTimer();
+  timerTool.value.updateTimerReference();
+};
 </script>
 
 <template>
@@ -61,10 +68,12 @@ const handleAddWord = (word) => {
     <!-- Timer -->
     <div class="mb-4 sm:mb-6">
       <TimerTool
+        ref="timerTool"
         class="flex flex-1 w-full flex-col items-center rounded-lg sm:rounded-xl bg-white px-4 sm:px-6 md:px-8 py-3 sm:py-4 md:py-6 text-5xl sm:text-6xl md:text-7xl text-gray-700 shadow-lg dark:bg-gray-800 dark:text-white border dark:border-gray-700 transition-all duration-200 hover:shadow-xl"
         :timer="timer"
+        :initial-time="seconds"
         :canAddPlayer="canAddPlayer"
-        @restart="restartTimer()"
+        @restart="handleRestartTimer()"
         @pause="pauseTimer()"
         @openAddPlayerModal="openAddPlayerModal"
       />
@@ -91,12 +100,12 @@ const handleAddWord = (word) => {
           <div
             class="text-xl sm:text-2xl font-medium text-gray-600 dark:text-gray-300"
           >
-            {{ t('scorer.addPlayerToStart') }}
+            {{ t("scorer.addPlayerToStart") }}
           </div>
           <div
             class="mt-2 sm:mt-4 text-sm sm:text-base text-gray-500 dark:text-gray-400"
           >
-            {{ t('scorer.playersTrackScores') }}
+            {{ t("scorer.playersTrackScores") }}
           </div>
           <button
             @click="openAddPlayerModal"
@@ -104,7 +113,7 @@ const handleAddWord = (word) => {
           >
             <div class="flex items-center justify-center gap-2">
               <LucideUserPlus class="w-5 h-5" />
-              <span>{{ t('scorer.addPlayer') }}</span>
+              <span>{{ t("scorer.addPlayer") }}</span>
             </div>
           </button>
         </div>
@@ -117,13 +126,13 @@ const handleAddWord = (word) => {
             <div
               class="text-xl sm:text-2xl font-semibold text-gray-800 dark:text-white"
             >
-              {{ t('scorer.players') }}
+              {{ t("scorer.players") }}
             </div>
             <div
               class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-1"
               v-if="activePlayer === null"
             >
-              {{ t('scorer.selectPlayerToAddWord') }}
+              {{ t("scorer.selectPlayerToAddWord") }}
             </div>
           </div>
 
@@ -155,18 +164,31 @@ const handleAddWord = (word) => {
 
     <!-- Modal per aggiungere un nuovo giocatore -->
     <Transition name="fade">
-      <div v-if="showAddPlayerModal" class="fixed inset-0 z-50 flex items-center justify-center">
-        <div class="absolute inset-0 bg-black opacity-50" @click="closeAddPlayerModal"></div>
-        <div class="relative z-10 bg-white dark:bg-gray-800 rounded-lg shadow-xl p-5 sm:p-6 max-w-md w-full">
+      <div
+        v-if="showAddPlayerModal"
+        class="fixed inset-0 z-50 flex items-center justify-center"
+      >
+        <div
+          class="absolute inset-0 bg-black opacity-50"
+          @click="closeAddPlayerModal"
+        ></div>
+        <div
+          class="relative z-10 bg-white dark:bg-gray-800 rounded-lg shadow-xl p-5 sm:p-6 max-w-md w-full"
+        >
           <div class="flex justify-between items-center mb-4">
-            <h2 class="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white">
-              {{ t('scorer.addNewPlayer') }}
+            <h2
+              class="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white"
+            >
+              {{ t("scorer.addNewPlayer") }}
             </h2>
-            <button @click="closeAddPlayerModal" class="p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700">
+            <button
+              @click="closeAddPlayerModal"
+              class="p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700"
+            >
               <LucideX class="w-5 h-5 text-gray-600 dark:text-gray-400" />
             </button>
           </div>
-          
+
           <div class="mb-3">
             <TInput
               id="newPlayerInput"
@@ -177,20 +199,20 @@ const handleAddWord = (word) => {
               v-model="newPlayerName"
             />
           </div>
-          
+
           <div class="flex justify-end gap-3">
-            <button 
+            <button
               @click="closeAddPlayerModal"
               class="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
             >
-              {{ t('general.cancelButton') }}
+              {{ t("general.cancelButton") }}
             </button>
             <TButton
               class="h-10 cursor-pointer rounded-lg bg-blue-500 px-4 py-2 text-white transition-colors duration-200 hover:bg-blue-600 disabled:cursor-not-allowed disabled:bg-blue-300 disabled:opacity-70"
               @click="handleAddPlayer"
               :disabled="!newPlayerName.trim() || !canAddPlayer"
             >
-              {{ t('general.addButton') }}
+              {{ t("general.addButton") }}
             </TButton>
           </div>
         </div>

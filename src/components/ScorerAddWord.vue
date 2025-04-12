@@ -1,13 +1,13 @@
 <script setup>
 import { useGameStore } from "@/stores/GameStore";
 import { useLocaleStore } from "@/stores/LocaleStore";
-import { TButton, TInput } from "@variantjs/vue";
+import { TButton } from "@variantjs/vue";
 import { storeToRefs } from "pinia";
 import { ref, defineProps, defineEmits, watchEffect, onMounted } from "vue";
 
 const game = useGameStore();
 const localeStore = useLocaleStore();
-const { bonus, maxWordLength } = storeToRefs(game);
+const { bonus } = storeToRefs(game);
 const { getCharacterPoints } = game;
 const { t } = localeStore;
 
@@ -98,7 +98,7 @@ watchEffect(() => {
   let points = 0;
   for (const [i, char] of [...word.value.text].entries()) {
     if (i >= WORD_MAX_LENGTH) break; // Preveniamo calcoli oltre il limite
-    
+
     const charPoints = getCharacterPoints(char.toUpperCase());
     if (!isNaN(charPoints)) {
       points += parseInt(bonusArray.value[i]) * parseInt(charPoints);
@@ -149,7 +149,7 @@ onMounted(() => {
           <span>{{ t("general.typeHere") }}</span>
         </div>
 
-        <!-- Input reale (non sovrapposto alle tessere, ma prima di esse) -->
+        <!-- Input reale -->
         <input
           type="text"
           ref="wordInput"
@@ -160,7 +160,7 @@ onMounted(() => {
           :disabled="!enabled"
           @keydown="handleKeydown"
         />
-        
+
         <!-- Visualizzazione delle tessere -->
         <div class="flex flex-wrap gap-1">
           <template v-if="word.text">
@@ -224,9 +224,9 @@ onMounted(() => {
           </template>
         </div>
       </div>
-      
+
       <!-- Contatore punti (spostato fuori dal campo di input) -->
-      <div 
+      <div
         class="mt-2 px-3 py-2 bg-gray-800 dark:bg-gray-700 text-white rounded-md flex items-center justify-between"
       >
         <span class="text-sm">{{ t("general.currentScore") }}</span>
@@ -276,7 +276,7 @@ onMounted(() => {
           <span class="ml-1">(+{{ bonus.value }})</span>
         </button>
       </div>
-      
+
       <!-- Pulsante aggiungi in una riga separata -->
       <TButton
         class="h-10 bg-blue-500 disabled:cursor-not-allowed disabled:bg-blue-300 flex items-center justify-center"

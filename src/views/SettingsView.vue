@@ -3,12 +3,18 @@ import { TInput, TSelect } from "@variantjs/vue";
 import { useGameStore } from "@/stores/GameStore";
 import { useLocaleStore } from "@/stores/LocaleStore";
 import { storeToRefs } from "pinia";
-import { computed, ref, watch, onMounted } from "vue";
+import { computed, ref, onMounted } from "vue";
 
 const game = useGameStore();
 const localeStore = useLocaleStore();
 const { t } = localeStore;
-const { language: scoreLanguage, maxWordLength, settings, seconds, bonus } = storeToRefs(game);
+const {
+  language: scoreLanguage,
+  maxWordLength,
+  settings,
+  seconds,
+  bonus,
+} = storeToRefs(game);
 const { language: uiLanguage } = storeToRefs(localeStore);
 
 const bonusComputed = computed({
@@ -46,7 +52,7 @@ const languageOptions = ref([
   { code: "de", name: "Deutsch" },
   { code: "et", name: "Eesti" },
   { code: "pt", name: "Português" },
-  { code: "sahibba", name: "Sahibba" }
+  { code: "sahibba", name: "Sahibba" },
 ]);
 
 onMounted(() => {
@@ -64,7 +70,7 @@ onMounted(() => {
       <h1
         class="text-3xl sm:text-4xl font-semibold mb-4 text-gray-800 dark:text-white"
       >
-        {{ t('settings.title') }}
+        {{ t("settings.title") }}
       </h1>
       <div
         class="w-full border-t border-gray-200 dark:border-gray-600 mb-6"
@@ -80,17 +86,21 @@ onMounted(() => {
               <div
                 class="text-lg font-medium text-gray-800 dark:text-white uppercase"
               >
-                {{ t('settings.language') }}
+                {{ t("settings.language") }}
               </div>
               <div class="text-sm text-gray-500 dark:text-gray-400">
-                {{ t('settings.interfaceLanguage') }}
+                {{ t("settings.interfaceLanguage") }}
               </div>
             </div>
-            <select 
+            <select
               v-model="uiLanguage"
               class="h-12 w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg"
             >
-              <option v-for="lang in languageOptions" :key="lang.code" :value="lang.code">
+              <option
+                v-for="lang in languageOptions"
+                :key="lang.code"
+                :value="lang.code"
+              >
                 {{ lang.name }}
               </option>
             </select>
@@ -104,10 +114,10 @@ onMounted(() => {
               <div
                 class="text-lg font-medium text-gray-800 dark:text-white uppercase"
               >
-                {{ t('settings.letterScores') }}
+                {{ t("settings.letterScores") }}
               </div>
               <div class="text-sm text-gray-500 dark:text-gray-400">
-                {{ t('settings.scoreLanguage') }}
+                {{ t("settings.scoreLanguage") }}
               </div>
             </div>
             <TSelect
@@ -126,10 +136,10 @@ onMounted(() => {
               <div
                 class="text-lg font-medium text-gray-800 dark:text-white uppercase"
               >
-                {{ t('settings.timer') }}
+                {{ t("settings.timer") }}
               </div>
               <div class="text-sm text-gray-500 dark:text-gray-400">
-                ({{ t('settings.seconds') }})
+                ({{ t("settings.seconds") }})
               </div>
             </div>
             <TInput
@@ -147,10 +157,10 @@ onMounted(() => {
               <div
                 class="text-lg font-medium text-gray-800 dark:text-white uppercase"
               >
-                {{ t('settings.bonusPoints') }}
+                {{ t("settings.bonusPoints") }}
               </div>
               <div class="text-sm text-gray-500 dark:text-gray-400">
-                ({{ t('general.points') }})
+                ({{ t("general.points") }})
               </div>
             </div>
             <TInput
@@ -168,10 +178,10 @@ onMounted(() => {
               <div
                 class="text-lg font-medium text-gray-800 dark:text-white uppercase"
               >
-                {{ t('settings.maxWordLength') }}
+                {{ t("settings.maxWordLength") }}
               </div>
               <div class="text-sm text-gray-500 dark:text-gray-400">
-                ({{ t('settings.characterCount') }})
+                ({{ t("settings.characterCount") }})
               </div>
             </div>
             <TInput
@@ -183,7 +193,7 @@ onMounted(() => {
         </div>
 
         <div class="mt-8 text-center text-sm text-gray-500 dark:text-gray-400">
-          {{ t('settings.autoSave') }}
+          {{ t("settings.autoSave") }}
         </div>
       </div>
     </div>
