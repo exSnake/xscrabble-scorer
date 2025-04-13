@@ -6,8 +6,6 @@ import { toast } from "vue3-toastify";
 import { useLocaleStore } from "./LocaleStore";
 
 export const useGameStore = defineStore("game", () => {
-  //#region State
-
   const bonus = useStorage("bonus", 50);
   const maxWordLength = useStorage("maxWordLength", 10);
   const language = useStorage("scoreLanguage", "it");
@@ -25,10 +23,6 @@ export const useGameStore = defineStore("game", () => {
     timer.value.pause();
   });
 
-  //#endregion State
-
-  //#region Computed properties
-
   const canAddPlayer = computed(() => {
     return players.value.length < 4;
   });
@@ -36,10 +30,6 @@ export const useGameStore = defineStore("game", () => {
   const activePlayer = computed(() => {
     return players.value.find((player) => player.active);
   });
-
-  //#endregion Computed properties
-
-  //#region Actions
 
   function activatePlayer(player) {
     players.value.forEach((p) => {
@@ -146,10 +136,7 @@ export const useGameStore = defineStore("game", () => {
     pauseTimer();
   }
 
-  //#endregion Actions
-
   return {
-    // State
     activePlayer,
     bonus,
     canAddPlayer,
@@ -160,7 +147,6 @@ export const useGameStore = defineStore("game", () => {
     settings,
     timer,
 
-    // Actions
     activatePlayer,
     addPlayer,
     addWord,

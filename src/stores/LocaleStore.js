@@ -5,17 +5,13 @@ import { useRouter, useRoute } from "vue-router";
 import locales from "@/locales";
 
 export const useLocaleStore = defineStore("locale", () => {
-  // State
   const language = ref(useStorage("uiLanguage", "it"));
   const router = useRouter();
   const route = useRoute();
 
-  // Osserva i cambiamenti alla lingua e aggiorna l'URL
   watch(language, (newLang) => {
-    // Evita cicli infiniti e cambiamenti di rotta non necessari
     const currentLangInPath = route.path.split("/")[1];
     if (currentLangInPath !== newLang) {
-      // Ottiene il percorso attuale e lo sostituisce con la nuova lingua
       const pathParts = route.path.split("/");
       if (pathParts.length > 1) {
         pathParts[1] = newLang;
@@ -25,10 +21,8 @@ export const useLocaleStore = defineStore("locale", () => {
     }
   });
 
-  // Getters
   const locale = computed(() => locales[language.value] || locales.it);
 
-  // Funzione di traduzione
   function t(key) {
     const keys = key.split(".");
     let text = locale.value;
@@ -45,7 +39,6 @@ export const useLocaleStore = defineStore("locale", () => {
     return text;
   }
 
-  // Actions
   function setLanguage(lang) {
     if (locales[lang]) {
       language.value = lang;
@@ -74,10 +67,8 @@ export const useLocaleStore = defineStore("locale", () => {
     }));
   }
 
-  // Aggiungiamo una funzione per ottenere i nomi delle lingue in lingua corrente
   function getLocalizedLanguageNames() {
     try {
-      // Verifichiamo prima che tutte le lingue abbiano le traduzioni necessarie
       const allLanguagesHaveTranslations = Object.keys(locales).every(
         (code) =>
           locale.value &&
@@ -91,7 +82,6 @@ export const useLocaleStore = defineStore("locale", () => {
           name: locale.value.languages[code],
         }));
       } else {
-        // Fallback ai nomi predefiniti se mancano traduzioni
         return getSupportedLanguages();
       }
     } catch (error) {
@@ -101,16 +91,9 @@ export const useLocaleStore = defineStore("locale", () => {
   }
 
   return {
-    // State
     language,
-
-    // Getters
     locale,
-
-    // Functions
     t,
-
-    // Actions
     setLanguage,
     getSupportedLanguages,
     getLocalizedLanguageNames,

@@ -40,7 +40,6 @@ const handleAddPlayer = () => {
 
 const openAddPlayerModal = () => {
   showAddPlayerModal.value = true;
-  // Focus sull'input dopo l'apertura del modale
   setTimeout(() => {
     document.getElementById("newPlayerInput")?.focus();
   }, 100);

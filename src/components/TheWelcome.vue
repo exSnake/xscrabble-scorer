@@ -7,12 +7,10 @@ const localeStore = useLocaleStore();
 const { t } = localeStore;
 const route = useRoute();
 
-// Ottieni la lingua corrente dalla route
 const currentLang = computed(() => {
   return route.path.split("/")[1] || "en";
 });
 
-// Genera percorsi localizzati
 const localePath = (path) => {
   const lang = currentLang.value;
   return `/${lang}${path ? `/${path}` : ""}`;

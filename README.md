@@ -1,78 +1,77 @@
-# xScrabbler - Score Calculator
+<div align="center">
+  <img src="public/logo/android-chrome-192x192.png" alt="xScrabbler Logo">
+  <h1>xScrabbler - Score Calculator</h1>
+</div>
 
-![xScrabbler Logo](public/favicon.ico)
+xScrabbler is a modern and intuitive score calculator for Scrabble, Scarabeo, and similar word games. It allows you to manage scores, apply bonuses, and keep track of game time in a single application.
 
-xScrabbler è un calcolatore di punteggi moderno e intuitivo per Scrabble, Scarabeo e giochi di parole simili. Permette di gestire punteggi, applicare bonus e tenere traccia del tempo di gioco in un'unica applicazione.
+## 🌟 Features
 
-## 🌟 Caratteristiche
+- **Multilingual**: Supports English, Italian, French, Spanish, German, Portuguese, Dutch, Estonian, and other languages
+- **Word Bonuses**: Easily calculate bonuses for letters and words
+- **Integrated Timer**: Built-in timer for competitive matches
+- **Player Tracking**: Keep track of all players' scores
+- **Customizable**: Personalize bonuses, timer, and other settings
+- **Open Source**: Contribute to the project on GitHub
+- **Light/Dark Theme**: Support for light and dark modes
 
-- **Multilingua**: Supporta inglese, italiano, francese, spagnolo, tedesco, portoghese, olandese, estone e altre lingue
-- **Bonus delle parole**: Calcola facilmente bonus per lettere e parole
-- **Timer integrato**: Timer incorporato per partite competitive
-- **Tracciamento giocatori**: Tieni traccia dei punteggi di tutti i giocatori
-- **Personalizzabile**: Personalizza bonus, timer e altre impostazioni
-- **Open Source**: Contribuisci al progetto su GitHub
-- **Tema chiaro/scuro**: Supporto per modalità chiara e scura
+## 📱 Compatibility
 
-## 📱 Compatibilità
-
-L'applicazione è completamente responsive e funziona su:
+The application is fully responsive and works on:
 - Desktop
 - Tablet
 - Smartphone
 
 ## 🌐 Demo
 
-Prova xScrabbler: [https://scrabble.exsnake.com](https://scrabble.exsnake.com)
+Try xScrabbler: [https://scrabble.exsnake.com](https://scrabble.exsnake.com)
 
-## 🛠️ Tecnologie utilizzate
+## 🛠️ Technologies Used
 
-- Vue.js 3 con Composition API
-- Vue Router per la navigazione
-- Pinia per la gestione dello stato
-- Tailwind CSS per lo stile
-- Vite come build tool
-- Lucide per le icone
+- Vue.js 3 with Composition API
+- Vue Router for navigation
+- Pinia for state management
+- Tailwind CSS for styling
+- Vite as build tool
+- Lucide for icons
 
-## 🚀 Setup del progetto
+## 🚀 Project Setup
 
-### Requisiti
-- Node.js (versione 18 o superiore)
-- npm o yarn
+### Requirements
+- Node.js (version 18 or higher)
+- npm or yarn
 
-### Installazione
+### To Contribute
 ```sh
-# Clona il repository
 git clone https://github.com/exSnake/xscrabble-scorer.git
 cd xscrabble-scorer
 
-# Installa le dipendenze
 npm install
 ```
 
-### Avvia l'ambiente di sviluppo
+### Run in development mode
 ```sh
 npm run dev
 ```
 
-### Compila per produzione
+### Compile for production
 ```sh
 npm run build
 ```
 
-### Lint con ESLint
+### Lint with  ESLint
 ```sh
 npm run lint
 ```
 
-## 🤝 Come contribuire
+## 🤝 How to contribute
 
-Consulta il file [CONTRIBUTING.md](./CONTRIBUTING.md) per informazioni su come contribuire al progetto.
+Check [CONTRIBUTING.md](./CONTRIBUTING.md) for information on how to contribute to the project.
 
 ## 📄 Licenza
 
-Questo progetto è distribuito con licenza MIT. Vedi il file [LICENSE](./LICENSE) per maggiori dettagli.
+This project is distributed under the MIT license. See the [LICENSE](./LICENSE) file for more details.
 
-## 👨‍💻 Creato da
+## 👨‍💻 Created
 
-[exSnake](https://github.com/exSnake)
+with love for words game ❤️ by [exSnake](https://github.com/exSnake)

@@ -7,17 +7,15 @@ import { ref, defineProps, defineEmits, watchEffect, onMounted } from "vue";
 
 const game = useGameStore();
 const localeStore = useLocaleStore();
-const { bonus } = storeToRefs(game);
+const { bonus, maxWordLength } = storeToRefs(game);
 const { getCharacterPoints } = game;
 const { t } = localeStore;
 
-// Impostiamo un limite fisso di 10 lettere
-const WORD_MAX_LENGTH = 10;
 const wordInput = ref(null);
 
 const word = ref({ text: "", points: 0 });
 const errors = ref(new Set());
-const bonusArray = ref(Array(WORD_MAX_LENGTH).fill(1));
+const bonusArray = ref(Array(maxWordLength.value).fill(1));
 const superBonus = ref(false);
 const wordBonus = ref(1);
 const emit = defineEmits(["add"]);
@@ -27,7 +25,6 @@ defineProps({
 });
 
 const add = () => {
-  // Includi tutti i dettagli dei bonus con il word
   const wordWithBonus = {
     ...word.value,
     bonusArray: [...bonusArray.value],
@@ -46,17 +43,17 @@ const add = () => {
 
 const init = () => {
   word.value = { text: "", points: 0 };
-  bonusArray.value = Array(WORD_MAX_LENGTH).fill(1);
+  bonusArray.value = Array(maxWordLength.value).fill(1);
   superBonus.value = false;
   wordBonus.value = 1;
 };
 
 // Funzione per prevenire l'inserimento oltre il limite massimo
 const updateText = (newText) => {
-  if (newText.length <= WORD_MAX_LENGTH) {
+  if (newText.length <= maxWordLength.value) {
     word.value.text = newText;
   } else {
-    word.value.text = newText.substring(0, WORD_MAX_LENGTH);
+    word.value.text = newText.substring(0, maxWordLength.value);
   }
 };
 
@@ -104,7 +101,7 @@ const handleKeydown = (event) => {
 watchEffect(() => {
   let points = 0;
   for (const [i, char] of [...word.value.text].entries()) {
-    if (i >= WORD_MAX_LENGTH) break; // Preveniamo calcoli oltre il limite
+    if (i >= maxWordLength.value) break;
 
     const charPoints = getCharacterPoints(char.toUpperCase());
     if (!isNaN(charPoints)) {
@@ -161,7 +158,7 @@ onMounted(() => {
           ref="wordInput"
           type="text"
           class="w-full bg-transparent border-0 outline-none px-2 py-1 dark:text-white mb-2 ring-0 border-none focus:ring-0 focus:border-none"
-          :maxlength="WORD_MAX_LENGTH"
+          :maxlength="maxWordLength"
           :value="word.text"
           :disabled="!enabled"
           @input="updateText($event.target.value)"
@@ -173,7 +170,7 @@ onMounted(() => {
           <template v-if="word.text">
             <div
               v-for="(char, index) in [...word.text.toUpperCase()]"
-              v-show="index < WORD_MAX_LENGTH"
+              v-show="index < maxWordLength"
               :key="index"
               class="flex flex-col mb-1"
             >
@@ -184,15 +181,15 @@ onMounted(() => {
                   'bg-amber-200 text-gray-700': isBonusEquals(index, 1),
                   'bg-blue-400 text-gray-700 border-blue-500': isBonusEquals(
                     index,
-                    2,
+                    2
                   ),
                   'bg-blue-700 text-white border-blue-800': isBonusEquals(
                     index,
-                    3,
+                    3
                   ),
                   'bg-amber-200 text-gray-500 border-gray-400': isBonusEquals(
                     index,
-                    0,
+                    0
                   ),
                 }"
                 @click="setBonus(index, -1)"
@@ -325,9 +322,7 @@ input::placeholder {
   bottom: 0;
   border: 3px solid transparent;
   background: linear-gradient(45deg, #facc15, #4ade80, #facc15) border-box;
-  -webkit-mask:
-    linear-gradient(#fff 0 0) padding-box,
-    linear-gradient(#fff 0 0);
+  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: destination-out;
   mask-composite: exclude;
   pointer-events: none;
@@ -344,9 +339,7 @@ input::placeholder {
   bottom: 0;
   border: 3px solid transparent;
   background: linear-gradient(45deg, #b91c1c, #4ade80, #b91c1c) border-box;
-  -webkit-mask:
-    linear-gradient(#fff 0 0) padding-box,
-    linear-gradient(#fff 0 0);
+  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: destination-out;
   mask-composite: exclude;
   pointer-events: none;

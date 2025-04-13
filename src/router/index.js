@@ -4,10 +4,8 @@ import ScorerView from "../views/ScorerView.vue";
 import SettingsView from "../views/SettingsView.vue";
 import { useLocaleStore } from "@/stores/LocaleStore";
 
-// Supporto per le lingue
 const supportedLanguages = ["en", "it", "fr", "es", "de", "nl", "et", "pt"];
 
-// Metadati comuni con traduzioni
 const metaData = {
   home: {
     title: {
@@ -102,14 +100,11 @@ const metaData = {
   },
 };
 
-// Costruzione delle rotte
 let routes = [];
 
-// Aggiungi la rotta predefinita (reindirizza alla lingua del browser o all'inglese)
 routes.push({
   path: "/",
   redirect: () => {
-    // Ottieni la lingua del browser o usa l'inglese come fallback
     const browserLang = navigator.language.split("-")[0];
     const targetLang = supportedLanguages.includes(browserLang)
       ? browserLang
@@ -118,9 +113,7 @@ routes.push({
   },
 });
 
-// Crea rotte dirette per ogni lingua e pagina
 supportedLanguages.forEach((lang) => {
-  // Pagina Home per questa lingua
   routes.push({
     path: `/${lang}`,
     name: lang,
@@ -131,7 +124,6 @@ supportedLanguages.forEach((lang) => {
     },
   });
 
-  // Pagina Scorer per questa lingua
   routes.push({
     path: `/${lang}/scorer`,
     name: `scorer-${lang}`,
@@ -142,7 +134,6 @@ supportedLanguages.forEach((lang) => {
     },
   });
 
-  // Pagina Settings per questa lingua
   routes.push({
     path: `/${lang}/settings`,
     name: `settings-${lang}`,
@@ -154,7 +145,6 @@ supportedLanguages.forEach((lang) => {
   });
 });
 
-// Aggiungi una rotta catch-all che reindirizza alla pagina home in inglese
 routes.push({
   path: "/:pathMatch(.*)*",
   redirect: "/en",
@@ -166,23 +156,17 @@ const router = createRouter({
   routes,
 });
 
-// Questa callback viene eseguita prima di ogni cambio di rotta, incluso il caricamento iniziale
 router.beforeEach((to, from, next) => {
-  // Ottieni lo store della localizzazione
   const localeStore = useLocaleStore();
 
-  // Imposta la lingua in base alla rotta se presente
   if (to.meta.lang) {
     localeStore.language = to.meta.lang;
   }
 
-  // Lingua corrente
   const currentLang = localeStore.language || "en";
 
-  // Titolo della pagina
   let title = "xScrabbler";
   if (to.meta.title) {
-    // Se il titolo è un oggetto con traduzioni
     if (typeof to.meta.title === "object") {
       title = to.meta.title[currentLang] || to.meta.title.en || title;
     } else {
@@ -191,16 +175,13 @@ router.beforeEach((to, from, next) => {
   }
   document.title = title;
 
-  // Rimuovi i meta tag esistenti
   Array.from(
     document.querySelectorAll("meta[data-vue-router-controlled]"),
   ).forEach((el) => el.remove());
 
-  // Aggiungi nuovi meta tag
   if (to.meta.metaTags) {
     let metaTags;
 
-    // Se i metaTags sono un oggetto con traduzioni
     if (
       typeof to.meta.metaTags === "object" &&
       !Array.isArray(to.meta.metaTags)
@@ -217,10 +198,8 @@ router.beforeEach((to, from, next) => {
         tag.setAttribute(key, metaTag[key]);
       });
 
-      // Marca come controllato da vue-router
       tag.setAttribute("data-vue-router-controlled", "");
 
-      // Aggiungi all'head
       document.head.appendChild(tag);
     });
   }

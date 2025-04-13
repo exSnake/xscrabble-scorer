@@ -6,7 +6,6 @@ import Vue3Toasity from "vue3-toastify";
 import { configure } from "vue-gtag";
 import "vue3-toastify/dist/index.css";
 
-// Importa Lucide Vue
 import {
   LucidePlay,
   LucidePause,
@@ -35,7 +34,6 @@ import router from "./router";
 import "./assets/main.css";
 import "flowbite";
 
-// Configura Google Analytics
 configure({
   appName: "xScrabbler",
   pageTrackerScreenviewEnabled: true,
@@ -52,7 +50,6 @@ const configuration = {
 
 app.component(VueCountdown.name, VueCountdown);
 
-// Registra i componenti Lucide
 app.component("LucidePlay", LucidePlay);
 app.component("LucidePause", LucidePause);
 app.component("LucideRefreshCw", LucideRefreshCw);

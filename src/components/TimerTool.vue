@@ -28,7 +28,6 @@ const props = defineProps({
 
 const emit = defineEmits(["restart", "pause", "openAddPlayerModal"]);
 
-// Riferimenti audio
 const tenSecondsSound = ref(null);
 const endSound = ref(null);
 const audioContext = ref(null);
@@ -38,17 +37,13 @@ const soundsPlayed = ref({
   lastSecond: null,
 });
 
-// Stato visuale
 const timerAnimation = ref("");
 const timerClass = ref("");
 
-// Tempo iniziale effettivo
 const actualInitialTime = ref(props.initialTime || 180);
 
-// Viewport width
 const isSmallScreen = ref(false);
 
-// Dimensioni responsive SVG
 const svgSize = computed(() => (isSmallScreen.value ? 180 : 240));
 const circleRadius = computed(() => (isSmallScreen.value ? 80 : 108));
 const circleCenterPoint = computed(() => svgSize.value / 2);
@@ -101,7 +96,6 @@ const progress = computed(() => {
   return (totalSeconds.value / actualInitialTime.value) * 100;
 });
 
-// Genera il tick con intensità variabile
 const playTickSound = () => {
   if (!audioContext.value) return;
 
@@ -124,11 +118,11 @@ const playTickSound = () => {
     gainNode.gain.setValueAtTime(0, audioContext.value.currentTime);
     gainNode.gain.linearRampToValueAtTime(
       volume,
-      audioContext.value.currentTime + 0.01,
+      audioContext.value.currentTime + 0.01
     );
     gainNode.gain.linearRampToValueAtTime(
       0,
-      audioContext.value.currentTime + 0.1,
+      audioContext.value.currentTime + 0.1
     );
 
     oscillator.connect(gainNode);
@@ -222,7 +216,6 @@ watch(
       timerAnimation.value = "end-animation";
     }
 
-    // Gestione timer fermo
     if (!newTimer.isRunning) {
       if (!isTimerFinished && seconds !== 0) {
         soundsPlayed.value = {
@@ -236,7 +229,6 @@ watch(
       return;
     }
 
-    // Animazioni per tempo restante
     if (seconds <= 10) {
       timerAnimation.value = "pulse-animation";
       timerClass.value = "timer-urgent";
@@ -248,7 +240,6 @@ watch(
       timerClass.value = "";
     }
 
-    // Suono 10 secondi
     if (seconds === 10 && !soundsPlayed.value.tenSeconds) {
       tenSecondsSound.value?.play();
       soundsPlayed.value.tenSeconds = true;
@@ -272,7 +263,7 @@ watch(
       soundsPlayed.value = { tenSeconds: false, end: false, lastSecond: null };
     }
   },
-  { deep: true },
+  { deep: true }
 );
 </script>
 
@@ -285,8 +276,8 @@ watch(
         timerClass === 'timer-urgent'
           ? 'shadow-lg shadow-red-500/20'
           : timerClass === 'timer-warning'
-            ? 'shadow-orange-500/15'
-            : 'shadow-black/15',
+          ? 'shadow-orange-500/15'
+          : 'shadow-black/15',
       ]"
     >
       <div class="relative flex flex-col items-center justify-center">
@@ -309,8 +300,8 @@ watch(
               progressColor === 'stroke-blue-600'
                 ? 'stroke-blue-600'
                 : progressColor === 'stroke-orange-500'
-                  ? 'stroke-orange-500'
-                  : 'stroke-red-600',
+                ? 'stroke-orange-500'
+                : 'stroke-red-600',
             ]"
             stroke-width="10"
             stroke-linecap="round"
@@ -332,8 +323,8 @@ watch(
             timerColor === 'text-blue-600'
               ? 'text-blue-600'
               : timerColor === 'text-orange-500'
-                ? 'text-orange-500'
-                : 'text-red-600',
+              ? 'text-orange-500'
+              : 'text-red-600',
           ]"
         >
           {{ zeroPad(timer.minutes, 2) }}:{{ zeroPad(timer.seconds, 2) }}
