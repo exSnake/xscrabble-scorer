@@ -7,6 +7,13 @@ export default {
     typeHere: "Tapez le mot ici...",
     currentScore: "Score actuel",
   },
+  nav: {
+    home: "Accueil",
+    scorer: "Calculateur",
+    settings: "Paramètres",
+    darkMode: "Mode sombre",
+    lightMode: "Mode clair",
+  },
   scorer: {
     wordLabel: "Mot:",
     wordBonus2: "Mot ×2",

@@ -7,6 +7,13 @@ export default {
     typeHere: "Escribe la palabra aquí...",
     currentScore: "Puntuación actual",
   },
+  nav: {
+    home: "Inicio",
+    scorer: "Calculadora",
+    settings: "Configuración",
+    darkMode: "Modo oscuro",
+    lightMode: "Modo claro",
+  },
   scorer: {
     wordLabel: "Palabra:",
     wordBonus2: "Palabra ×2",

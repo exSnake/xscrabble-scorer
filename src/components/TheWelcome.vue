@@ -1,8 +1,22 @@
 <script setup>
 import { useLocaleStore } from "@/stores/LocaleStore";
+import { useRoute } from "vue-router";
+import { computed } from "vue";
 
 const localeStore = useLocaleStore();
 const { t } = localeStore;
+const route = useRoute();
+
+// Ottieni la lingua corrente dalla route
+const currentLang = computed(() => {
+  return route.path.split("/")[1] || "en";
+});
+
+// Genera percorsi localizzati
+const localePath = (path) => {
+  const lang = currentLang.value;
+  return `/${lang}${path ? `/${path}` : ""}`;
+};
 </script>
 
 <template>
@@ -34,8 +48,9 @@ const { t } = localeStore;
             class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
           >
             <router-link
-              :to="{ name: 'scorer' }"
+              :to="localePath('scorer')"
               class="inline-flex items-center justify-center py-3 px-6 rounded-lg bg-rose-600 hover:bg-rose-700 text-white font-medium text-lg transition-colors duration-300 shadow-lg hover:shadow-rose-500/20"
+              aria-label="Inizia a usare xScrabbler"
             >
               <LucidePlay class="w-5 h-5 mr-2" />
               {{ t("home.getStarted") }}
@@ -43,7 +58,9 @@ const { t } = localeStore;
             <a
               href="https://github.com/exSnake/scrabble-scorer"
               target="_blank"
+              rel="noopener noreferrer"
               class="inline-flex items-center justify-center py-3 px-6 rounded-lg bg-gray-800 hover:bg-gray-900 text-white font-medium text-lg transition-colors duration-300 shadow-lg dark:bg-gray-700 dark:hover:bg-gray-600"
+              aria-label="Visita repository GitHub"
             >
               <LucideGithub class="w-5 h-5 mr-2" />
               GitHub
@@ -175,7 +192,9 @@ const { t } = localeStore;
     </section>
 
     <!-- Features Section -->
-    <section class="py-16 px-6 bg-white dark:bg-gray-800 shadow-sm">
+    <section
+      class="py-16 px-6 bg-white dark:bg-gray-800 shadow-sm rounded-t-lg"
+    >
       <div class="max-w-7xl mx-auto">
         <div class="text-center mb-16">
           <h2
@@ -321,8 +340,9 @@ const { t } = localeStore;
           {{ t("home.aboutDesc") }}
         </p>
         <router-link
-          :to="{ name: 'scorer' }"
+          :to="localePath('scorer')"
           class="inline-flex items-center justify-center py-3 px-8 rounded-lg bg-white hover:bg-gray-100 text-rose-600 font-medium text-lg transition-colors duration-300 shadow-lg"
+          aria-label="Inizia subito a usare xScrabbler"
         >
           {{ t("home.quickStart") }}
         </router-link>
@@ -342,7 +362,9 @@ const { t } = localeStore;
           <a
             href="https://github.com/exSnake"
             target="_blank"
+            rel="noopener noreferrer"
             class="text-rose-600 dark:text-rose-400 hover:underline"
+            aria-label="Visita il profilo GitHub di exSnake"
             >exSnake</a
           >
         </div>

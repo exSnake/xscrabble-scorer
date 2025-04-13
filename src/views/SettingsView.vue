@@ -55,10 +55,6 @@ const languageOptions = ref([
   { code: "sahibba", name: "Sahibba" },
 ]);
 
-onMounted(() => {
-  console.log("Language options:", languageOptions.value);
-  console.log("Current UI language:", uiLanguage.value);
-});
 </script>
 <template>
   <div

@@ -7,6 +7,13 @@ export default {
     typeHere: "Scrivi qui la parola...",
     currentScore: "Punteggio attuale",
   },
+  nav: {
+    home: "Home",
+    scorer: "Calcolatore",
+    settings: "Impostazioni",
+    darkMode: "Modalità scura",
+    lightMode: "Modalità chiara",
+  },
   scorer: {
     wordLabel: "Parola:",
     wordBonus2: "Parola ×2",
@@ -59,7 +66,7 @@ export default {
     subtitle: "CALCOLATORE DI PUNTEGGIO",
     quickStart: "INIZIA E' GRATIS!",
     features: "Caratteristiche",
-    multipleLanguages: "Multiple lingue",
+    multipleLanguages: "Multilingua",
     multipleLanguagesDesc:
       "Supporta italiano, inglese, francese, spagnolo e molte altre lingue",
     wordBonus: "Bonus parola",

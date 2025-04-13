@@ -7,6 +7,13 @@ export default {
     typeHere: "Wort hier eingeben...",
     currentScore: "Aktueller Punktestand",
   },
+  nav: {
+    home: "Startseite",
+    scorer: "Punktesteller",
+    settings: "Einstellungen",
+    darkMode: "Dunkler Modus",
+    lightMode: "Hellmodus",
+  },
   scorer: {
     wordLabel: "Wort:",
     wordBonus2: "Wort ×2",

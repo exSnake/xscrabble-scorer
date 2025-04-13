@@ -1,11 +1,29 @@
 import { defineStore } from "pinia";
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 import { useStorage } from "@vueuse/core";
+import { useRouter, useRoute } from "vue-router";
 import locales from "@/locales";
 
 export const useLocaleStore = defineStore("locale", () => {
   // State
   const language = ref(useStorage("uiLanguage", "it"));
+  const router = useRouter();
+  const route = useRoute();
+
+  // Osserva i cambiamenti alla lingua e aggiorna l'URL
+  watch(language, (newLang) => {
+    // Evita cicli infiniti e cambiamenti di rotta non necessari
+    const currentLangInPath = route.path.split("/")[1];
+    if (currentLangInPath !== newLang) {
+      // Ottiene il percorso attuale e lo sostituisce con la nuova lingua
+      const pathParts = route.path.split("/");
+      if (pathParts.length > 1) {
+        pathParts[1] = newLang;
+        const newPath = pathParts.join("/");
+        router.push(newPath);
+      }
+    }
+  });
 
   // Getters
   const locale = computed(() => locales[language.value] || locales.it);

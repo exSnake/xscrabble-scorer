@@ -7,6 +7,13 @@ export default {
     typeHere: "Scrivilo qui, dai!",
     currentScore: "Punti conquistati",
   },
+  nav: {
+    home: "Casina",
+    scorer: "Calcolatorino",
+    settings: "Impostazionelle",
+    darkMode: "Modalità buiona",
+    lightMode: "Modalità lucina",
+  },
   scorer: {
     wordLabel: "Parolina:",
     wordBonus2: "Parola ×2 Boom!",

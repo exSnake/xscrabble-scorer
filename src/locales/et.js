@@ -7,6 +7,13 @@ export default {
     typeHere: "Kirjuta sõna siia...",
     currentScore: "Praegune skoor",
   },
+  nav: {
+    home: "Kodu",
+    scorer: "Skoorimine",
+    settings: "Seaded",
+    darkMode: "Tume režiim",
+    lightMode: "Heled režiim",
+  },
   scorer: {
     wordLabel: "Sõna:",
     wordBonus2: "Sõna ×2",

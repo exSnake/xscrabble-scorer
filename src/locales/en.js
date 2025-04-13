@@ -7,6 +7,13 @@ export default {
     typeHere: "Type word here...",
     currentScore: "Current score",
   },
+  nav: {
+    home: "Home",
+    scorer: "Scorer",
+    settings: "Settings",
+    darkMode: "Dark mode",
+    lightMode: "Light mode",
+  },
   scorer: {
     wordLabel: "Word:",
     wordBonus2: "Word ×2",
