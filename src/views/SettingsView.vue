@@ -3,7 +3,7 @@ import { TInput, TSelect } from "@variantjs/vue";
 import { useGameStore } from "@/stores/GameStore";
 import { useLocaleStore } from "@/stores/LocaleStore";
 import { storeToRefs } from "pinia";
-import { computed, ref, onMounted } from "vue";
+import { computed, ref } from "vue";
 
 const game = useGameStore();
 const localeStore = useLocaleStore();
@@ -54,7 +54,6 @@ const languageOptions = ref([
   { code: "pt", name: "Português" },
   { code: "sahibba", name: "Sahibba" },
 ]);
-
 </script>
 <template>
   <div

@@ -3,6 +3,7 @@ import { createPinia } from "pinia";
 import { variantJS } from "@variantjs/vue";
 import VueCountdown from "@chenfengyuan/vue-countdown";
 import Vue3Toasity from "vue3-toastify";
+import { configure } from "vue-gtag";
 import "vue3-toastify/dist/index.css";
 
 // Importa Lucide Vue
@@ -33,6 +34,16 @@ import router from "./router";
 
 import "./assets/main.css";
 import "flowbite";
+
+// Configura Google Analytics
+configure({
+  appName: "xScrabbler",
+  pageTrackerScreenviewEnabled: true,
+  config: {
+    id: "G-8PKY8T9FPE",
+  },
+  router,
+});
 
 const app = createApp(App);
 const configuration = {
