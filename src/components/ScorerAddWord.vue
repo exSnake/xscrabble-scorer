@@ -158,13 +158,13 @@ onMounted(() => {
 
         <!-- Input reale -->
         <input
-          type="text"
           ref="wordInput"
+          type="text"
           class="w-full bg-transparent border-0 outline-none px-2 py-1 dark:text-white mb-2 ring-0 border-none focus:ring-0 focus:border-none"
           :maxlength="WORD_MAX_LENGTH"
           :value="word.text"
-          @input="updateText($event.target.value)"
           :disabled="!enabled"
+          @input="updateText($event.target.value)"
           @keydown="handleKeydown"
         />
 
@@ -173,9 +173,9 @@ onMounted(() => {
           <template v-if="word.text">
             <div
               v-for="(char, index) in [...word.text.toUpperCase()]"
+              v-show="index < WORD_MAX_LENGTH"
               :key="index"
               class="flex flex-col mb-1"
-              v-show="index < WORD_MAX_LENGTH"
             >
               <!-- Tessera principale -->
               <div
@@ -184,23 +184,23 @@ onMounted(() => {
                   'bg-amber-200 text-gray-700': isBonusEquals(index, 1),
                   'bg-blue-400 text-gray-700 border-blue-500': isBonusEquals(
                     index,
-                    2
+                    2,
                   ),
                   'bg-blue-700 text-white border-blue-800': isBonusEquals(
                     index,
-                    3
+                    3,
                   ),
                   'bg-amber-200 text-gray-500 border-gray-400': isBonusEquals(
                     index,
-                    0
+                    0,
                   ),
                 }"
                 @click="setBonus(index, -1)"
               >
                 <span class="text-2xl font-bold">{{ char }}</span>
                 <span
-                  class="absolute bottom-0 right-1 text-xs"
                   v-if="!isBonusEquals(index, 0)"
+                  class="absolute bottom-0 right-1 text-xs"
                 >
                   {{ getCharacterPoints(char) }}
                 </span>
@@ -254,8 +254,8 @@ onMounted(() => {
             'bg-yellow-500 ring-2 ring-yellow-300': wordBonus === 2,
             'bg-yellow-400 hover:bg-yellow-500': wordBonus !== 2,
           }"
-          @click="setWordBonus(2)"
           type="button"
+          @click="setWordBonus(2)"
         >
           {{ t("scorer.wordBonus2") }}
         </button>
@@ -265,8 +265,8 @@ onMounted(() => {
             'bg-red-700 ring-2 ring-red-300': wordBonus === 3,
             'bg-red-600 hover:bg-red-700': wordBonus !== 3,
           }"
-          @click="setWordBonus(3)"
           type="button"
+          @click="setWordBonus(3)"
         >
           {{ t("scorer.wordBonus3") }}
         </button>
@@ -276,8 +276,8 @@ onMounted(() => {
             'bg-green-600 ring-2 ring-green-300': superBonus,
             'bg-green-500 hover:bg-green-600': !superBonus,
           }"
-          @click="setSuperBonus()"
           type="button"
+          @click="setSuperBonus()"
         >
           {{ t("scorer.bonus") }}
           <span class="ml-1">(+{{ bonus.value }})</span>
@@ -287,16 +287,16 @@ onMounted(() => {
       <!-- Pulsante aggiungi in una riga separata -->
       <TButton
         class="h-10 bg-blue-500 disabled:cursor-not-allowed disabled:bg-blue-300 flex items-center justify-center"
-        @click="add"
         :disabled="!enabled"
+        @click="add"
       >
         <LucidePlus class="w-5 h-5 mr-2" />
         {{ t("general.addButton") }}
       </TButton>
     </div>
 
-    <div class="mt-2 space-y-1" v-if="errors.size">
-      <div class="text-red-400" :key="index" v-for="(error, index) in errors">
+    <div v-if="errors.size" class="mt-2 space-y-1">
+      <div v-for="(error, index) in errors" :key="index" class="text-red-400">
         &bull; {{ error }}
       </div>
     </div>
@@ -325,7 +325,9 @@ input::placeholder {
   bottom: 0;
   border: 3px solid transparent;
   background: linear-gradient(45deg, #facc15, #4ade80, #facc15) border-box;
-  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) padding-box,
+    linear-gradient(#fff 0 0);
   -webkit-mask-composite: destination-out;
   mask-composite: exclude;
   pointer-events: none;
@@ -342,7 +344,9 @@ input::placeholder {
   bottom: 0;
   border: 3px solid transparent;
   background: linear-gradient(45deg, #b91c1c, #4ade80, #b91c1c) border-box;
-  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) padding-box,
+    linear-gradient(#fff 0 0);
   -webkit-mask-composite: destination-out;
   mask-composite: exclude;
   pointer-events: none;

@@ -117,9 +117,9 @@ const localePath = (path) => {
                   class="bg-gray-50 dark:bg-gray-700 px-4 py-2 border-b dark:border-gray-600 flex items-center"
                 >
                   <div class="flex space-x-2">
-                    <div class="w-3 h-3 rounded-full bg-red-500"></div>
-                    <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
-                    <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                    <div class="w-3 h-3 rounded-full bg-red-500" />
+                    <div class="w-3 h-3 rounded-full bg-yellow-500" />
+                    <div class="w-3 h-3 rounded-full bg-green-500" />
                   </div>
                   <div
                     class="text-center text-xs text-gray-500 dark:text-gray-400 w-full"
@@ -202,7 +202,7 @@ const localePath = (path) => {
           >
             {{ t("home.features") }}
           </h2>
-          <div class="w-20 h-1 bg-rose-600 mx-auto"></div>
+          <div class="w-20 h-1 bg-rose-600 mx-auto" />
         </div>
 
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -331,7 +331,7 @@ const localePath = (path) => {
     <section class="py-20 px-6 relative overflow-hidden">
       <div
         class="absolute inset-0 bg-gradient-to-br from-rose-500 to-pink-600 opacity-90"
-      ></div>
+      />
       <div class="relative z-10 max-w-5xl mx-auto text-center">
         <h2 class="text-3xl sm:text-4xl font-bold text-white mb-6">
           {{ t("home.aboutTitle") }}
@@ -346,6 +346,37 @@ const localePath = (path) => {
         >
           {{ t("home.quickStart") }}
         </router-link>
+      </div>
+    </section>
+
+    <!-- Hidden SEO Content -->
+    <section class="sr-only">
+      <div>
+        <h2>Calcolatore di punteggio per Scrabble e Scarabeo</h2>
+        <p>
+          xScrabbler è il miglior calcolatore di punteggio online per Scrabble e
+          Scarabeo. Questo strumento gratuito ti permette di tenere traccia dei
+          punteggi di tutti i giocatori in modo semplice e intuitivo. Aggiungi
+          parole, calcola i bonus e visualizza il punteggio totale con
+          un'interfaccia moderna e facile da usare.
+        </p>
+        <p>
+          Ideale per partite di Scrabble o Scarabeo con amici e familiari,
+          xScrabbler ti aiuta a concentrarti sul gioco senza preoccuparti di
+          calcolare manualmente i punteggi.
+        </p>
+        <h2>Online Scrabble Score Tracker</h2>
+        <p>
+          xScrabbler is a free online score calculator for Scrabble and similar
+          word games. This web application lets you easily track scores, add
+          words, calculate bonuses, and manage game time with a built-in timer.
+        </p>
+        <p>
+          Perfect for casual games or competitive matches, xScrabbler supports
+          multiple languages including English, Italian, French, Spanish,
+          German, Dutch, Portuguese, and Estonian, making it the ideal companion
+          for your word games.
+        </p>
       </div>
     </section>
 

@@ -80,7 +80,9 @@ export const useLocaleStore = defineStore("locale", () => {
       // Verifichiamo prima che tutte le lingue abbiano le traduzioni necessarie
       const allLanguagesHaveTranslations = Object.keys(locales).every(
         (code) =>
-          locale.value && locale.value.languages && locale.value.languages[code]
+          locale.value &&
+          locale.value.languages &&
+          locale.value.languages[code],
       );
 
       if (allLanguagesHaveTranslations) {

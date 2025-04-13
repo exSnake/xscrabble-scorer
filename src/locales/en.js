@@ -63,7 +63,7 @@ export default {
   },
   home: {
     title: "XSCRABBLER",
-    subtitle: "SCORE CALCULATOR",
+    subtitle: "SCORE TRACKER",
     quickStart: "QUICK START",
     features: "Features",
     multipleLanguages: "Multilingual",

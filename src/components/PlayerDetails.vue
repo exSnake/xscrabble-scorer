@@ -5,7 +5,10 @@ const localeStore = useLocaleStore();
 const { t } = localeStore;
 
 defineProps({
-  player: Object,
+  player: {
+    type: Object,
+    required: true,
+  },
 });
 
 defineEmits(["delete", "deleteWord", "activate"]);
@@ -32,14 +35,14 @@ const getWordBonusClass = (word) => {
     return word.wordBonus === 2
       ? "border-l-4 border-l-green-500 border-t-4 border-t-yellow-400 border-b-4 border-b-yellow-400 border-r-4 border-r-yellow-400"
       : word.wordBonus === 3
-      ? "border-l-4 border-l-green-500 border-t-4 border-t-red-600 border-b-4 border-b-red-600 border-r-4 border-r-red-600"
-      : "border-l-4 border-l-green-500";
+        ? "border-l-4 border-l-green-500 border-t-4 border-t-red-600 border-b-4 border-b-red-600 border-r-4 border-r-red-600"
+        : "border-l-4 border-l-green-500";
   } else {
     return word.wordBonus === 2
       ? "border-2 border-yellow-400"
       : word.wordBonus === 3
-      ? "border-2 border-red-600"
-      : "";
+        ? "border-2 border-red-600"
+        : "";
   }
 };
 </script>
@@ -61,7 +64,7 @@ const getWordBonusClass = (word) => {
             'bg-green-500': player.active,
             'bg-gray-400': !player.active,
           }"
-        ></div>
+        />
         <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
           {{ player.name }}
         </h2>

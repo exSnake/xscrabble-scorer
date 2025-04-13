@@ -1,0 +1,23 @@
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "xScrabbler - Calcolatore di punteggio per Scrabble e Scarabeo",
+  "alternateName": "xScrabbler Score Tracker",
+  "url": "https://scrabble.exsnake.com",
+  "logo": "https://scrabble.exsnake.com/logo/logo.svg",
+  "screenshot": "https://scrabble.exsnake.com/xscrabbler-preview.png",
+  "description": "Calcolatore di punteggio online per Scrabble e Scarabeo. Segna punti facilmente con bonus, timer e gestione giocatori.",
+  "applicationCategory": "GameApplication",
+  "operatingSystem": "Any",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "EUR"
+  },
+  "keywords": "scrabble calcolatore punteggio, scrabble calcoltatore punteggio online, scrabble score tracker online, scrabble segna punti, scrabble segna punti online, scarabeo calcolatore punteggio, scarabeo calcolatore punteggio online, scarabeo segna punti, scarabeo segna punti online",
+  "author": {
+    "@type": "Person",
+    "name": "exSnake"
+  },
+  "inLanguage": ["it-IT", "en-US", "fr-FR", "es-ES", "de-DE", "nl-NL", "pt-PT", "et-EE"]
+} 

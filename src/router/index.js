@@ -193,7 +193,7 @@ router.beforeEach((to, from, next) => {
 
   // Rimuovi i meta tag esistenti
   Array.from(
-    document.querySelectorAll("meta[data-vue-router-controlled]")
+    document.querySelectorAll("meta[data-vue-router-controlled]"),
   ).forEach((el) => el.remove());
 
   // Aggiungi nuovi meta tag

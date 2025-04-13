@@ -43,7 +43,7 @@ watch(
   () => route.fullPath,
   () => {
     isMenuOpen.value = false;
-  }
+  },
 );
 
 // Chiudi il menu quando si fa click fuori
@@ -88,19 +88,10 @@ onBeforeUnmount(() => {
           aria-label="Homepage xScrabbler"
         >
           <div class="relative flex items-center">
-            <div
-              class="absolute w-8 h-8 bg-amber-200 rounded border-2 border-amber-400 flex items-center justify-center rotate-6 shadow-sm"
-            >
-              <span class="text-lg font-bold text-gray-800">S</span>
-            </div>
-            <div
-              class="absolute -right-2 w-8 h-8 bg-blue-400 rounded border-2 border-blue-500 flex items-center justify-center -rotate-6 shadow-sm z-10"
-            >
-              <span class="text-lg font-bold text-gray-800">X</span>
-            </div>
+            <img src="/logo/logo.svg" alt="xScrabbler Logo" class="w-14 h-14" />
           </div>
           <span
-            class="text-xl font-bold ml-10 text-gray-900 dark:text-white tracking-tighter"
+            class="text-xl font-bold ml-2 text-gray-900 dark:text-white tracking-tighter"
           >
             xScrabbler
           </span>
@@ -108,9 +99,9 @@ onBeforeUnmount(() => {
 
         <!-- Dark Mode Toggle -->
         <button
-          @click="toggleDark()"
           class="z-40 p-3 rounded-full bg-gray-100 dark:bg-gray-700 shadow-lg hover:shadow-xl transition-all duration-300"
           aria-label="Toggle dark mode"
+          @click="toggleDark()"
         >
           <LucideMoon v-if="isDark" class="w-5 h-5 text-blue-600" />
           <LucideSun v-if="!isDark" class="w-5 h-5 text-amber-500" />
@@ -122,11 +113,11 @@ onBeforeUnmount(() => {
         <!-- Menu Toggle (Mobile) -->
         <button
           id="menu-toggle"
-          @click="toggleMenu"
           class="lg:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
           aria-label="Toggle menu"
           aria-expanded="isMenuOpen"
           aria-controls="navbar-menu"
+          @click="toggleMenu"
         >
           <LucideMenu class="w-6 h-6 text-gray-700 dark:text-gray-300" />
         </button>
@@ -189,8 +180,8 @@ onBeforeUnmount(() => {
                 'bg-rose-100 dark:bg-gray-700 text-rose-600 dark:text-white':
                   isActive(''),
               }"
-              @click="isMenuOpen = false"
               role="menuitem"
+              @click="isMenuOpen = false"
             >
               {{ t("nav.home") }}
             </RouterLink>
@@ -201,8 +192,8 @@ onBeforeUnmount(() => {
                 'bg-rose-100 dark:bg-gray-700 text-rose-600 dark:text-white':
                   isActive('scorer'),
               }"
-              @click="isMenuOpen = false"
               role="menuitem"
+              @click="isMenuOpen = false"
             >
               {{ t("nav.scorer") }}
             </RouterLink>
@@ -213,8 +204,8 @@ onBeforeUnmount(() => {
                 'bg-rose-100 dark:bg-gray-700 text-rose-600 dark:text-white':
                   isActive('settings'),
               }"
-              @click="isMenuOpen = false"
               role="menuitem"
+              @click="isMenuOpen = false"
             >
               {{ t("nav.settings") }}
             </RouterLink>

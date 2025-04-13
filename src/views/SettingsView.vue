@@ -67,9 +67,7 @@ const languageOptions = ref([
       >
         {{ t("settings.title") }}
       </h1>
-      <div
-        class="w-full border-t border-gray-200 dark:border-gray-600 mb-6"
-      ></div>
+      <div class="w-full border-t border-gray-200 dark:border-gray-600 mb-6" />
 
       <div class="max-w-3xl mx-auto">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -117,8 +115,8 @@ const languageOptions = ref([
             </div>
             <TSelect
               v-if="settings"
-              class="h-12 w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg focus:border-blue-400 focus:ring focus:ring-blue-200 focus:ring-opacity-50 text-gray-900 dark:text-white"
               v-model="scoreLanguage"
+              class="h-12 w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg focus:border-blue-400 focus:ring focus:ring-blue-200 focus:ring-opacity-50 text-gray-900 dark:text-white"
               :options="settings.languages"
             />
           </div>
@@ -138,8 +136,8 @@ const languageOptions = ref([
               </div>
             </div>
             <TInput
-              class="h-12 w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg focus:border-blue-400 focus:ring focus:ring-blue-200 focus:ring-opacity-50 px-4 text-gray-900 dark:text-white"
               v-model.number="secondsComputed"
+              class="h-12 w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg focus:border-blue-400 focus:ring focus:ring-blue-200 focus:ring-opacity-50 px-4 text-gray-900 dark:text-white"
               @keypress="handleNumberInputKeyPress"
             />
           </div>
@@ -159,8 +157,8 @@ const languageOptions = ref([
               </div>
             </div>
             <TInput
-              class="h-12 w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg focus:border-blue-400 focus:ring focus:ring-blue-200 focus:ring-opacity-50 px-4 text-gray-900 dark:text-white"
               v-model.number="bonusComputed"
+              class="h-12 w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg focus:border-blue-400 focus:ring focus:ring-blue-200 focus:ring-opacity-50 px-4 text-gray-900 dark:text-white"
               @keypress="handleNumberInputKeyPress"
             />
           </div>
@@ -180,8 +178,8 @@ const languageOptions = ref([
               </div>
             </div>
             <TInput
-              class="h-12 w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg focus:border-blue-400 focus:ring focus:ring-blue-200 focus:ring-opacity-50 px-4 text-gray-900 dark:text-white"
               v-model.number="maxWordLengthComputed"
+              class="h-12 w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg focus:border-blue-400 focus:ring focus:ring-blue-200 focus:ring-opacity-50 px-4 text-gray-900 dark:text-white"
               @keypress="handleNumberInputKeyPress"
             />
           </div>

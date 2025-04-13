@@ -8,11 +8,11 @@ import { useLocaleStore } from "./LocaleStore";
 export const useGameStore = defineStore("game", () => {
   //#region State
 
-  const bonus = ref(useStorage("bonus", 50));
-  const maxWordLength = ref(useStorage("maxWordLength", 10));
-  const language = ref(useStorage("scoreLanguage", "it"));
-  const players = ref(useStorage("players", [], localStorage, { deep: true }));
-  const seconds = ref(useStorage("seconds", 90));
+  const bonus = useStorage("bonus", 50);
+  const maxWordLength = useStorage("maxWordLength", 10);
+  const language = useStorage("scoreLanguage", "it");
+  const players = useStorage("players", [], localStorage, { deep: true });
+  const seconds = useStorage("seconds", 90);
   const settings = ref(null);
   const timer = ref(null);
 

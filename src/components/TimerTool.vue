@@ -15,7 +15,10 @@ const localeStore = useLocaleStore();
 const { t } = localeStore;
 
 const props = defineProps({
-  timer: Object,
+  timer: {
+    type: Object,
+    required: true,
+  },
   canAddPlayer: Boolean,
   initialTime: {
     type: Number,
@@ -121,11 +124,11 @@ const playTickSound = () => {
     gainNode.gain.setValueAtTime(0, audioContext.value.currentTime);
     gainNode.gain.linearRampToValueAtTime(
       volume,
-      audioContext.value.currentTime + 0.01
+      audioContext.value.currentTime + 0.01,
     );
     gainNode.gain.linearRampToValueAtTime(
       0,
-      audioContext.value.currentTime + 0.1
+      audioContext.value.currentTime + 0.1,
     );
 
     oscillator.connect(gainNode);
@@ -269,7 +272,7 @@ watch(
       soundsPlayed.value = { tenSeconds: false, end: false, lastSecond: null };
     }
   },
-  { deep: true }
+  { deep: true },
 );
 </script>
 
@@ -282,8 +285,8 @@ watch(
         timerClass === 'timer-urgent'
           ? 'shadow-lg shadow-red-500/20'
           : timerClass === 'timer-warning'
-          ? 'shadow-orange-500/15'
-          : 'shadow-black/15',
+            ? 'shadow-orange-500/15'
+            : 'shadow-black/15',
       ]"
     >
       <div class="relative flex flex-col items-center justify-center">
@@ -306,8 +309,8 @@ watch(
               progressColor === 'stroke-blue-600'
                 ? 'stroke-blue-600'
                 : progressColor === 'stroke-orange-500'
-                ? 'stroke-orange-500'
-                : 'stroke-red-600',
+                  ? 'stroke-orange-500'
+                  : 'stroke-red-600',
             ]"
             stroke-width="10"
             stroke-linecap="round"
@@ -329,8 +332,8 @@ watch(
             timerColor === 'text-blue-600'
               ? 'text-blue-600'
               : timerColor === 'text-orange-500'
-              ? 'text-orange-500'
-              : 'text-red-600',
+                ? 'text-orange-500'
+                : 'text-red-600',
           ]"
         >
           {{ zeroPad(timer.minutes, 2) }}:{{ zeroPad(timer.seconds, 2) }}
@@ -359,9 +362,9 @@ watch(
 
           <button
             v-if="canAddPlayer"
-            @click="emit('openAddPlayerModal')"
             class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/90 text-white cursor-pointer transition-all duration-300 shadow-lg hover:-translate-y-1 hover:bg-blue-600 active:translate-y-0.5"
             :title="t('scorer.addPlayer')"
+            @click="emit('openAddPlayerModal')"
           >
             <LucideUserPlus class="w-7 h-7" />
           </button>

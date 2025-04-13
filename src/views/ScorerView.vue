@@ -72,10 +72,10 @@ const handleRestartTimer = () => {
         class="flex flex-1 w-full flex-col items-center rounded-lg sm:rounded-xl bg-white px-4 sm:px-6 md:px-8 py-3 sm:py-4 md:py-6 text-5xl sm:text-6xl md:text-7xl text-gray-700 shadow-lg dark:bg-gray-800 dark:text-white border dark:border-gray-700 transition-all duration-200 hover:shadow-xl"
         :timer="timer"
         :initial-time="seconds"
-        :canAddPlayer="canAddPlayer"
+        :can-add-player="canAddPlayer"
         @restart="handleRestartTimer()"
         @pause="pauseTimer()"
-        @openAddPlayerModal="openAddPlayerModal"
+        @open-add-player-modal="openAddPlayerModal"
       />
     </div>
 
@@ -85,8 +85,8 @@ const handleRestartTimer = () => {
       <!-- Add Word -->
       <Transition>
         <div
-          class="order-1 flex w-full flex-col rounded-lg sm:rounded-xl bg-white p-3 sm:p-4 dark:bg-gray-800 shadow-md border dark:border-gray-700 transition-all duration-200 hover:shadow-lg"
           v-if="activePlayer"
+          class="order-1 flex w-full flex-col rounded-lg sm:rounded-xl bg-white p-3 sm:p-4 dark:bg-gray-800 shadow-md border dark:border-gray-700 transition-all duration-200 hover:shadow-lg"
         >
           <ScorerAddWord :enabled="activePlayer != null" @add="handleAddWord" />
         </div>
@@ -108,8 +108,8 @@ const handleRestartTimer = () => {
             {{ t("scorer.playersTrackScores") }}
           </div>
           <button
-            @click="openAddPlayerModal"
             class="mt-4 px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-lg shadow transition-colors"
+            @click="openAddPlayerModal"
           >
             <div class="flex items-center justify-center gap-2">
               <LucideUserPlus class="w-5 h-5" />
@@ -129,8 +129,8 @@ const handleRestartTimer = () => {
               {{ t("scorer.players") }}
             </div>
             <div
-              class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-1"
               v-if="activePlayer === null"
+              class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-1"
             >
               {{ t("scorer.selectPlayerToAddWord") }}
             </div>
@@ -153,7 +153,7 @@ const handleRestartTimer = () => {
               :key="player.id"
               class="transition-all duration-300 hover:scale-102 hover:shadow-lg w-full h-full"
               :player="player"
-              @deleteWord="handleDeleteWord"
+              @delete-word="handleDeleteWord"
               @delete="deletePlayer(player)"
               @activate="activatePlayer(player)"
             />
@@ -171,7 +171,7 @@ const handleRestartTimer = () => {
         <div
           class="absolute inset-0 bg-black opacity-50"
           @click="closeAddPlayerModal"
-        ></div>
+        />
         <div
           class="relative z-10 bg-white dark:bg-gray-800 rounded-lg shadow-xl p-5 sm:p-6 max-w-md w-full"
         >
@@ -182,8 +182,8 @@ const handleRestartTimer = () => {
               {{ t("scorer.addNewPlayer") }}
             </h2>
             <button
-              @click="closeAddPlayerModal"
               class="p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700"
+              @click="closeAddPlayerModal"
             >
               <LucideX class="w-5 h-5 text-gray-600 dark:text-gray-400" />
             </button>
@@ -192,25 +192,25 @@ const handleRestartTimer = () => {
           <div class="mb-3">
             <TInput
               id="newPlayerInput"
+              v-model="newPlayerName"
               :placeholder="t('scorer.playerName')"
               class="h-12 w-full bg-gray-50 px-4 py-2 text-gray-900 rounded-lg border-gray-200 focus:border-blue-400 focus:ring focus:ring-blue-200 focus:ring-opacity-50 transition-all duration-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:border-blue-500"
               type="text"
               @keyup.enter="handleAddPlayer"
-              v-model="newPlayerName"
             />
           </div>
 
           <div class="flex justify-end gap-3">
             <button
-              @click="closeAddPlayerModal"
               class="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+              @click="closeAddPlayerModal"
             >
               {{ t("general.cancelButton") }}
             </button>
             <TButton
               class="h-10 cursor-pointer rounded-lg bg-blue-500 px-4 py-2 text-white transition-colors duration-200 hover:bg-blue-600 disabled:cursor-not-allowed disabled:bg-blue-300 disabled:opacity-70"
-              @click="handleAddPlayer"
               :disabled="!newPlayerName.trim() || !canAddPlayer"
+              @click="handleAddPlayer"
             >
               {{ t("general.addButton") }}
             </TButton>
@@ -246,7 +246,9 @@ const handleRestartTimer = () => {
 /* Fade transition for modal */
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.3s, transform 0.3s;
+  transition:
+    opacity 0.3s,
+    transform 0.3s;
 }
 
 .fade-enter-from,

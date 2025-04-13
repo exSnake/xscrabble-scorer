@@ -1,8 +1,10 @@
 /* eslint-env node */
-/* eslint-disable no-undef */
+
+import flowbitePlugin from "flowbite/plugin";
+import tailwindcssForm from "@tailwindcss/forms";
 
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
   darkMode: "class",
   theme: {
     fontSize: {
@@ -35,5 +37,5 @@ module.exports = {
       cursor: ["disabled"],
     },
   },
-  plugins: [require("flowbite/plugin"), require("@tailwindcss/forms")],
+  plugins: [flowbitePlugin, tailwindcssForm],
 };
