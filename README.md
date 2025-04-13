@@ -1,48 +1,78 @@
-# A Scrabble Scorer Helper
+# xScrabbler - Score Calculator
 
-Scrabble scorer helper made in VUE, frontend only with timer, players and bonus settings.
-Each letter point can be configured and is already implemented with standard languages configuration such as:
+![xScrabbler Logo](public/favicon.ico)
 
-- italiano
-- english
-- nederlands
-- french
-- espanol
-- deutsch
-- eesti
-- portugues
-- sahibba 
-- word with friends edition.
- 
+xScrabbler è un calcolatore di punteggi moderno e intuitivo per Scrabble, Scarabeo e giochi di parole simili. Permette di gestire punteggi, applicare bonus e tenere traccia del tempo di gioco in un'unica applicazione.
 
-## Recommended IDE Setup
+## 🌟 Caratteristiche
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+- **Multilingua**: Supporta inglese, italiano, francese, spagnolo, tedesco, portoghese, olandese, estone e altre lingue
+- **Bonus delle parole**: Calcola facilmente bonus per lettere e parole
+- **Timer integrato**: Timer incorporato per partite competitive
+- **Tracciamento giocatori**: Tieni traccia dei punteggi di tutti i giocatori
+- **Personalizzabile**: Personalizza bonus, timer e altre impostazioni
+- **Open Source**: Contribuisci al progetto su GitHub
+- **Tema chiaro/scuro**: Supporto per modalità chiara e scura
 
-## Customize configuration
+## 📱 Compatibilità
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+L'applicazione è completamente responsive e funziona su:
+- Desktop
+- Tablet
+- Smartphone
 
-## Project Setup
+## 🌐 Demo
 
+Prova xScrabbler: [https://scrabble.exsnake.com](https://scrabble.exsnake.com)
+
+## 🛠️ Tecnologie utilizzate
+
+- Vue.js 3 con Composition API
+- Vue Router per la navigazione
+- Pinia per la gestione dello stato
+- Tailwind CSS per lo stile
+- Vite come build tool
+- Lucide per le icone
+
+## 🚀 Setup del progetto
+
+### Requisiti
+- Node.js (versione 18 o superiore)
+- npm o yarn
+
+### Installazione
 ```sh
+# Clona il repository
+git clone https://github.com/exSnake/xscrabble-scorer.git
+cd xscrabble-scorer
+
+# Installa le dipendenze
 npm install
 ```
 
-### Compile and Hot-Reload for Development
-
+### Avvia l'ambiente di sviluppo
 ```sh
 npm run dev
 ```
 
-### Compile and Minify for Production
-
+### Compila per produzione
 ```sh
 npm run build
 ```
 
-### Lint with [ESLint](https://eslint.org/)
-
+### Lint con ESLint
 ```sh
 npm run lint
 ```
+
+## 🤝 Come contribuire
+
+Consulta il file [CONTRIBUTING.md](./CONTRIBUTING.md) per informazioni su come contribuire al progetto.
+
+## 📄 Licenza
+
+Questo progetto è distribuito con licenza MIT. Vedi il file [LICENSE](./LICENSE) per maggiori dettagli.
+
+## 👨‍💻 Creato da
+
+[exSnake](https://github.com/exSnake)
