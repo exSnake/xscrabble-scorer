@@ -23,7 +23,7 @@
     "@vueuse/components": "10.7.1",
     "@vueuse/core": "^9.9.0",
     "body-scroll-lock": "^4.0.0-beta.0",
-    "flowbite": "^1.5.5",
+    "flowbite": "^3.1.2",
     "lucide-vue-next": "^0.487.0",
     "oh-vue-icons": "^1.0.0-rc3",
     "pinia": "^2.0.28",
