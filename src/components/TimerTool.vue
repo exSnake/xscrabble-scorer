@@ -118,11 +118,11 @@ const playTickSound = () => {
     gainNode.gain.setValueAtTime(0, audioContext.value.currentTime);
     gainNode.gain.linearRampToValueAtTime(
       volume,
-      audioContext.value.currentTime + 0.01
+      audioContext.value.currentTime + 0.01,
     );
     gainNode.gain.linearRampToValueAtTime(
       0,
-      audioContext.value.currentTime + 0.1
+      audioContext.value.currentTime + 0.1,
     );
 
     oscillator.connect(gainNode);
@@ -263,7 +263,7 @@ watch(
       soundsPlayed.value = { tenSeconds: false, end: false, lastSecond: null };
     }
   },
-  { deep: true }
+  { deep: true },
 );
 </script>
 
@@ -276,8 +276,8 @@ watch(
         timerClass === 'timer-urgent'
           ? 'shadow-lg shadow-red-500/20'
           : timerClass === 'timer-warning'
-          ? 'shadow-orange-500/15'
-          : 'shadow-black/15',
+            ? 'shadow-orange-500/15'
+            : 'shadow-black/15',
       ]"
     >
       <div class="relative flex flex-col items-center justify-center">
@@ -300,8 +300,8 @@ watch(
               progressColor === 'stroke-blue-600'
                 ? 'stroke-blue-600'
                 : progressColor === 'stroke-orange-500'
-                ? 'stroke-orange-500'
-                : 'stroke-red-600',
+                  ? 'stroke-orange-500'
+                  : 'stroke-red-600',
             ]"
             stroke-width="10"
             stroke-linecap="round"
@@ -323,8 +323,8 @@ watch(
             timerColor === 'text-blue-600'
               ? 'text-blue-600'
               : timerColor === 'text-orange-500'
-              ? 'text-orange-500'
-              : 'text-red-600',
+                ? 'text-orange-500'
+                : 'text-red-600',
           ]"
         >
           {{ zeroPad(timer.minutes, 2) }}:{{ zeroPad(timer.seconds, 2) }}

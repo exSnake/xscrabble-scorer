@@ -181,15 +181,15 @@ onMounted(() => {
                   'bg-amber-200 text-gray-700': isBonusEquals(index, 1),
                   'bg-blue-400 text-gray-700 border-blue-500': isBonusEquals(
                     index,
-                    2
+                    2,
                   ),
                   'bg-blue-700 text-white border-blue-800': isBonusEquals(
                     index,
-                    3
+                    3,
                   ),
                   'bg-amber-200 text-gray-500 border-gray-400': isBonusEquals(
                     index,
-                    0
+                    0,
                   ),
                 }"
                 @click="setBonus(index, -1)"
@@ -322,7 +322,9 @@ input::placeholder {
   bottom: 0;
   border: 3px solid transparent;
   background: linear-gradient(45deg, #facc15, #4ade80, #facc15) border-box;
-  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) padding-box,
+    linear-gradient(#fff 0 0);
   -webkit-mask-composite: destination-out;
   mask-composite: exclude;
   pointer-events: none;
@@ -339,7 +341,9 @@ input::placeholder {
   bottom: 0;
   border: 3px solid transparent;
   background: linear-gradient(45deg, #b91c1c, #4ade80, #b91c1c) border-box;
-  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) padding-box,
+    linear-gradient(#fff 0 0);
   -webkit-mask-composite: destination-out;
   mask-composite: exclude;
   pointer-events: none;
