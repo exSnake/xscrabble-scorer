@@ -3,6 +3,7 @@ import { RouterLink, RouterView, useRoute } from "vue-router";
 import { useDark, useToggle } from "@vueuse/core";
 import { ref, onMounted, watch, computed, onBeforeUnmount } from "vue";
 import { useLocaleStore } from "@/stores/LocaleStore";
+import { Analytics } from "@vercel/analytics/vue";
 
 const localeStore = useLocaleStore();
 const { t } = localeStore;
@@ -72,6 +73,7 @@ onBeforeUnmount(() => {
   <div
     class="min-h-screen bg-gradient-to-b from-white to-gray-50 dark:from-gray-800 dark:to-gray-900"
   >
+    <Analytics />
     <!-- Navbar -->
     <nav
       class="sticky pl-4 top-0 z-30 backdrop-blur-md bg-white/90 dark:bg-gray-900/90 border-b border-gray-200 dark:border-gray-700 shadow-sm transition-all duration-200"
