@@ -1,6 +1,6 @@
 <script setup>
 import PlayerDetails from "@/components/PlayerDetails.vue";
-import TimerTool from "@/components/icons/TimerTool.vue";
+import TimerTool from "@/components/TimerTool.vue";
 import { useGameStore } from "@/stores/GameStore";
 import { TButton, TInput } from "@variantjs/vue";
 import { ref } from "vue";
