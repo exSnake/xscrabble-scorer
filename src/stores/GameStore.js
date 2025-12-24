@@ -3,14 +3,15 @@ import { defineStore } from "pinia";
 import { useTimer } from "vue-timer-hook";
 import { useStorage } from "@vueuse/core";
 import { toast } from "vue3-toastify";
-import { useLocaleStore } from "./LocaleStore";
-
+import i18n from "@/i18n";
 export const useGameStore = defineStore("game", () => {
-  const bonus = useStorage("bonus", 50);
-  const maxWordLength = useStorage("maxWordLength", 10);
-  const language = useStorage("scoreLanguage", "it");
-  const players = useStorage("players", [], localStorage, { deep: true });
-  const seconds = useStorage("seconds", 90);
+  //#region State
+
+  const bonus = ref(useStorage("bonus", 50));
+  const maxWordLength = ref(useStorage("maxWordLength", 10));
+  const language = ref(useStorage("language", "it"));
+  const players = ref(useStorage("players", [], localStorage, { deep: true }));
+  const seconds = ref(useStorage("seconds", 90));
   const settings = ref(null);
   const timer = ref(null);
 
@@ -23,6 +24,10 @@ export const useGameStore = defineStore("game", () => {
     timer.value.pause();
   });
 
+  //#endregion State
+
+  //#region Computed properties
+
   const canAddPlayer = computed(() => {
     return players.value.length < 4;
   });
@@ -31,6 +36,10 @@ export const useGameStore = defineStore("game", () => {
     return players.value.find((player) => player.active);
   });
 
+  //#endregion Computed properties
+
+  //#region Actions
+
   function activatePlayer(player) {
     players.value.forEach((p) => {
       p.active = p === player;
@@ -38,13 +47,13 @@ export const useGameStore = defineStore("game", () => {
   }
 
   function addPlayer(name) {
-    const localeStore = useLocaleStore();
-
+    // if it's empty, don't add it and show toast message
     if (!name) {
-      toast.error(localeStore.t("error.emptyName"));
+      toast.error(i18n.global.t("store.insertName"));
       return;
     }
 
+    // get id of the player to add, for each player get the max id and add 1
     const id = players.value.reduce((max, player) => {
       return player.id > max ? player.id : max;
     }, 0);
@@ -55,16 +64,15 @@ export const useGameStore = defineStore("game", () => {
       active: false,
       words: [],
     });
+    // if it was the first player, activate it
     if (players.value.length === 1) {
       activatePlayer(players.value[0]);
     }
   }
 
   function addWord(word) {
-    const localeStore = useLocaleStore();
-
     if (!word.text) {
-      toast.error(localeStore.t("error.emptyWord"));
+      toast.error(i18n.global.t("store.insertNonEmptyWord"));
       return;
     }
 
@@ -72,18 +80,6 @@ export const useGameStore = defineStore("game", () => {
       id: activePlayer.value.words.length + 1,
       text: word.text,
       points: parseInt(word.points),
-      letters: [...word.text.toUpperCase()].map((char, i) => {
-        const charPoints = getCharacterPoints(char);
-        const letterBonus = word.bonusArray ? word.bonusArray[i] : 1;
-
-        return {
-          char: char,
-          points: charPoints,
-          bonus: letterBonus,
-        };
-      }),
-      wordBonus: word.wordBonus || 1,
-      hasExtraBonus: word.superBonus || false,
     });
 
     nextPlayer();
@@ -136,7 +132,10 @@ export const useGameStore = defineStore("game", () => {
     pauseTimer();
   }
 
+  //#endregion Actions
+
   return {
+    // State
     activePlayer,
     bonus,
     canAddPlayer,
@@ -147,6 +146,7 @@ export const useGameStore = defineStore("game", () => {
     settings,
     timer,
 
+    // Actions
     activatePlayer,
     addPlayer,
     addWord,

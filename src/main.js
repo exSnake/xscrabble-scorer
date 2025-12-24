@@ -30,6 +30,7 @@ import {
 
 import App from "./App.vue";
 import router from "./router";
+import i18n from "./i18n";
 
 import "./assets/main.css";
 import "flowbite";
@@ -74,5 +75,6 @@ app.use(variantJS, configuration);
 app.use(Vue3Toasity, { autoClose: 3000 });
 app.use(createPinia());
 app.use(router);
+app.use(i18n);
 
 app.mount("#app");

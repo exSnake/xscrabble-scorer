@@ -98,6 +98,36 @@ const metaData = {
       ],
     },
   },
+  board: {
+    title: {
+      en: "Board Game - xScrabbler",
+      it: "Tavolo di Gioco - xScrabbler",
+    },
+    metaTags: {
+      en: [
+        {
+          name: "description",
+          content:
+            "Play Scrabble on an interactive board with multiplayer support, timer and automatic scoring.",
+        },
+        {
+          property: "og:title",
+          content: "Board Game - xScrabbler",
+        },
+      ],
+      it: [
+        {
+          name: "description",
+          content:
+            "Gioca a Scrabble su una tavola interattiva con supporto multigiocatore, timer e punteggio automatico.",
+        },
+        {
+          property: "og:title",
+          content: "Tavolo di Gioco - xScrabbler",
+        },
+      ],
+    },
+  },
 };
 
 let routes = [];
@@ -140,6 +170,16 @@ supportedLanguages.forEach((lang) => {
     component: SettingsView,
     meta: {
       ...metaData.settings,
+      lang,
+    },
+  });
+
+  routes.push({
+    path: `/${lang}/board`,
+    name: `board-${lang}`,
+    component: () => import("../views/BoardView.vue"),
+    meta: {
+      ...metaData.board,
       lang,
     },
   });
@@ -205,6 +245,15 @@ router.beforeEach((to, from, next) => {
   }
 
   next();
+});
+
+// Log quando cambia la route
+router.afterEach((to, from) => {
+  console.log(
+    `[Router] Navigazione da "${from.name || from.path}" a "${
+      to.name || to.path
+    }"`
+  );
 });
 
 export default router;

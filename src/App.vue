@@ -1,245 +1,161 @@
 <script setup>
-import { RouterLink, RouterView, useRoute } from "vue-router";
+import { RouterLink, RouterView } from "vue-router";
 import { useDark, useToggle } from "@vueuse/core";
-import { ref, onMounted, watch, computed, onBeforeUnmount } from "vue";
-import { useLocaleStore } from "@/stores/LocaleStore";
-import { Analytics } from "@vercel/analytics/vue";
-
-const localeStore = useLocaleStore();
-const { t } = localeStore;
-const route = useRoute();
-
-// Ottieni la lingua corrente dalla route
-const currentLang = computed(() => {
-  const lang = route.path.split("/")[1] || "en";
-  return lang;
-});
-
-// Genera percorsi localizzati
-const localePath = (path) => {
-  const lang = currentLang.value;
-  const fullPath = `/${lang}${path ? `/${path}` : ""}`;
-  return fullPath;
-};
-
-// Verifica se un percorso è attivo
-const isActive = (path) => {
-  const fullPath = localePath(path);
-  const isExactMatch = route.path === fullPath;
-  const isSubPath = path && route.path.startsWith(fullPath);
-  return isExactMatch || isSubPath;
-};
+import { useI18n } from "vue-i18n";
+import { useStorage } from "@vueuse/core";
 
 const isDark = useDark({});
 const toggleDark = useToggle(isDark);
+const { t, locale } = useI18n();
+const storedLocale = useStorage("locale", "it");
 
-// Gestione menu mobile
-const isMenuOpen = ref(false);
-const toggleMenu = () => {
-  isMenuOpen.value = !isMenuOpen.value;
+// Sync locale with storage
+locale.value = storedLocale.value;
+
+const changeLocale = (newLocale) => {
+  locale.value = newLocale;
+  storedLocale.value = newLocale;
 };
 
-// Chiudi il menu quando si cambia route
-watch(
-  () => route.fullPath,
-  () => {
-    isMenuOpen.value = false;
-  },
-);
-
-// Chiudi il menu quando si fa click fuori
-onMounted(() => {
-  document.addEventListener("click", (e) => {
-    const menu = document.getElementById("navbar-menu");
-    const toggle = document.getElementById("menu-toggle");
-    if (menu && !menu.contains(e.target) && !toggle.contains(e.target)) {
-      isMenuOpen.value = false;
-    }
-  });
-});
-
-onBeforeUnmount(() => {
-  document.removeEventListener("click", (e) => {
-    const menu = document.getElementById("navbar-menu");
-    const toggle = document.getElementById("menu-toggle");
-    if (menu && !menu.contains(e.target) && !toggle.contains(e.target)) {
-      isMenuOpen.value = false;
-    }
-  });
-});
+const languages = [
+  { code: "it", name: "IT", flag: "🇮🇹" },
+  { code: "en", name: "EN", flag: "🇬🇧" },
+];
 </script>
 
 <template>
-  <div
-    class="min-h-screen bg-gradient-to-b from-white to-gray-50 dark:from-gray-800 dark:to-gray-900"
-  >
-    <Analytics />
-    <!-- Navbar -->
+  <div class="dark:bg-gray-700 h-screen">
     <nav
-      class="sticky pl-4 top-0 z-30 backdrop-blur-md bg-white/90 dark:bg-gray-900/90 border-b border-gray-200 dark:border-gray-700 shadow-sm transition-all duration-200"
-      role="navigation"
-      aria-label="Menu principale"
+      class="p-2 bg-gray-100 border-gray-200 dark:bg-gray-900 dark:border-gray-700"
     >
       <div
-        class="container mx-auto px-4 py-3 flex items-center justify-between"
+        class="container flex flex-wrap items-center justify-between mx-auto"
       >
-        <!-- Logo e titolo -->
-        <RouterLink
-          :to="localePath('')"
-          class="flex items-center gap-2"
-          aria-label="Homepage xScrabbler"
-        >
-          <div class="relative flex items-center">
-            <img src="/logo/logo.svg" alt="xScrabbler Logo" class="w-14 h-14" />
-          </div>
-          <span
-            class="text-xl font-bold ml-2 text-gray-900 dark:text-white tracking-tighter"
-          >
-            xScrabbler
-          </span>
-        </RouterLink>
-
-        <!-- Dark Mode Toggle -->
-        <button
-          class="z-40 p-3 rounded-full bg-gray-100 dark:bg-gray-700 shadow-lg hover:shadow-xl transition-all duration-300"
-          aria-label="Toggle dark mode"
-          @click="toggleDark()"
-        >
-          <LucideMoon v-if="isDark" class="w-5 h-5 text-blue-600" />
-          <LucideSun v-if="!isDark" class="w-5 h-5 text-amber-500" />
-          <span class="sr-only">{{
-            isDark ? t("nav.lightMode") : t("nav.darkMode")
-          }}</span>
-        </button>
-
-        <!-- Menu Toggle (Mobile) -->
-        <button
-          id="menu-toggle"
-          class="lg:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-          aria-label="Toggle menu"
-          aria-expanded="isMenuOpen"
-          aria-controls="navbar-menu"
-          @click="toggleMenu"
-        >
-          <LucideMenu class="w-6 h-6 text-gray-700 dark:text-gray-300" />
-        </button>
-
-        <!-- Desktop Navigation -->
-        <div class="hidden lg:flex items-center space-x-1" role="menubar">
+        <a href="#" class="flex items-center">
+          <img
+            src="https://flowbite.com/docs/images/logo.svg"
+            class="h-6 mr-3 sm:h-10"
+            :alt="t('app.logoAlt')"
+          />
           <RouterLink
-            :to="localePath('')"
-            class="px-4 py-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-rose-50 dark:hover:bg-gray-800 font-medium transition-colors"
-            :class="{
-              'bg-rose-100 dark:bg-gray-700 text-rose-600 dark:text-white':
-                isActive(''),
-            }"
-            role="menuitem"
-          >
-            {{ t("nav.home") }}
+            to="/"
+            class="self-center text-xl font-semibold whitespace-nowrap dark:text-white"
+            >xScrabbler
           </RouterLink>
-          <RouterLink
-            :to="localePath('scorer')"
-            class="px-4 py-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-rose-50 dark:hover:bg-gray-800 font-medium transition-colors"
-            :class="{
-              'bg-rose-100 dark:bg-gray-700 text-rose-600 dark:text-white':
-                isActive('scorer'),
-            }"
-            role="menuitem"
+        </a>
+        <!-- Language Selector -->
+        <div class="flex items-center gap-2 mr-2">
+          <select
+            v-model="locale"
+            @change="changeLocale(locale)"
+            class="text-xs font-medium text-gray-700 bg-white border border-gray-200 rounded-lg px-2 py-1 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-300 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700"
           >
-            {{ t("nav.scorer") }}
-          </RouterLink>
-          <RouterLink
-            :to="localePath('settings')"
-            class="px-4 py-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-rose-50 dark:hover:bg-gray-800 font-medium transition-colors"
-            :class="{
-              'bg-rose-100 dark:bg-gray-700 text-rose-600 dark:text-white':
-                isActive('settings'),
-            }"
-            role="menuitem"
-          >
-            {{ t("nav.settings") }}
-          </RouterLink>
+            <option v-for="lang in languages" :key="lang.code" :value="lang.code">
+              {{ lang.flag }} {{ lang.name }}
+            </option>
+          </select>
         </div>
-      </div>
-
-      <!-- Mobile Navigation -->
-      <div
-        id="navbar-menu"
-        :class="{
-          'translate-x-0 opacity-100': isMenuOpen,
-          '-translate-x-full opacity-0 lg:hidden': !isMenuOpen,
-        }"
-        class="fixed inset-0 z-20 w-full h-screen lg:hidden transition-all duration-300 transform ease-in-out bg-white/95 dark:bg-gray-900/95 backdrop-blur-md pt-20"
-        role="menu"
-        aria-label="Menu mobile"
-      >
-        <div class="container mx-auto px-6 py-8">
-          <div class="flex flex-col space-y-3">
-            <RouterLink
-              :to="localePath('')"
-              class="px-4 py-3 rounded-lg text-lg font-medium border-b border-gray-100 dark:border-gray-800 text-gray-700 dark:text-gray-300 hover:bg-rose-50 dark:hover:bg-gray-800"
-              :class="{
-                'bg-rose-100 dark:bg-gray-700 text-rose-600 dark:text-white':
-                  isActive(''),
-              }"
-              role="menuitem"
-              @click="isMenuOpen = false"
-            >
-              {{ t("nav.home") }}
-            </RouterLink>
-            <RouterLink
-              :to="localePath('scorer')"
-              class="px-4 py-3 rounded-lg text-lg font-medium border-b border-gray-100 dark:border-gray-800 text-gray-700 dark:text-gray-300 hover:bg-rose-50 dark:hover:bg-gray-800"
-              :class="{
-                'bg-rose-100 dark:bg-gray-700 text-rose-600 dark:text-white':
-                  isActive('scorer'),
-              }"
-              role="menuitem"
-              @click="isMenuOpen = false"
-            >
-              {{ t("nav.scorer") }}
-            </RouterLink>
-            <RouterLink
-              :to="localePath('settings')"
-              class="px-4 py-3 rounded-lg text-lg font-medium border-b border-gray-100 dark:border-gray-800 text-gray-700 dark:text-gray-300 hover:bg-rose-50 dark:hover:bg-gray-800"
-              :class="{
-                'bg-rose-100 dark:bg-gray-700 text-rose-600 dark:text-white':
-                  isActive('settings'),
-              }"
-              role="menuitem"
-              @click="isMenuOpen = false"
-            >
-              {{ t("nav.settings") }}
-            </RouterLink>
-          </div>
+        <button
+          data-collapse-toggle="navbar-dropdown"
+          type="button"
+          class="inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+          aria-controls="navbar-dropdown"
+          aria-expanded="false"
+        >
+          <span class="sr-only">{{ t("app.openMainMenu") }}</span>
+          <svg
+            class="w-6 h-6"
+            aria-hidden="true"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+              clip-rule="evenodd"
+            />
+          </svg>
+        </button>
+        <button
+          type="button"
+          @click="toggleDark()"
+          class="flex items-center p-2 ml-2 text-xs font-medium text-gray-700 bg-white border border-gray-200 rounded-lg toggle-dark-state-example hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-500 dark:bg-gray-800 focus:outline-none dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700"
+        >
+          <svg
+            aria-hidden="true"
+            data-toggle-icon="moon"
+            class="w-4 h-4 hidden"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+            ></path>
+          </svg>
+          <svg
+            aria-hidden="true"
+            data-toggle-icon="sun"
+            class="w-4 h-4"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+            ></path>
+          </svg>
+          <span class="sr-only">{{ t("app.toggleDarkMode") }}</span>
+        </button>
+        <div class="hidden w-full md:block md:w-auto" id="navbar-dropdown">
+          <ul
+            class="flex flex-col p-4 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700"
+          >
+            <li>
+              <RouterLink
+                to="/"
+                class="flex items-center justify-between w-full py-2 pl-3 pr-4 font-medium rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:p-0 md:w-auto dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent"
+              >
+                {{ t("nav.home") }}
+              </RouterLink>
+            </li>
+            <li>
+              <RouterLink
+                to="/scorer"
+                class="flex items-center justify-between w-full py-2 pl-3 pr-4 font-medium rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:p-0 md:w-auto dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent"
+              >
+                {{ t("nav.scorer") }}
+              </RouterLink>
+            </li>
+            <li>
+              <RouterLink
+                to="/board"
+                class="flex items-center justify-between w-full py-2 pl-3 pr-4 font-medium rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:p-0 md:w-auto dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent"
+              >
+                {{ t("nav.boardGame") }}
+              </RouterLink>
+            </li>
+            <li>
+              <RouterLink
+                to="/settings"
+                class="block py-2 pl-3 pr-4 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:p-0 md: dark:hover:bg-gray-700 md:dark:hover:bg-transparent"
+              >
+                {{ t("nav.settings") }}
+              </RouterLink>
+            </li>
+          </ul>
         </div>
       </div>
     </nav>
-
-    <!-- Main Content -->
-    <main>
-      <RouterView />
-    </main>
+    <RouterView />
   </div>
 </template>
 
 <style scoped>
-.router-link-active {
-  color: theme("colors.rose.600");
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.fade-in {
-  animation: fadeIn 0.3s ease-in-out;
+.active {
+  color: theme(colors.blue.600);
 }
 </style>
