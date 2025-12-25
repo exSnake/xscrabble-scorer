@@ -133,13 +133,13 @@ const handleNumberInputKeyPress = (event) => {
             </div>
           </div>
 
-          <!-- Language Setting -->
+          <!-- Scoring Dictionary Setting -->
           <div class="space-y-2">
             <label
               class="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300"
             >
               <LucideGlobe class="w-4 h-4 text-gray-500 dark:text-gray-400" />
-              <span>{{ t("settings.language") }}</span>
+              <span>{{ t("settings.scoringDictionary") }}</span>
             </label>
             <TSelect
               v-if="settings"
@@ -147,6 +147,9 @@ const handleNumberInputKeyPress = (event) => {
               :options="settings.languages"
               class="w-full h-12 px-4 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-rose-500 focus:border-transparent transition-all duration-200"
             />
+            <p class="text-xs text-gray-500 dark:text-gray-400">
+              {{ t("settings.scoringDictionaryHint") }}
+            </p>
           </div>
 
           <!-- Bonus Setting -->
