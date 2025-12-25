@@ -1,18 +1,50 @@
 <script setup>
-import { computed, ref } from "vue";
+import { computed, ref, onBeforeUnmount, watch, nextTick } from "vue";
 import { useI18n } from "vue-i18n";
 import ConfirmationModal from "@/components/ui/ConfirmationModal.vue";
 
 const { t } = useI18n();
 
 const props = defineProps({
-  player: Object,
-  show: Boolean,
+  player: {
+    type: Object,
+    required: true,
+  },
+  show: {
+    type: Boolean,
+    default: false,
+  },
 });
 
-const emit = defineEmits(["close", "deleteWord", "deletePlayer"]);
+const emit = defineEmits([
+  "close",
+  "deleteWord",
+  "deletePlayer",
+  "updateWordPoints",
+]);
 
 const showDeleteConfirm = ref(false);
+const editingWordId = ref(null);
+const editingPoints = ref(0);
+const editInputRef = ref(null);
+
+// Cleanup: close modal when component is unmounted to prevent DOM errors
+onBeforeUnmount(() => {
+  if (props.show) {
+    emit("close");
+  }
+});
+
+// Close modal when show becomes false to ensure cleanup
+watch(
+  () => props.show,
+  (newValue) => {
+    if (!newValue) {
+      showDeleteConfirm.value = false;
+      editingWordId.value = null;
+    }
+  },
+);
 
 const totalPoints = computed(() => {
   if (!props.player) return 0;
@@ -33,6 +65,35 @@ const handleDeleteConfirm = (confirmed) => {
     emit("close");
   }
   showDeleteConfirm.value = false;
+};
+
+// Edit word points functions
+const startEditPoints = (word) => {
+  editingWordId.value = word.id;
+  editingPoints.value = word.points;
+  nextTick(() => {
+    if (editInputRef.value) {
+      editInputRef.value.focus();
+      editInputRef.value.select();
+    }
+  });
+};
+
+const cancelEditPoints = () => {
+  editingWordId.value = null;
+  editingPoints.value = 0;
+};
+
+const saveEditPoints = () => {
+  if (editingWordId.value !== null) {
+    emit("updateWordPoints", {
+      wordId: editingWordId.value,
+      player: props.player,
+      newPoints: editingPoints.value,
+    });
+    editingWordId.value = null;
+    editingPoints.value = 0;
+  }
 };
 </script>
 
@@ -58,8 +119,8 @@ const handleDeleteConfirm = (confirmed) => {
               </p>
             </div>
             <button
-              @click="emit('close')"
               class="text-white hover:bg-white/20 rounded-lg p-2 transition-colors"
+              @click="emit('close')"
             >
               <svg
                 class="w-6 h-6"
@@ -103,16 +164,55 @@ const handleDeleteConfirm = (confirmed) => {
                   >
                     {{ word.text }}
                   </p>
-                  <p class="text-sm text-gray-500 dark:text-gray-400">
+                  <!-- Normal view: show points -->
+                  <p
+                    v-if="editingWordId !== word.id"
+                    class="text-sm text-gray-500 dark:text-gray-400"
+                  >
                     {{ word.points }} {{ t("playerDetails.points") }}
                   </p>
+                  <!-- Edit mode: show input -->
+                  <div v-else class="flex items-center gap-2 mt-1">
+                    <input
+                      ref="editInputRef"
+                      v-model.number="editingPoints"
+                      type="number"
+                      class="w-20 px-2 py-1 text-sm rounded border border-blue-400 dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      @keyup.enter="saveEditPoints"
+                      @keyup.esc="cancelEditPoints"
+                    />
+                    <button
+                      class="px-2 py-1 bg-green-500 hover:bg-green-600 text-white text-xs rounded font-semibold"
+                      @click="saveEditPoints"
+                    >
+                      ✓
+                    </button>
+                    <button
+                      class="px-2 py-1 bg-gray-400 hover:bg-gray-500 text-white text-xs rounded font-semibold"
+                      @click="cancelEditPoints"
+                    >
+                      ✕
+                    </button>
+                  </div>
                 </div>
-                <button
-                  @click="handleDeleteWord(word.id)"
-                  class="opacity-0 group-hover:opacity-100 px-3 py-1 bg-red-500 hover:bg-red-600 text-white text-sm rounded-lg font-semibold transition-all"
+                <!-- Action buttons -->
+                <div
+                  v-if="editingWordId !== word.id"
+                  class="flex gap-1 opacity-0 group-hover:opacity-100 transition-all"
                 >
-                  {{ t("playerDetails.delete") }}
-                </button>
+                  <button
+                    class="px-3 py-1 bg-blue-500 hover:bg-blue-600 text-white text-sm rounded-lg font-semibold"
+                    @click="startEditPoints(word)"
+                  >
+                    {{ t("playerDetails.edit") }}
+                  </button>
+                  <button
+                    class="px-3 py-1 bg-red-500 hover:bg-red-600 text-white text-sm rounded-lg font-semibold"
+                    @click="handleDeleteWord(word.id)"
+                  >
+                    {{ t("playerDetails.delete") }}
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -122,14 +222,14 @@ const handleDeleteConfirm = (confirmed) => {
             class="border-t border-gray-200 dark:border-gray-600 p-4 flex gap-2"
           >
             <button
-              @click="handleDeletePlayer"
               class="flex-1 px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg font-semibold transition-colors"
+              @click="handleDeletePlayer"
             >
               {{ t("playerDetails.deletePlayer") }}
             </button>
             <button
-              @click="emit('close')"
               class="flex-1 px-4 py-2 bg-gray-300 hover:bg-gray-400 dark:bg-gray-600 dark:hover:bg-gray-500 text-gray-800 dark:text-white rounded-lg font-semibold transition-colors"
+              @click="emit('close')"
             >
               {{ t("playerDetails.close") }}
             </button>
@@ -157,7 +257,9 @@ const handleDeleteConfirm = (confirmed) => {
 
 .modal-enter-active > div,
 .modal-leave-active > div {
-  transition: transform 0.3s ease, opacity 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
 }
 
 .modal-enter-from,

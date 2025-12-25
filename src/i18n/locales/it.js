@@ -3,8 +3,54 @@ export default {
   nav: {
     home: "Home",
     scorer: "Scorer",
-    boardGame: "Board Game",
+    boardGame: "Tavolo di Gioco",
     settings: "Impostazioni",
+    darkMode: "Modalità scura",
+    lightMode: "Modalità chiara",
+  },
+
+  // General
+  general: {
+    addButton: "Aggiungi",
+    cancelButton: "Annulla",
+    points: "punti",
+    maxLetters: "Max 10 lettere",
+    typeHere: "Scrivi la parola qui...",
+    currentScore: "Punteggio attuale",
+  },
+
+  // Timer
+  timer: {
+    pause: "Pausa",
+    resume: "Riprendi",
+    restart: "Riavvia",
+  },
+
+  // Home
+  home: {
+    title: "XSCRABBLER",
+    subtitle: "CALCOLA PUNTEGGI",
+    quickStart: "INIZIA SUBITO",
+    features: "Funzionalità",
+    multipleLanguages: "Multilingua",
+    multipleLanguagesDesc:
+      "Supporta Italiano, Inglese, Francese, Spagnolo e molte altre lingue",
+    wordBonus: "Bonus Parole",
+    wordBonusDesc: "Calcola facilmente i bonus per parole e lettere",
+    timer: "Timer",
+    timerDesc: "Timer integrato per partite competitive",
+    playerTracking: "Traccia Giocatori",
+    playerTrackingDesc: "Tieni traccia dei punteggi di tutti i giocatori",
+    customizable: "Personalizzabile",
+    customizableDesc: "Personalizza bonus, timer e altre impostazioni",
+    openSource: "Open Source",
+    openSourceDesc: "Contribuisci al progetto su GitHub",
+    getStarted: "Inizia",
+    aboutTitle: "Cos'è xScrabbler?",
+    aboutDesc:
+      "xScrabbler è un calcolatore di punteggi moderno per Scrabble, Scarabeo e giochi di parole simili. Ti permette di tracciare i punteggi, applicare bonus e gestire il tempo di gioco.",
+    footer: "Fatto con ❤️ per gli amanti dei giochi di parole",
+    madeBy: "Creato da",
   },
 
   // Common
@@ -40,6 +86,8 @@ export default {
     firstWordRule: "Prima parola: Deve passare per il centro (★)",
     nextWordsRule: "Prossime parole: Devono connettersi alle parole esistenti",
     gotIt: "Capito!",
+    bonusTooltip: "Bonus Bingo (B) - Aggiungi quando usi tutte le 7 tessere",
+    bonusActive: "✓ Bonus Bingo attivo (+{bonus} punti)",
   },
 
   // Board View
@@ -72,6 +120,11 @@ export default {
     playerTurn: "E' il turno di {name}",
   },
 
+  // Scorer
+  scorer: {
+    addPlayer: "Aggiungi giocatore",
+  },
+
   // Scorer View
   scorerView: {
     newPlayer: "Nuovo giocatore...",
@@ -93,6 +146,7 @@ export default {
     points: "punti",
     words: "Parole",
     noWords: "Nessuna parola ancora posizionata",
+    edit: "Modifica",
     delete: "Elimina",
     deletePlayer: "Elimina Giocatore",
     close: "Chiudi",
@@ -135,9 +189,12 @@ export default {
     wordOutOfBounds: "La parola esce dai bordi",
     firstWordMustPassCenter: "La prima parola deve passare per il centro (★)",
     positionOccupied: "Posizione già occupata",
+    letterMismatch:
+      'Le lettere non corrispondono: non puoi mettere "{new}" dove c\'è già "{existing}"',
     wordMustConnect: "La parola deve connettersi alle parole esistenti",
     wordNotInDictionary: "Parola non nel dizionario",
     insertNonEmptyWord: "Inserisci una parola non vuota",
     wordPlaced: 'Parola "{text}" posizionata! +{points} punti',
+    pointsUpdated: "Punti aggiornati con successo",
   },
 };

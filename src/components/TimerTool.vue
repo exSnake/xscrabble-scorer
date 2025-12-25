@@ -1,5 +1,5 @@
 <script setup>
-import { useLocaleStore } from "@/stores/LocaleStore";
+import { useI18n } from "vue-i18n";
 import {
   ref,
   watch,
@@ -11,13 +11,13 @@ import {
 
 const zeroPad = (num, places) => String(num).padStart(places, "0");
 
-const localeStore = useLocaleStore();
-const { t } = localeStore;
+const { t } = useI18n();
 
 const props = defineProps({
   timer: {
     type: Object,
-    required: true,
+    required: false,
+    default: null,
   },
   canAddPlayer: Boolean,
   initialTime: {

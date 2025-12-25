@@ -31,6 +31,7 @@ export default [
     },
     rules: {
       ...pluginVue.configs.essential.rules,
+      "vue/require-default-prop": "off",
     },
   },
   eslintPluginPrettierRecommended,

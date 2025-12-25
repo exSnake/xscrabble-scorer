@@ -5,6 +5,52 @@ export default {
     scorer: "Scorer",
     boardGame: "Board Game",
     settings: "Settings",
+    darkMode: "Dark mode",
+    lightMode: "Light mode",
+  },
+
+  // General
+  general: {
+    addButton: "Add",
+    cancelButton: "Cancel",
+    points: "points",
+    maxLetters: "Max 10 letters",
+    typeHere: "Type word here...",
+    currentScore: "Current score",
+  },
+
+  // Timer
+  timer: {
+    pause: "Pause",
+    resume: "Resume",
+    restart: "Restart",
+  },
+
+  // Home
+  home: {
+    title: "XSCRABBLER",
+    subtitle: "SCORE TRACKER",
+    quickStart: "QUICK START",
+    features: "Features",
+    multipleLanguages: "Multilingual",
+    multipleLanguagesDesc:
+      "Supports English, Italian, French, Spanish and many more languages",
+    wordBonus: "Word Bonuses",
+    wordBonusDesc: "Easily calculate word and letter bonuses",
+    timer: "Timer",
+    timerDesc: "Built-in timer for competitive games",
+    playerTracking: "Player Tracking",
+    playerTrackingDesc: "Keep track of all players' scores",
+    customizable: "Customizable",
+    customizableDesc: "Customize bonuses, timer and other settings",
+    openSource: "Open Source",
+    openSourceDesc: "Contribute to the project on GitHub",
+    getStarted: "Get Started",
+    aboutTitle: "What is xScrabbler?",
+    aboutDesc:
+      "xScrabbler is a modern score calculator for Scrabble, Scarabeo and similar word games. It allows you to track scores, apply bonuses and manage game time.",
+    footer: "Made with ❤️ for word game lovers",
+    madeBy: "Created by",
   },
 
   // Common
@@ -37,6 +83,8 @@ export default {
     firstWordRule: "First word: Must pass through center (★)",
     nextWordsRule: "Next words: Must connect to existing words",
     gotIt: "Got it!",
+    bonusTooltip: "Bingo bonus (B) - Add when using all 7 tiles",
+    bonusActive: "✓ Bingo bonus active (+{bonus} points)",
   },
 
   // Board View
@@ -69,6 +117,11 @@ export default {
     playerTurn: "{name}'s turn",
   },
 
+  // Scorer
+  scorer: {
+    addPlayer: "Add player",
+  },
+
   // Scorer View
   scorerView: {
     newPlayer: "New player...",
@@ -90,6 +143,7 @@ export default {
     points: "points",
     words: "Words",
     noWords: "No words placed yet",
+    edit: "Edit",
     delete: "Delete",
     deletePlayer: "Delete Player",
     close: "Close",
@@ -132,9 +186,12 @@ export default {
     wordOutOfBounds: "Word goes out of bounds",
     firstWordMustPassCenter: "First word must pass through center (★)",
     positionOccupied: "Position already occupied",
+    letterMismatch:
+      'Letter mismatch: cannot place "{new}" where "{existing}" already exists',
     wordMustConnect: "Word must connect to existing words",
     wordNotInDictionary: "Word not in dictionary",
     insertNonEmptyWord: "Insert a non empty word",
     wordPlaced: 'Word "{text}" placed! +{points} points',
+    pointsUpdated: "Points updated successfully",
   },
 };

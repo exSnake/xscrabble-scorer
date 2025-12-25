@@ -66,13 +66,13 @@ const handleOverlayClick = (event) => {
             <button
               v-for="(option, index) in options"
               :key="index"
-              @click="handleOption(index)"
               :class="{
                 'px-6 py-2 rounded-lg font-semibold transition-colors': true,
                 'bg-blue-500 hover:bg-blue-600 text-white': index === 0,
                 'bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-900 dark:text-white':
                   index === 1,
               }"
+              @click="handleOption(index)"
             >
               {{ option }}
             </button>
@@ -91,7 +91,9 @@ const handleOverlayClick = (event) => {
 
 .modal-enter-active .bg-white,
 .modal-leave-active .bg-white {
-  transition: transform 0.3s ease, opacity 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
 }
 
 .modal-enter-from,

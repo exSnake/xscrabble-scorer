@@ -1,0 +1,202 @@
+export default {
+  // Navigation
+  nav: {
+    home: "Accueil",
+    scorer: "Calculateur",
+    boardGame: "Jeu de Plateau",
+    settings: "Paramètres",
+    darkMode: "Mode sombre",
+    lightMode: "Mode clair",
+  },
+
+  // General
+  general: {
+    addButton: "Ajouter",
+    cancelButton: "Annuler",
+    points: "points",
+    maxLetters: "Max 10 lettres",
+    typeHere: "Tapez le mot ici...",
+    currentScore: "Score actuel",
+  },
+
+  // Timer
+  timer: {
+    pause: "Pause",
+    resume: "Reprendre",
+    restart: "Redémarrer",
+  },
+
+  // Home
+  home: {
+    title: "XSCRABBLER",
+    subtitle: "CALCULATEUR DE SCORE",
+    quickStart: "DÉMARRAGE RAPIDE",
+    features: "Caractéristiques",
+    multipleLanguages: "Langues multiples",
+    multipleLanguagesDesc:
+      "Supporte l'anglais, l'italien, le français, l'espagnol et bien d'autres langues",
+    wordBonus: "Bonus de mot",
+    wordBonusDesc: "Calcul facile des bonus de mot et de lettre",
+    timer: "Minuteur",
+    timerDesc: "Minuteur intégré pour les parties compétitives",
+    playerTracking: "Suivi des joueurs",
+    playerTrackingDesc: "Suivez les scores de tous les joueurs",
+    customizable: "Personnalisable",
+    customizableDesc:
+      "Personnalisez les bonus, le minuteur et d'autres paramètres",
+    openSource: "Code source ouvert",
+    openSourceDesc: "Contribuez au projet sur GitHub",
+    getStarted: "Commencez maintenant",
+    aboutTitle: "Qu'est-ce que xScrabbler?",
+    aboutDesc:
+      "xScrabbler est un calculateur de score moderne pour Scrabble, Scarabeo et jeux de mots similaires. Il vous permet de suivre les scores, de calculer les bonus et de suivre le progresse du jeu.",
+    footer: "Développé avec ❤️ pour les amateurs de jeux de mots",
+    madeBy: "Développé par",
+  },
+
+  // Common
+  common: {
+    oneWord: "mot",
+    words: "mots",
+  },
+
+  // Board Word Placement
+  boardWordPlacement: {
+    title: "Placer Mot",
+    howToPlay: "❓ Comment jouer",
+    wordLabel: "Mot (utilisez _ pour les tuiles vides)",
+    placeholder: "Cliquez sur le plateau pour sélectionner...",
+    blankTilesWarning: "⚠️ Les tuiles vides (_) valent 0 points",
+    placeWord: "Placer Mot",
+    clear: "Effacer",
+    clickToBegin: "👆 Cliquez sur une cellule du plateau pour commencer",
+    cellSelected: "✓ Cellule sélectionnée - commencez à taper!",
+    firstWordWarning: "⚠️ Le premier mot doit passer par le centre (★)",
+    mustConnect: "ℹ️ Le mot doit se connecter aux mots existants",
+    instructionsTitle: "Comment Jouer",
+    instruction1:
+      "<strong>1.</strong> Cliquez sur une cellule du plateau pour sélectionner la position de départ",
+    instruction2:
+      "<strong>2.</strong> Cliquez à nouveau pour changer la direction (→ Horizontal / ↓ Vertical)",
+    instruction3:
+      "<strong>3.</strong> Commencez à taper votre mot (l'input se focalise automatiquement)",
+    instruction4:
+      "<strong>4.</strong> Utilisez underscore (_) pour les tuiles vides/joker (0 points)",
+    instruction5:
+      '<strong>5.</strong> Voyez l\'aperçu sur le plateau, puis appuyez sur Entrée ou cliquez sur "Placer Mot"',
+    firstWordRule: "Premier mot: Doit passer par le centre (★)",
+    nextWordsRule: "Mots suivants: Doivent se connecter aux mots existants",
+    gotIt: "Compris!",
+    bonusTooltip:
+      "Bonus Bingo (B) - Ajoutez lorsque vous utilisez les 7 tuiles",
+    bonusActive: "✓ Bonus Bingo actif (+{bonus} points)",
+  },
+
+  // Board View
+  boardView: {
+    loading: "Chargement du plateau...",
+    legend: "Légende",
+    tw: "TM",
+    dw: "DM",
+    tl: "TL",
+    dl: "DL",
+    center: "★ Centre",
+    placed: "Placé",
+    selected: "Sélectionné",
+    preview: "Aperçu",
+    addPlayer: "Ajouter Joueur",
+    playerNamePlaceholder: "Nom du joueur...",
+    add: "Ajouter",
+    resetBoard: "Réinitialiser Plateau",
+    players: "Joueurs",
+    addPlayerToStart: "Ajoutez un joueur pour commencer",
+    resetBoardTitle: "Réinitialiser Plateau",
+    resetBoardMessage:
+      "Êtes-vous sûr de vouloir réinitialiser le plateau? Tous les mots seront effacés et le plateau sera réinitialisé.",
+    clearBoard: "Effacer Plateau",
+    cancel: "Annuler",
+    ranking: "Classement",
+    noPlayers: "Aucun joueur. Ajoutez un joueur pour commencer!",
+    confirmReset:
+      "Êtes-vous sûr de vouloir réinitialiser le plateau? Tous les mots seront effacés.",
+    playerTurn: "C'est au tour de {name}",
+  },
+
+  // Scorer
+  scorer: {
+    addPlayer: "Ajouter joueur",
+  },
+
+  // Scorer View
+  scorerView: {
+    newPlayer: "Nouveau joueur...",
+    add: "Ajouter",
+    addPlayerToStart: "Ajoutez un joueur pour commencer la partie",
+    players: "Joueurs",
+    selectPlayerToAddWord: "Sélectionnez un joueur pour ajouter un mot",
+  },
+
+  // Scorer Add Word
+  scorerAddWord: {
+    word: "Mot:",
+    wordPlaceholder: "mot...",
+    pointsPlaceholder: "points...",
+  },
+
+  // Player Details
+  playerDetails: {
+    points: "points",
+    words: "Mots",
+    noWords: "Aucun mot placé pour le moment",
+    edit: "Modifier",
+    delete: "Supprimer",
+    deletePlayer: "Supprimer Joueur",
+    close: "Fermer",
+    confirmDelete: "Êtes-vous sûr de vouloir supprimer ce joueur?",
+  },
+
+  // Settings View
+  settings: {
+    title: "Paramètres",
+    timer: "Minuteur",
+    seconds: "(secondes)",
+    language: "Langue",
+    points: "(points)",
+    bonus: "Bonus",
+    maxWordLength: "Longueur Maximale du Mot",
+    number: "(nombre)",
+    boardGameSettings: "Paramètres du Jeu de Plateau",
+  },
+
+  // Board Config Selector
+  boardConfigSelector: {
+    boardConfiguration: "Configuration du Plateau",
+    boardSize: "Taille du Plateau",
+    changeSizeConfirm:
+      "Changer la taille du plateau réinitialisera la partie en cours. Continuer?",
+  },
+
+  // App
+  app: {
+    logoAlt: "Flowbite Logo",
+    toggleDarkMode: "Basculer mode sombre/clair",
+    openMainMenu: "Ouvrir le menu principal",
+  },
+
+  // Store Messages
+  store: {
+    insertName: "Entrez un nom",
+    noActivePlayer: "Aucun joueur actif",
+    wordCannotBeEmpty: "Le mot ne peut pas être vide",
+    wordOutOfBounds: "Le mot sort des limites",
+    firstWordMustPassCenter: "Le premier mot doit passer par le centre (★)",
+    positionOccupied: "Position déjà occupée",
+    letterMismatch:
+      'Incompatibilité de lettres: ne peut pas placer "{new}" où "{existing}" existe déjà',
+    wordMustConnect: "Le mot doit se connecter aux mots existants",
+    wordNotInDictionary: "Mot non dans le dictionnaire",
+    insertNonEmptyWord: "Entrez un mot non vide",
+    wordPlaced: 'Mot "{text}" placé! +{points} points',
+    pointsUpdated: "Points mis à jour avec succès",
+  },
+};

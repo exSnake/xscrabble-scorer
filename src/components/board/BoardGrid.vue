@@ -4,13 +4,18 @@ import { useBoardGameStore } from "@/stores/BoardGameStore";
 import { storeToRefs } from "pinia";
 
 const props = defineProps({
-  grid: Array,
-  boardConfig: Object,
+  grid: {
+    type: Array,
+    required: true,
+  },
+  boardConfig: {
+    type: Object,
+    required: true,
+  },
 });
 
 const boardGame = useBoardGameStore();
-const { selectedCell, direction, previewCells, activePlayer } =
-  storeToRefs(boardGame);
+const { selectedCell, direction, previewCells } = storeToRefs(boardGame);
 const { selectCell, getMultiplierAtPosition, getCharacterPoints } = boardGame;
 
 const gridSize = computed(() => props.grid?.length || 15);
@@ -32,13 +37,13 @@ function isCellSelected(row, col) {
 
 function isCellInPreview(row, col) {
   return previewCells.value.some(
-    (cell) => cell.row === row && cell.col === col
+    (cell) => cell.row === row && cell.col === col,
   );
 }
 
 function getPreviewLetter(row, col) {
   const previewCell = previewCells.value.find(
-    (cell) => cell.row === row && cell.col === col
+    (cell) => cell.row === row && cell.col === col,
   );
   return previewCell?.letter || "";
 }
@@ -148,78 +153,78 @@ function getColLabel(index) {
 <template>
   <div class="overflow-x-auto">
     <div class="inline-block min-w-min mx-auto">
-        <!-- Column headers -->
-        <div class="flex">
-          <div class="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10"></div>
-          <div
-            v-for="(col, colIndex) in gridSize"
-            :key="`col-${colIndex}`"
-            class="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 flex items-center justify-center text-xs font-bold dark:text-white"
-          >
-            {{ getColLabel(colIndex) }}
-          </div>
+      <!-- Column headers -->
+      <div class="flex">
+        <div class="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10"></div>
+        <div
+          v-for="(col, colIndex) in gridSize"
+          :key="`col-${colIndex}`"
+          class="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 flex items-center justify-center text-xs font-bold dark:text-white"
+        >
+          {{ getColLabel(colIndex) }}
+        </div>
+      </div>
+
+      <!-- Board rows -->
+      <div
+        v-for="(row, rowIndex) in grid"
+        :key="`row-${rowIndex}`"
+        class="flex"
+      >
+        <!-- Row label -->
+        <div
+          class="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 flex items-center justify-center text-xs font-bold dark:text-white"
+        >
+          {{ getRowLabel(rowIndex) }}
         </div>
 
-        <!-- Board rows -->
+        <!-- Board cells -->
         <div
-          v-for="(row, rowIndex) in grid"
-          :key="`row-${rowIndex}`"
-          class="flex"
+          v-for="(cell, colIndex) in row"
+          :key="`cell-${rowIndex}-${colIndex}`"
+          :class="getCellClass(rowIndex, colIndex, cell)"
+          @click="handleCellClick(rowIndex, colIndex, cell)"
         >
-          <!-- Row label -->
-          <div
-            class="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 flex items-center justify-center text-xs font-bold dark:text-white"
-          >
-            {{ getRowLabel(rowIndex) }}
-          </div>
-
-          <!-- Board cells -->
-          <div
-            v-for="(cell, colIndex) in row"
-            :key="`cell-${rowIndex}-${colIndex}`"
-            :class="getCellClass(rowIndex, colIndex, cell)"
-            @click="handleCellClick(rowIndex, colIndex, cell)"
-          >
-            <!-- Placed letter with multiplier badge and points -->
-            <template v-if="cell.letter">
-              <span class="text-base md:text-lg font-bold z-10">{{
-                cell.letter
-              }}</span>
-              <span
-                v-if="getMultiplierBadge(rowIndex, colIndex)"
-                :class="[
-                  'absolute top-0 right-0 text-3xs px-1 rounded-bl',
-                  getBadgeClass(getMultiplierBadge(rowIndex, colIndex)),
-                ]"
-              >
-                {{ getMultiplierBadge(rowIndex, colIndex) }}
-              </span>
-              <span
-                class="absolute bottom-0 right-0 text-3xs px-1 bg-gray-800 text-white rounded-tl"
-              >
-                {{ getCharacterPoints(cell.letter) }}
-              </span>
-            </template>
-
-            <!-- Preview letter -->
-            <template v-else-if="isCellInPreview(rowIndex, colIndex)">
-              <span class="text-base md:text-lg font-bold opacity-75">{{
-                getPreviewLetter(rowIndex, colIndex)
-              }}</span>
-            </template>
-
-            <!-- Empty cell with multiplier label or direction arrow -->
+          <!-- Placed letter with multiplier badge and points -->
+          <template v-if="cell.letter">
+            <span class="text-base md:text-lg font-bold z-10">{{
+              cell.letter
+            }}</span>
             <span
-              v-else
-              :class="
-                isCellSelected(rowIndex, colIndex)
-                  ? 'text-2xl sm:text-3xl opacity-60'
-                  : 'text-3xs sm:text-2xs opacity-70'
-              "
-              >{{ getMultiplierLabel(rowIndex, colIndex) }}</span
+              v-if="getMultiplierBadge(rowIndex, colIndex)"
+              :class="[
+                'absolute top-0 right-0 text-3xs px-1 rounded-bl',
+                getBadgeClass(getMultiplierBadge(rowIndex, colIndex)),
+              ]"
             >
-          </div>
+              {{ getMultiplierBadge(rowIndex, colIndex) }}
+            </span>
+            <span
+              class="absolute bottom-0 right-0 text-3xs px-1 bg-gray-800 text-white rounded-tl"
+            >
+              {{ getCharacterPoints(cell.letter) }}
+            </span>
+          </template>
+
+          <!-- Preview letter -->
+          <template v-else-if="isCellInPreview(rowIndex, colIndex)">
+            <span class="text-base md:text-lg font-bold opacity-75">{{
+              getPreviewLetter(rowIndex, colIndex)
+            }}</span>
+          </template>
+
+          <!-- Empty cell with multiplier label or direction arrow -->
+          <span
+            v-else
+            :class="
+              isCellSelected(rowIndex, colIndex)
+                ? 'text-2xl sm:text-3xl opacity-60'
+                : 'text-3xs sm:text-2xs opacity-70'
+            "
+            >{{ getMultiplierLabel(rowIndex, colIndex) }}</span
+          >
         </div>
       </div>
     </div>
+  </div>
 </template>

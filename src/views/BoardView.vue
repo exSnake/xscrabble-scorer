@@ -20,6 +20,7 @@ const {
   placeWord,
   deletePlayer,
   deleteWord,
+  updateWordPoints,
   pauseTimer,
   restartTimer,
   resetBoard,
@@ -38,6 +39,10 @@ const {
 
 const handleDeleteWord = ({ id, player }) => {
   deleteWord({ wordId: id, player });
+};
+
+const handleUpdateWordPoints = ({ wordId, player, newPoints }) => {
+  updateWordPoints({ wordId, player, newPoints });
 };
 
 const handlePlaceWord = (wordData) => {
@@ -70,10 +75,10 @@ watch(
       "[BoardView] seconds changed from",
       oldSeconds,
       "to",
-      newSeconds
+      newSeconds,
     );
   },
-  { immediate: true }
+  { immediate: true },
 );
 </script>
 
@@ -161,6 +166,7 @@ watch(
         @close="showPlayerModal = false"
         @delete-word="handleDeleteWord"
         @delete-player="handleDeletePlayer"
+        @update-word-points="handleUpdateWordPoints"
       />
     </div>
   </div>

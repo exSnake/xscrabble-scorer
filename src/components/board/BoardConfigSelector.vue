@@ -42,31 +42,39 @@ function handleSizeChange(value) {
 </script>
 
 <template>
-  <div class="flex flex-wrap gap-2 rounded-lg bg-gray-200 p-3 dark:bg-gray-600">
-    <div class="flex-1 min-w-[200px]">
-      <label
-        class="text-xs uppercase block mb-1 text-gray-700 dark:text-gray-300"
-        >{{ t("boardConfigSelector.boardConfiguration") }}</label
-      >
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+    <div class="space-y-2">
+      <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+        {{ t("boardConfigSelector.boardConfiguration") }}
+      </label>
       <TSelect
-        class="h-10 w-full bg-white dark:bg-gray-700 dark:text-white"
         :model-value="selectedBoardConfig"
-        @update:model-value="handleConfigChange"
         :options="configOptions"
+        class="w-full h-12 px-4 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+        @update:model-value="handleConfigChange"
       />
     </div>
 
-    <div class="flex-1 min-w-[200px]">
-      <label
-        class="text-xs uppercase block mb-1 text-gray-700 dark:text-gray-300"
-        >{{ t("boardConfigSelector.boardSize") }}</label
-      >
+    <div class="space-y-2">
+      <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+        {{ t("boardConfigSelector.boardSize") }}
+      </label>
       <TSelect
-        class="h-10 w-full bg-white dark:bg-gray-700 dark:text-white"
         :model-value="boardSize"
-        @update:model-value="handleSizeChange"
         :options="sizeOptions"
+        class="w-full h-12 px-4 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+        @update:model-value="handleSizeChange"
       />
     </div>
   </div>
 </template>
+
+<style scoped>
+:deep(.t-select) {
+  @apply transition-all duration-200;
+}
+
+:deep(.t-select:focus) {
+  @apply ring-2 ring-blue-500 border-transparent;
+}
+</style>

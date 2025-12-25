@@ -1,161 +1,475 @@
 <script setup>
-import { RouterLink, RouterView } from "vue-router";
+import { RouterLink, RouterView, useRoute, useRouter } from "vue-router";
 import { useDark, useToggle } from "@vueuse/core";
+import { ref, onMounted, watch, computed, onBeforeUnmount } from "vue";
 import { useI18n } from "vue-i18n";
-import { useStorage } from "@vueuse/core";
+import { Analytics } from "@vercel/analytics/vue";
+
+const { t, locale } = useI18n();
+const route = useRoute();
+const router = useRouter();
+
+// Ottieni la lingua corrente dalla route
+const currentLang = computed(() => route.path.split("/")[1] || "en");
+
+// Sync vue-i18n locale with route language
+watch(
+  currentLang,
+  (newLang) => {
+    if (newLang && locale.value !== newLang) {
+      locale.value = newLang;
+      localStorage.setItem("locale", newLang);
+    }
+  },
+  { immediate: true },
+);
+
+// Genera percorsi localizzati
+const localePath = (path) => {
+  const lang = currentLang.value;
+  if (path) {
+    return "/" + lang + "/" + path;
+  }
+  return "/" + lang;
+};
+
+// Verifica se un percorso è attivo
+const isActive = (path) => {
+  const fullPath = localePath(path);
+  const isExactMatch = route.path === fullPath;
+  const isSubPath = path && route.path.startsWith(fullPath);
+  return isExactMatch || isSubPath;
+};
 
 const isDark = useDark({});
 const toggleDark = useToggle(isDark);
-const { t, locale } = useI18n();
-const storedLocale = useStorage("locale", "it");
 
-// Sync locale with storage
-locale.value = storedLocale.value;
-
-const changeLocale = (newLocale) => {
-  locale.value = newLocale;
-  storedLocale.value = newLocale;
+// Gestione menu mobile
+const isMenuOpen = ref(false);
+const toggleMenu = () => {
+  isMenuOpen.value = !isMenuOpen.value;
 };
 
+// Gestione dropdown lingua
+const isLangDropdownOpen = ref(false);
+const toggleLangDropdown = () => {
+  isLangDropdownOpen.value = !isLangDropdownOpen.value;
+};
+
+// Lingue supportate con bandiere e nomi
 const languages = [
-  { code: "it", name: "IT", flag: "🇮🇹" },
-  { code: "en", name: "EN", flag: "🇬🇧" },
+  { code: "en", flag: "🇬🇧", name: "English" },
+  { code: "it", flag: "🇮🇹", name: "Italiano" },
+  { code: "fr", flag: "🇫🇷", name: "Français" },
+  { code: "es", flag: "🇪🇸", name: "Español" },
+  { code: "de", flag: "🇩🇪", name: "Deutsch" },
+  { code: "nl", flag: "🇳🇱", name: "Nederlands" },
+  { code: "et", flag: "🇪🇪", name: "Eesti" },
+  { code: "pt", flag: "🇵🇹", name: "Português" },
 ];
+
+const currentLanguage = computed(() => {
+  return (
+    languages.find((lang) => lang.code === currentLang.value) || languages[0]
+  );
+});
+
+const changeLanguage = (langCode) => {
+  const currentPath = route.path.replace(/^\/[^/]+/, "");
+  router.push(`/${langCode}${currentPath}`);
+  isLangDropdownOpen.value = false;
+  isMenuOpen.value = false;
+};
+
+// Chiudi il menu quando si cambia route
+watch(
+  () => route.fullPath,
+  () => {
+    isMenuOpen.value = false;
+    isLangDropdownOpen.value = false;
+  },
+);
+
+// Chiudi dropdown quando si fa click fuori
+const handleClickOutside = (e) => {
+  const langDropdown = document.getElementById("lang-dropdown");
+  const langButton = document.getElementById("lang-button");
+  const menu = document.getElementById("navbar-menu");
+  const menuToggle = document.getElementById("menu-toggle");
+
+  if (
+    langDropdown &&
+    langButton &&
+    !langDropdown.contains(e.target) &&
+    !langButton.contains(e.target)
+  ) {
+    isLangDropdownOpen.value = false;
+  }
+
+  if (
+    menu &&
+    menuToggle &&
+    !menu.contains(e.target) &&
+    !menuToggle.contains(e.target)
+  ) {
+    isMenuOpen.value = false;
+  }
+};
+
+onMounted(() => {
+  document.addEventListener("click", handleClickOutside);
+});
+
+onBeforeUnmount(() => {
+  document.removeEventListener("click", handleClickOutside);
+});
 </script>
 
 <template>
-  <div class="dark:bg-gray-700 h-screen">
+  <div
+    class="min-h-screen flex flex-col bg-gradient-to-b from-white to-gray-50 dark:from-gray-800 dark:to-gray-900"
+  >
+    <Analytics />
+
+    <!-- Navbar -->
     <nav
-      class="p-2 bg-gray-100 border-gray-200 dark:bg-gray-900 dark:border-gray-700"
+      class="sticky top-0 z-50 w-full bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg border-b border-gray-200/50 dark:border-gray-700/50 shadow-sm transition-all duration-300"
+      role="navigation"
+      aria-label="Menu principale"
     >
-      <div
-        class="container flex flex-wrap items-center justify-between mx-auto"
-      >
-        <a href="#" class="flex items-center">
-          <img
-            src="https://flowbite.com/docs/images/logo.svg"
-            class="h-6 mr-3 sm:h-10"
-            :alt="t('app.logoAlt')"
-          />
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+          <!-- Logo -->
           <RouterLink
-            to="/"
-            class="self-center text-xl font-semibold whitespace-nowrap dark:text-white"
-            >xScrabbler
-          </RouterLink>
-        </a>
-        <!-- Language Selector -->
-        <div class="flex items-center gap-2 mr-2">
-          <select
-            v-model="locale"
-            @change="changeLocale(locale)"
-            class="text-xs font-medium text-gray-700 bg-white border border-gray-200 rounded-lg px-2 py-1 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-300 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700"
+            :to="localePath('')"
+            class="flex items-center gap-2 sm:gap-3 flex-shrink-0 hover:opacity-80 transition-opacity"
+            aria-label="Homepage xScrabbler"
           >
-            <option v-for="lang in languages" :key="lang.code" :value="lang.code">
-              {{ lang.flag }} {{ lang.name }}
-            </option>
-          </select>
-        </div>
-        <button
-          data-collapse-toggle="navbar-dropdown"
-          type="button"
-          class="inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-          aria-controls="navbar-dropdown"
-          aria-expanded="false"
-        >
-          <span class="sr-only">{{ t("app.openMainMenu") }}</span>
-          <svg
-            class="w-6 h-6"
-            aria-hidden="true"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              fill-rule="evenodd"
-              d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-              clip-rule="evenodd"
+            <img
+              src="/logo/logo.svg"
+              alt="xScrabbler Logo"
+              class="w-10 h-10 sm:w-12 sm:h-12"
             />
-          </svg>
-        </button>
-        <button
-          type="button"
-          @click="toggleDark()"
-          class="flex items-center p-2 ml-2 text-xs font-medium text-gray-700 bg-white border border-gray-200 rounded-lg toggle-dark-state-example hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-500 dark:bg-gray-800 focus:outline-none dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700"
+            <span
+              class="text-lg sm:text-xl font-bold text-gray-900 dark:text-white tracking-tight"
+            >
+              xScrabbler
+            </span>
+          </RouterLink>
+
+          <!-- Desktop Navigation -->
+          <div class="hidden lg:flex items-center gap-1 flex-1 justify-center">
+            <RouterLink
+              :to="localePath('')"
+              class="px-4 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
+              :class="{
+                'bg-gray-100 dark:bg-gray-800 text-rose-600 dark:text-rose-400':
+                  isActive(''),
+              }"
+              role="menuitem"
+            >
+              {{ t("nav.home") }}
+            </RouterLink>
+            <RouterLink
+              :to="localePath('scorer')"
+              class="px-4 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
+              :class="{
+                'bg-gray-100 dark:bg-gray-800 text-rose-600 dark:text-rose-400':
+                  isActive('scorer'),
+              }"
+              role="menuitem"
+            >
+              {{ t("nav.scorer") }}
+            </RouterLink>
+            <RouterLink
+              :to="localePath('board')"
+              class="px-4 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
+              :class="{
+                'bg-gray-100 dark:bg-gray-800 text-rose-600 dark:text-rose-400':
+                  isActive('board'),
+              }"
+              role="menuitem"
+            >
+              {{ t("nav.boardGame") }}
+            </RouterLink>
+            <RouterLink
+              :to="localePath('settings')"
+              class="px-4 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
+              :class="{
+                'bg-gray-100 dark:bg-gray-800 text-rose-600 dark:text-rose-400':
+                  isActive('settings'),
+              }"
+              role="menuitem"
+            >
+              {{ t("nav.settings") }}
+            </RouterLink>
+          </div>
+
+          <!-- Right side controls (Desktop) -->
+          <div class="hidden lg:flex items-center gap-2">
+            <!-- Language Selector -->
+            <div id="lang-dropdown" class="relative">
+              <button
+                id="lang-button"
+                class="flex items-center gap-2 px-3 py-2 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
+                aria-label="Seleziona lingua"
+                :aria-expanded="isLangDropdownOpen"
+                aria-haspopup="true"
+                @click="toggleLangDropdown"
+              >
+                <span class="text-xl">{{ currentLanguage.flag }}</span>
+                <LucideChevronDown
+                  class="w-4 h-4 text-gray-600 dark:text-gray-400 transition-transform duration-200"
+                  :class="{ 'rotate-180': isLangDropdownOpen }"
+                />
+              </button>
+
+              <!-- Dropdown Menu -->
+              <Transition
+                enter-active-class="transition ease-out duration-200"
+                enter-from-class="opacity-0 scale-95 translate-y-1"
+                enter-to-class="opacity-100 scale-100 translate-y-0"
+                leave-active-class="transition ease-in duration-150"
+                leave-from-class="opacity-100 scale-100 translate-y-0"
+                leave-to-class="opacity-0 scale-95 translate-y-1"
+              >
+                <div
+                  v-if="isLangDropdownOpen"
+                  class="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 py-1 z-50"
+                  role="menu"
+                >
+                  <button
+                    v-for="lang in languages"
+                    :key="lang.code"
+                    class="w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-150"
+                    :class="{
+                      'bg-gray-100 dark:bg-gray-700 text-rose-600 dark:text-rose-400':
+                        lang.code === currentLang,
+                    }"
+                    role="menuitem"
+                    @click="changeLanguage(lang.code)"
+                  >
+                    <span class="text-xl">{{ lang.flag }}</span>
+                    <span>{{ lang.name }}</span>
+                  </button>
+                </div>
+              </Transition>
+            </div>
+
+            <!-- Dark Mode Toggle -->
+            <button
+              class="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
+              aria-label="Toggle dark mode"
+              @click="toggleDark()"
+            >
+              <LucideMoon
+                v-if="isDark"
+                class="w-5 h-5 text-blue-600 dark:text-blue-400"
+              />
+              <LucideSun v-if="!isDark" class="w-5 h-5 text-amber-500" />
+            </button>
+          </div>
+
+          <!-- Mobile Menu Toggle -->
+          <div class="flex lg:hidden items-center gap-2">
+            <!-- Language Selector (Mobile - solo bandiera) -->
+            <div id="lang-dropdown" class="relative">
+              <button
+                id="lang-button"
+                class="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
+                aria-label="Seleziona lingua"
+                :aria-expanded="isLangDropdownOpen"
+                aria-haspopup="true"
+                @click="toggleLangDropdown"
+              >
+                <span class="text-xl">{{ currentLanguage.flag }}</span>
+              </button>
+
+              <!-- Dropdown Menu Mobile -->
+              <Transition
+                enter-active-class="transition ease-out duration-200"
+                enter-from-class="opacity-0 scale-95 translate-y-1"
+                enter-to-class="opacity-100 scale-100 translate-y-0"
+                leave-active-class="transition ease-in duration-150"
+                leave-from-class="opacity-100 scale-100 translate-y-0"
+                leave-to-class="opacity-0 scale-95 translate-y-1"
+              >
+                <div
+                  v-if="isLangDropdownOpen"
+                  class="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 py-1 z-50"
+                  role="menu"
+                >
+                  <button
+                    v-for="lang in languages"
+                    :key="lang.code"
+                    class="w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-150"
+                    :class="{
+                      'bg-gray-100 dark:bg-gray-700 text-rose-600 dark:text-rose-400':
+                        lang.code === currentLang,
+                    }"
+                    role="menuitem"
+                    @click="changeLanguage(lang.code)"
+                  >
+                    <span class="text-xl">{{ lang.flag }}</span>
+                    <span>{{ lang.name }}</span>
+                  </button>
+                </div>
+              </Transition>
+            </div>
+
+            <!-- Dark Mode Toggle (Mobile) -->
+            <button
+              class="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
+              aria-label="Toggle dark mode"
+              @click="toggleDark()"
+            >
+              <LucideMoon
+                v-if="isDark"
+                class="w-5 h-5 text-blue-600 dark:text-blue-400"
+              />
+              <LucideSun v-if="!isDark" class="w-5 h-5 text-amber-500" />
+            </button>
+
+            <!-- Hamburger Menu Button -->
+            <button
+              id="menu-toggle"
+              class="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
+              aria-label="Toggle menu"
+              :aria-expanded="isMenuOpen"
+              aria-controls="navbar-menu"
+              @click="toggleMenu"
+            >
+              <LucideX
+                v-if="isMenuOpen"
+                class="w-6 h-6 text-gray-700 dark:text-gray-300 transition-transform duration-200"
+              />
+              <LucideMenu
+                v-else
+                class="w-6 h-6 text-gray-700 dark:text-gray-300 transition-transform duration-200"
+              />
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile Navigation Menu -->
+      <Transition
+        enter-active-class="transition ease-out duration-300"
+        enter-from-class="opacity-0 -translate-y-4"
+        enter-to-class="opacity-100 translate-y-0"
+        leave-active-class="transition ease-in duration-200"
+        leave-from-class="opacity-100 translate-y-0"
+        leave-to-class="opacity-0 -translate-y-4"
+      >
+        <div
+          v-if="isMenuOpen"
+          id="navbar-menu"
+          class="lg:hidden border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900"
+          role="menu"
+          aria-label="Menu mobile"
         >
-          <svg
-            aria-hidden="true"
-            data-toggle-icon="moon"
-            class="w-4 h-4 hidden"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
-            ></path>
-          </svg>
-          <svg
-            aria-hidden="true"
-            data-toggle-icon="sun"
-            class="w-4 h-4"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-            ></path>
-          </svg>
-          <span class="sr-only">{{ t("app.toggleDarkMode") }}</span>
-        </button>
-        <div class="hidden w-full md:block md:w-auto" id="navbar-dropdown">
-          <ul
-            class="flex flex-col p-4 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700"
-          >
-            <li>
+          <div class="container mx-auto px-4 py-4">
+            <nav class="flex flex-col space-y-1">
               <RouterLink
-                to="/"
-                class="flex items-center justify-between w-full py-2 pl-3 pr-4 font-medium rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:p-0 md:w-auto dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent"
+                :to="localePath('')"
+                class="px-4 py-3 rounded-lg text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
+                :class="{
+                  'bg-gray-100 dark:bg-gray-800 text-rose-600 dark:text-rose-400':
+                    isActive(''),
+                }"
+                role="menuitem"
+                @click="isMenuOpen = false"
               >
                 {{ t("nav.home") }}
               </RouterLink>
-            </li>
-            <li>
               <RouterLink
-                to="/scorer"
-                class="flex items-center justify-between w-full py-2 pl-3 pr-4 font-medium rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:p-0 md:w-auto dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent"
+                :to="localePath('scorer')"
+                class="px-4 py-3 rounded-lg text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
+                :class="{
+                  'bg-gray-100 dark:bg-gray-800 text-rose-600 dark:text-rose-400':
+                    isActive('scorer'),
+                }"
+                role="menuitem"
+                @click="isMenuOpen = false"
               >
                 {{ t("nav.scorer") }}
               </RouterLink>
-            </li>
-            <li>
               <RouterLink
-                to="/board"
-                class="flex items-center justify-between w-full py-2 pl-3 pr-4 font-medium rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:p-0 md:w-auto dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent"
+                :to="localePath('board')"
+                class="px-4 py-3 rounded-lg text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
+                :class="{
+                  'bg-gray-100 dark:bg-gray-800 text-rose-600 dark:text-rose-400':
+                    isActive('board'),
+                }"
+                role="menuitem"
+                @click="isMenuOpen = false"
               >
                 {{ t("nav.boardGame") }}
               </RouterLink>
-            </li>
-            <li>
               <RouterLink
-                to="/settings"
-                class="block py-2 pl-3 pr-4 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:p-0 md: dark:hover:bg-gray-700 md:dark:hover:bg-transparent"
+                :to="localePath('settings')"
+                class="px-4 py-3 rounded-lg text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
+                :class="{
+                  'bg-gray-100 dark:bg-gray-800 text-rose-600 dark:text-rose-400':
+                    isActive('settings'),
+                }"
+                role="menuitem"
+                @click="isMenuOpen = false"
               >
                 {{ t("nav.settings") }}
               </RouterLink>
-            </li>
-          </ul>
+            </nav>
+          </div>
+        </div>
+      </Transition>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-1">
+      <RouterView />
+    </main>
+
+    <!-- Global Footer -->
+    <footer
+      class="w-full py-6 px-6 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700"
+    >
+      <div class="max-w-7xl mx-auto flex flex-col items-center">
+        <p class="text-gray-600 dark:text-gray-300 text-sm mb-2">
+          {{ t("home.footer") }}
+        </p>
+        <div class="text-gray-500 dark:text-gray-400 text-xs">
+          {{ t("home.madeBy") }}
+          <a
+            href="https://github.com/exSnake"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-rose-600 dark:text-rose-400 hover:underline"
+            aria-label="Visita il profilo GitHub di exSnake"
+            >exSnake</a
+          >
         </div>
       </div>
-    </nav>
-    <RouterView />
+    </footer>
   </div>
 </template>
 
 <style scoped>
-.active {
-  color: theme(colors.blue.600);
+.router-link-active {
+  color: theme("colors.rose.600");
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease-in-out;
 }
 </style>

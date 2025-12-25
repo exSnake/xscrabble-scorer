@@ -75,15 +75,15 @@ const handleResetConfirm = (confirmed) => {
       <div class="flex gap-2">
         <input
           v-model="newPlayerName"
-          @keyup.enter="handleAddPlayer"
           type="text"
           placeholder="Player name..."
           class="flex-1 px-3 py-2 text-sm bg-gray-50 dark:bg-gray-600 dark:text-white border border-gray-300 dark:border-gray-500 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-300"
+          @keyup.enter="handleAddPlayer"
         />
         <button
-          @click="handleAddPlayer"
           :disabled="!newPlayerName.trim()"
           class="px-3 py-2 bg-blue-500 hover:bg-blue-600 text-white text-sm rounded-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          @click="handleAddPlayer"
         >
           ➕
         </button>
@@ -103,13 +103,13 @@ const handleResetConfirm = (confirmed) => {
       <div
         v-for="(player, index) in sortedPlayers"
         :key="player.id"
-        @click="emit('selectPlayer', player)"
         class="flex items-center justify-between p-3 rounded-lg cursor-pointer transition-all group"
         :class="[
           activePlayer?.id === player.id
             ? 'bg-blue-100 dark:bg-blue-900 border border-blue-500 ring-blue-500'
             : 'bg-gray-50 dark:bg-gray-600 hover:bg-gray-100 dark:hover:bg-gray-500',
         ]"
+        @click="emit('selectPlayer', player)"
       >
         <div class="flex items-center gap-3 flex-1 min-w-0">
           <span
@@ -137,8 +137,8 @@ const handleResetConfirm = (confirmed) => {
           </span>
           <button
             v-if="!player.active"
-            @click.stop="emit('activatePlayer', player)"
             class="opacity-0 group-hover:opacity-100 px-2 py-1 bg-blue-500 hover:bg-blue-600 text-white text-xs rounded font-semibold transition-all"
+            @click.stop="emit('activatePlayer', player)"
           >
             Play
           </button>
@@ -152,8 +152,8 @@ const handleResetConfirm = (confirmed) => {
       class="mt-3 pt-3 border-t border-gray-200 dark:border-gray-600"
     >
       <button
-        @click="handleResetBoard"
         class="w-full px-4 py-2 bg-red-500 hover:bg-red-600 text-white text-sm rounded-lg font-semibold transition-colors"
+        @click="handleResetBoard"
       >
         🔄 Reset Board
       </button>

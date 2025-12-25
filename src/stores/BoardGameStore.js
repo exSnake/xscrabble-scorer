@@ -11,7 +11,7 @@ export const useBoardGameStore = defineStore("boardGame", () => {
   const bonus = ref(useStorage("board_bonus", 50));
   const language = ref(useStorage("board_language", "en"));
   const players = ref(
-    useStorage("board_players", [], localStorage, { deep: true })
+    useStorage("board_players", [], localStorage, { deep: true }),
   );
   const seconds = ref(useStorage("board_seconds", 90));
   const settings = ref(null);
@@ -25,10 +25,10 @@ export const useBoardGameStore = defineStore("boardGame", () => {
   const boardSize = ref(useStorage("board_size", 15));
   const boardConfigs = ref(null);
   const boardGrid = ref(
-    useStorage("board_grid", [], localStorage, { deep: true })
+    useStorage("board_grid", [], localStorage, { deep: true }),
   );
   const placedWords = ref(
-    useStorage("board_placed_words", [], localStorage, { deep: true })
+    useStorage("board_placed_words", [], localStorage, { deep: true }),
   );
 
   // Interactive selection state (not persisted)
@@ -50,22 +50,42 @@ export const useBoardGameStore = defineStore("boardGame", () => {
     console.log("[BoardGameStore] onMounted - seconds.value:", seconds.value);
     const now = Date.now();
     const targetTime = new Date(now + seconds.value * 1000);
-    console.log("[BoardGameStore] onMounted - now:", new Date(now), "target:", targetTime, "diff:", seconds.value, "seconds");
+    console.log(
+      "[BoardGameStore] onMounted - now:",
+      new Date(now),
+      "target:",
+      targetTime,
+      "diff:",
+      seconds.value,
+      "seconds",
+    );
     timer.value = useTimer(targetTime);
     timer.value.pause();
-    console.log("[BoardGameStore] Timer initialized, timer.seconds:", timer.value.seconds, "isRunning:", timer.value.isRunning);
+    console.log(
+      "[BoardGameStore] Timer initialized, timer.seconds:",
+      timer.value.seconds,
+      "isRunning:",
+      timer.value.isRunning,
+    );
   });
 
   // Watch seconds changes - don't auto-restart, user must click restart button
   watch(seconds, (newSeconds, oldSeconds) => {
-    console.log("[BoardGameStore] seconds changed from", oldSeconds, "to", newSeconds);
-    console.log("[BoardGameStore] Note: Timer will use new value on next restart");
+    console.log(
+      "[BoardGameStore] seconds changed from",
+      oldSeconds,
+      "to",
+      newSeconds,
+    );
+    console.log(
+      "[BoardGameStore] Note: Timer will use new value on next restart",
+    );
   });
 
   //#region Computed properties
 
   const canAddPlayer = computed(
-    () => players.value.length < 4 && isBoardEmpty.value
+    () => players.value.length < 4 && isBoardEmpty.value,
   );
 
   const activePlayer = computed(() => players.value.find((p) => p.active));
@@ -108,7 +128,7 @@ export const useBoardGameStore = defineStore("boardGame", () => {
             letter: null,
             playerId: null,
             wordId: null,
-          }))
+          })),
       );
   }
 
@@ -185,7 +205,7 @@ export const useBoardGameStore = defineStore("boardGame", () => {
 
       // Remove letters from board grid
       const placedWordIndex = placedWords.value.findIndex(
-        (w) => w.id === wordId && w.playerId === player.id
+        (w) => w.id === wordId && w.playerId === player.id,
       );
       if (placedWordIndex > -1) {
         const placedWord = placedWords.value[placedWordIndex];
@@ -201,6 +221,14 @@ export const useBoardGameStore = defineStore("boardGame", () => {
     }
   }
 
+  function updateWordPoints({ wordId, player, newPoints }) {
+    const wordIndex = player.words.findIndex((word) => word.id === wordId);
+    if (wordIndex > -1) {
+      player.words[wordIndex].points = newPoints;
+      toast.success(i18n.global.t("store.pointsUpdated"));
+    }
+  }
+
   function nextPlayer() {
     const index = players.value.indexOf(activePlayer.value);
     const nextIndex = index === players.value.length - 1 ? 0 : index + 1;
@@ -212,7 +240,7 @@ export const useBoardGameStore = defineStore("boardGame", () => {
   //#region Actions - Word Placement & Validation
 
   function placeWord(wordData) {
-    const { text, startRow, startCol, direction } = wordData;
+    const { text, startRow, startCol, direction, hasBonus = false } = wordData;
 
     if (!activePlayer.value) {
       toast.error(i18n.global.t("store.noActivePlayer"));
@@ -224,15 +252,21 @@ export const useBoardGameStore = defineStore("boardGame", () => {
       text,
       startRow,
       startCol,
-      direction
+      direction,
     );
     if (!validation.valid) {
       toast.error(validation.error);
       return;
     }
 
-    // Calculate score
-    const score = calculateWordScore(text, startRow, startCol, direction);
+    // Calculate score (con bonus manuale)
+    const score = calculateWordScore(
+      text,
+      startRow,
+      startCol,
+      direction,
+      hasBonus,
+    );
 
     // Place letters on board
     const positions = [];
@@ -243,11 +277,17 @@ export const useBoardGameStore = defineStore("boardGame", () => {
       const row = direction === "horizontal" ? startRow : startRow + i;
       const col = direction === "horizontal" ? startCol + i : startCol;
 
-      boardGrid.value[row][col] = {
-        letter: letters[i],
-        playerId: activePlayer.value.id,
-        wordId: wordId,
-      };
+      // Only update cell if it's empty or update to add new wordId
+      // Don't overwrite existing letters (they're already validated to match)
+      if (boardGrid.value[row][col].letter === null) {
+        boardGrid.value[row][col] = {
+          letter: letters[i],
+          playerId: activePlayer.value.id,
+          wordId: wordId,
+        };
+      }
+      // If letter already exists, we keep the original playerId/wordId
+      // The intersection letter belongs to the first word that placed it
 
       positions.push({ row, col, letter: letters[i] });
     }
@@ -274,11 +314,11 @@ export const useBoardGameStore = defineStore("boardGame", () => {
       i18n.global.t("store.wordPlaced", {
         text: text.toUpperCase(),
         points: score,
-      })
+      }),
     );
 
     nextPlayer();
-    restartTimer();
+    restartTimer(true); // Auto-resume se il timer era attivo
   }
 
   function validateWordPlacement(text, startRow, startCol, direction) {
@@ -286,7 +326,7 @@ export const useBoardGameStore = defineStore("boardGame", () => {
       return { valid: false, error: i18n.global.t("store.wordCannotBeEmpty") };
     }
 
-    const letters = [...text];
+    const letters = [...text.toUpperCase()];
     const endRow =
       direction === "horizontal" ? startRow : startRow + letters.length - 1;
     const endCol =
@@ -330,12 +370,24 @@ export const useBoardGameStore = defineStore("boardGame", () => {
         const row = direction === "horizontal" ? startRow : startRow + i;
         const col = direction === "horizontal" ? startCol + i : startCol;
 
+        const existingCell = boardGrid.value[row][col];
+
         // Check if position already occupied
-        if (boardGrid.value[row][col].letter !== null) {
-          return {
-            valid: false,
-            error: i18n.global.t("store.positionOccupied"),
-          };
+        if (existingCell.letter !== null) {
+          // Position is occupied - check if the letter matches
+          if (existingCell.letter.toUpperCase() !== letters[i]) {
+            // Letter mismatch - cannot place word here
+            return {
+              valid: false,
+              error: i18n.global.t("store.letterMismatch", {
+                existing: existingCell.letter,
+                new: letters[i],
+              }),
+            };
+          }
+          // Letter matches - this counts as a valid connection (intersection)
+          connects = true;
+          continue; // Skip adjacent check for this cell, it's already connected
         }
 
         // Check adjacent cells for existing letters
@@ -359,8 +411,6 @@ export const useBoardGameStore = defineStore("boardGame", () => {
             }
           }
         }
-
-        if (connects) break;
       }
 
       if (!connects) {
@@ -392,7 +442,13 @@ export const useBoardGameStore = defineStore("boardGame", () => {
 
   //#region Actions - Scoring
 
-  function calculateWordScore(text, startRow, startCol, direction) {
+  function calculateWordScore(
+    text,
+    startRow,
+    startCol,
+    direction,
+    hasBonus = false,
+  ) {
     const letters = [...text.toUpperCase()];
     let score = 0;
     let wordMultiplier = 1;
@@ -407,22 +463,31 @@ export const useBoardGameStore = defineStore("boardGame", () => {
       // Get base letter value
       let letterValue = getCharacterPoints(letters[i]);
 
-      // Get multiplier from board position
-      const multiplier = getMultiplierAtPosition(row, col, config);
+      // Check if this cell already has a letter (intersection)
+      const existingLetter = boardGrid.value[row]?.[col]?.letter;
+      const isExistingLetter =
+        existingLetter !== null && existingLetter !== undefined;
 
-      if (multiplier.type === "letter") {
-        letterValue *= multiplier.value;
-      } else if (multiplier.type === "word") {
-        wordMultiplier *= multiplier.value;
+      // Bonuses only apply to newly placed letters, not to existing ones
+      if (!isExistingLetter) {
+        // Get multiplier from board position (only for new letters)
+        const multiplier = getMultiplierAtPosition(row, col, config);
+
+        if (multiplier.type === "letter") {
+          letterValue *= multiplier.value;
+        } else if (multiplier.type === "word") {
+          wordMultiplier *= multiplier.value;
+        }
       }
+      // For existing letters: only base value counts, no multipliers
 
       score += letterValue;
     }
 
     score *= wordMultiplier;
 
-    // Add bonus for using all 7 letters (bingo)
-    if (letters.length === 7) {
+    // Add bonus if player used all tiles (bingo) - now manually triggered
+    if (hasBonus) {
       score += bonus.value;
     }
 
@@ -458,12 +523,23 @@ export const useBoardGameStore = defineStore("boardGame", () => {
     }
   }
 
-  function restartTimer() {
-    console.log("[BoardGameStore] restartTimer called, seconds.value:", seconds.value);
+  function restartTimer(autoResume = false) {
+    console.log(
+      "[BoardGameStore] restartTimer called, seconds.value:",
+      seconds.value,
+      "autoResume:",
+      autoResume,
+    );
+    const wasRunning = timer.value?.isRunning;
     const time = new Date();
     time.setSeconds(time.getSeconds() + seconds.value);
     timer.value.restart(time);
-    pauseTimer();
+
+    // Se autoResume è true e il timer era in esecuzione, mantienilo attivo
+    // Altrimenti metti in pausa (comportamento default per il pulsante restart)
+    if (!(autoResume && wasRunning)) {
+      timer.value.pause();
+    }
   }
 
   //#endregion Actions - Timer
@@ -503,7 +579,7 @@ export const useBoardGameStore = defineStore("boardGame", () => {
     previewWord.value = "";
   }
 
-  function placeWordFromPreview() {
+  function placeWordFromPreview(hasBonus = false) {
     if (!selectedCell.value || !previewWord.value) return;
 
     placeWord({
@@ -511,6 +587,7 @@ export const useBoardGameStore = defineStore("boardGame", () => {
       startRow: selectedCell.value.row,
       startCol: selectedCell.value.col,
       direction: direction.value,
+      hasBonus: hasBonus,
     });
 
     clearSelection();
@@ -580,6 +657,7 @@ export const useBoardGameStore = defineStore("boardGame", () => {
     addPlayer,
     deletePlayer,
     deleteWord,
+    updateWordPoints,
     placeWord,
     validateWordPlacement,
     isValidWord,

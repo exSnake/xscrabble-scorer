@@ -26,7 +26,11 @@ import {
   LucideSettings,
   LucideCode,
   LucideGlobe,
-} from "lucide-vue-next";
+  LucideChevronDown,
+  LucideChevronUp,
+  LucideMaximize2,
+  LucideGrid,
+} from "@/components/icons";
 
 import App from "./App.vue";
 import router from "./router";
@@ -70,6 +74,10 @@ app.component("LucideUsers", LucideUsers);
 app.component("LucideSettings", LucideSettings);
 app.component("LucideCode", LucideCode);
 app.component("LucideGlobe", LucideGlobe);
+app.component("LucideChevronDown", LucideChevronDown);
+app.component("LucideChevronUp", LucideChevronUp);
+app.component("LucideMaximize2", LucideMaximize2);
+app.component("LucideGrid", LucideGrid);
 
 app.use(variantJS, configuration);
 app.use(Vue3Toasity, { autoClose: 3000 });
