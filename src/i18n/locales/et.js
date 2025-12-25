@@ -61,6 +61,19 @@ export default {
       "Kasutage kiiret skoorimist sõnade ja punktide kiireks sisestamiseks. Ideaalne kiirete mängude jaoks või kui eelistate punktide käsitsi arvutamist. Lihtsam ja otsesem, ideaalne neile, kes tahavad keskenduda mängule ilma häireta.",
     tryBoard: "Proovige Lauamängu",
     tryScorer: "Proovige Skoorimist",
+    faqTitle: "Korduma Kippuvad Küsimused",
+    faq1Question: "Mis on Scrabble punktiarvestus?",
+    faq1Answer:
+      "Punktiarvestus on tööriist, mis aitab teil jälgida skoore Scrabble mängu ajal. xScrabbler on tasuta digitaalne Scrabble punktiarvestus, mis arvutab automaatselt punkte, boonuseid ja haldab taimerit iga käigu jaoks.",
+    faq2Question: "Kuidas Scrabble skoori arvuti töötab?",
+    faq2Answer:
+      "xScrabbleri skoori arvuti võimaldab teil sisestada mängitud sõnu ja arvutab automaatselt skoori, arvestades tähe boonuseid (DL, TL) ja sõna boonuseid (DS, TS). Saate kasutada ka interaktiivset lauda sõnade visuaalseks paigutamiseks.",
+    faq3Question: "Kas on olemas sisseehitatud Scrabble taimer?",
+    faq3Answer:
+      "Jah! xScrabbler sisaldab sisseehitatud Scrabble taimerit, mida saate seadetes kohandada. Ideaalne võistlusmängudele, kus igal mängijal on oma käigu jaoks piiratud aeg.",
+    faq4Question: "Kas ma saan xScrabblerit kasutada teiste sõnamängude jaoks?",
+    faq4Answer:
+      "Absoluutselt! xScrabbler töötab suurepäraselt punktiarvestusena Scrabble, Scarabeo ja sarnaste mängude jaoks. See toetab mitut keelt ja punktisüsteemi.",
   },
 
   // Common

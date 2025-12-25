@@ -61,6 +61,19 @@ export default {
       "Verwenden Sie den schnellen Punktesteller, um schnell Wörter und Punkte einzugeben. Ideal für schnelle Spiele oder wenn Sie es vorziehen, Punkte manuell zu berechnen. Einfacher und direkter, perfekt für diejenigen, die sich ohne Ablenkungen auf das Spiel konzentrieren möchten.",
     tryBoard: "Brettspiel ausprobieren",
     tryScorer: "Punktesteller ausprobieren",
+    faqTitle: "Häufig Gestellte Fragen",
+    faq1Question: "Was ist ein Scrabble Punktezähler?",
+    faq1Answer:
+      "Ein Punktezähler (oder Punktestand) ist ein Werkzeug, das Ihnen hilft, die Punkte während eines Scrabble-Spiels zu verfolgen. xScrabbler ist ein kostenloser digitaler Scrabble Punktezähler, der automatisch Punkte, Boni berechnet und den Timer für jeden Zug verwaltet.",
+    faq2Question: "Wie funktioniert der Scrabble Punkterechner?",
+    faq2Answer:
+      "Der xScrabbler Punkterechner ermöglicht es Ihnen, gespielte Wörter einzugeben und berechnet automatisch den Punktestand unter Berücksichtigung von Buchstabenboni (DL, TL) und Wortboni (DW, TW). Sie können auch das interaktive Brett verwenden, um Wörter visuell zu platzieren.",
+    faq3Question: "Gibt es einen integrierten Scrabble Timer?",
+    faq3Answer:
+      "Ja! xScrabbler enthält einen integrierten Scrabble Timer, den Sie in den Einstellungen anpassen können. Perfekt für Wettspiele, bei denen jeder Spieler begrenzte Zeit für seinen Zug hat.",
+    faq4Question: "Kann ich xScrabbler für andere Wortspiele verwenden?",
+    faq4Answer:
+      "Absolut! xScrabbler funktioniert perfekt als Punktezähler für Scrabble, Scarabeo und ähnliche Spiele. Es unterstützt mehrere Sprachen und Punktesysteme.",
   },
 
   // Common

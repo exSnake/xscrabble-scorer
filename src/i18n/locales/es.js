@@ -62,6 +62,19 @@ export default {
       "Usa la calculadora rápida para introducir rápidamente palabras y puntuaciones. Ideal para partidas rápidas o cuando prefieres calcular las puntuaciones manualmente. Más simple y directo, perfecto para quienes quieren concentrarse en el juego sin distracciones.",
     tryBoard: "Prueba el Tablero",
     tryScorer: "Prueba la Calculadora",
+    faqTitle: "Preguntas Frecuentes",
+    faq1Question: "¿Qué es un contador de puntos Scrabble?",
+    faq1Answer:
+      "Un contador de puntos (o marcador) es una herramienta que te ayuda a seguir las puntuaciones durante una partida de Scrabble. xScrabbler es un contador Scrabble digital gratuito que calcula automáticamente los puntos, bonos y gestiona el temporizador para cada turno.",
+    faq2Question: "¿Cómo funciona la calculadora de puntuación Scrabble?",
+    faq2Answer:
+      "La calculadora Scrabble de xScrabbler te permite introducir las palabras jugadas y calcula automáticamente la puntuación considerando los bonos de letra (DL, TL) y palabra (DP, TP). También puedes usar el tablero interactivo para colocar palabras visualmente.",
+    faq3Question: "¿Hay un temporizador Scrabble integrado?",
+    faq3Answer:
+      "¡Sí! xScrabbler incluye un temporizador Scrabble integrado que puedes personalizar en la configuración. Perfecto para partidas competitivas donde cada jugador tiene tiempo limitado para su turno.",
+    faq4Question: "¿Puedo usar xScrabbler para otros juegos de palabras?",
+    faq4Answer:
+      "¡Por supuesto! xScrabbler funciona perfectamente como contador de puntos para Scrabble, Scarabeo y juegos similares. Soporta múltiples idiomas y sistemas de puntuación.",
   },
 
   // Common

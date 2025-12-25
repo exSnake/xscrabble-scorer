@@ -62,6 +62,19 @@ export default {
       "Utilisez le calculateur rapide pour entrer rapidement les mots et les scores. Idéal pour les parties rapides ou lorsque vous préférez calculer les scores manuellement. Plus simple et plus direct, parfait pour ceux qui veulent se concentrer sur le jeu sans distractions.",
     tryBoard: "Essayer le Tablier",
     tryScorer: "Essayer le Calculateur",
+    faqTitle: "Questions Fréquentes",
+    faq1Question: "Qu'est-ce qu'un compteur de points Scrabble?",
+    faq1Answer:
+      "Un compteur de points (ou compte-points) est un outil qui vous aide à suivre les scores pendant une partie de Scrabble. xScrabbler est un compteur Scrabble numérique gratuit qui calcule automatiquement les points, les bonus et gère le minuteur pour chaque tour.",
+    faq2Question: "Comment fonctionne le calculateur de score Scrabble?",
+    faq2Answer:
+      "Le calculateur Scrabble de xScrabbler vous permet d'entrer les mots joués et calcule automatiquement le score en tenant compte des bonus de lettre (DL, TL) et de mot (DM, TM). Vous pouvez également utiliser le tablier interactif pour placer les mots visuellement.",
+    faq3Question: "Y a-t-il un minuteur Scrabble intégré?",
+    faq3Answer:
+      "Oui! xScrabbler inclut un minuteur Scrabble intégré que vous pouvez personnaliser dans les paramètres. Parfait pour les parties compétitives où chaque joueur a un temps limité pour son tour.",
+    faq4Question: "Puis-je utiliser xScrabbler pour d'autres jeux de mots?",
+    faq4Answer:
+      "Absolument! xScrabbler fonctionne parfaitement comme compteur de points pour Scrabble, Scarabeo et jeux similaires. Il supporte plusieurs langues et systèmes de score.",
   },
 
   // Common

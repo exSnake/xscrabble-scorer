@@ -61,6 +61,19 @@ export default {
       "Gebruik de snelle scorecalculator om snel woorden en scores in te voeren. Ideaal voor snelle spellen of wanneer je de voorkeur geeft aan handmatige scoreberekening. Eenvoudiger en directer, perfect voor degenen die zich willen concentreren op het spel zonder afleiding.",
     tryBoard: "Probeer het Bordspel",
     tryScorer: "Probeer de Scorecalculator",
+    faqTitle: "Veelgestelde Vragen",
+    faq1Question: "Wat is een Scrabble scorebord?",
+    faq1Answer:
+      "Een scorebord (of punten teller) is een hulpmiddel dat je helpt om de scores bij te houden tijdens een Scrabble-spel. xScrabbler is een gratis digitaal Scrabble scorebord dat automatisch punten, bonussen berekent en de timer voor elke beurt beheert.",
+    faq2Question: "Hoe werkt de Scrabble scorecalculator?",
+    faq2Answer:
+      "De xScrabbler scorecalculator laat je gespeelde woorden invoeren en berekent automatisch de score rekening houdend met letterbonussen (DL, TL) en woordbonussen (DW, TW). Je kunt ook het interactieve bord gebruiken om woorden visueel te plaatsen.",
+    faq3Question: "Is er een ingebouwde Scrabble timer?",
+    faq3Answer:
+      "Ja! xScrabbler bevat een ingebouwde Scrabble timer die je kunt aanpassen in de instellingen. Perfect voor competitieve spellen waar elke speler beperkte tijd heeft voor zijn beurt.",
+    faq4Question: "Kan ik xScrabbler gebruiken voor andere woordspellen?",
+    faq4Answer:
+      "Absoluut! xScrabbler werkt perfect als scorebord voor Scrabble, Scarabeo en vergelijkbare spellen. Het ondersteunt meerdere talen en scoresystemen.",
   },
 
   // Common

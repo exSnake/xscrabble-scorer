@@ -393,6 +393,90 @@ const localePath = (path) => {
       </div>
     </section>
 
+    <!-- FAQ Section for SEO -->
+    <section class="py-16 px-6 bg-white dark:bg-gray-800">
+      <div class="max-w-4xl mx-auto">
+        <div class="text-center mb-12">
+          <h2
+            class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4"
+          >
+            {{ t("home.faqTitle") }}
+          </h2>
+          <div class="w-20 h-1 bg-rose-600 mx-auto" />
+        </div>
+
+        <div class="space-y-6">
+          <!-- FAQ 1 -->
+          <details
+            class="bg-gray-50 dark:bg-gray-700 rounded-xl p-6 shadow-md border border-gray-100 dark:border-gray-600 group"
+          >
+            <summary
+              class="text-lg font-semibold text-gray-900 dark:text-white cursor-pointer list-none flex justify-between items-center"
+            >
+              {{ t("home.faq1Question") }}
+              <LucideChevronDown
+                class="w-5 h-5 text-gray-500 group-open:rotate-180 transition-transform"
+              />
+            </summary>
+            <p class="mt-4 text-gray-600 dark:text-gray-300">
+              {{ t("home.faq1Answer") }}
+            </p>
+          </details>
+
+          <!-- FAQ 2 -->
+          <details
+            class="bg-gray-50 dark:bg-gray-700 rounded-xl p-6 shadow-md border border-gray-100 dark:border-gray-600 group"
+          >
+            <summary
+              class="text-lg font-semibold text-gray-900 dark:text-white cursor-pointer list-none flex justify-between items-center"
+            >
+              {{ t("home.faq2Question") }}
+              <LucideChevronDown
+                class="w-5 h-5 text-gray-500 group-open:rotate-180 transition-transform"
+              />
+            </summary>
+            <p class="mt-4 text-gray-600 dark:text-gray-300">
+              {{ t("home.faq2Answer") }}
+            </p>
+          </details>
+
+          <!-- FAQ 3 -->
+          <details
+            class="bg-gray-50 dark:bg-gray-700 rounded-xl p-6 shadow-md border border-gray-100 dark:border-gray-600 group"
+          >
+            <summary
+              class="text-lg font-semibold text-gray-900 dark:text-white cursor-pointer list-none flex justify-between items-center"
+            >
+              {{ t("home.faq3Question") }}
+              <LucideChevronDown
+                class="w-5 h-5 text-gray-500 group-open:rotate-180 transition-transform"
+              />
+            </summary>
+            <p class="mt-4 text-gray-600 dark:text-gray-300">
+              {{ t("home.faq3Answer") }}
+            </p>
+          </details>
+
+          <!-- FAQ 4 -->
+          <details
+            class="bg-gray-50 dark:bg-gray-700 rounded-xl p-6 shadow-md border border-gray-100 dark:border-gray-600 group"
+          >
+            <summary
+              class="text-lg font-semibold text-gray-900 dark:text-white cursor-pointer list-none flex justify-between items-center"
+            >
+              {{ t("home.faq4Question") }}
+              <LucideChevronDown
+                class="w-5 h-5 text-gray-500 group-open:rotate-180 transition-transform"
+              />
+            </summary>
+            <p class="mt-4 text-gray-600 dark:text-gray-300">
+              {{ t("home.faq4Answer") }}
+            </p>
+          </details>
+        </div>
+      </div>
+    </section>
+
     <!-- Call to Action Section -->
     <section class="py-20 px-6 relative overflow-hidden">
       <div
@@ -415,35 +499,126 @@ const localePath = (path) => {
       </div>
     </section>
 
-    <!-- Hidden SEO Content -->
-    <section class="sr-only">
-      <div>
-        <h2>Calcolatore di punteggio per Scrabble e Scarabeo</h2>
+    <!-- Hidden SEO Content - Multilingual for search engines -->
+    <section class="sr-only" aria-hidden="true">
+      <article lang="it">
+        <h2>Porta Conto Scrabble e Scarabeo Online Gratis</h2>
         <p>
-          xScrabbler è il miglior calcolatore di punteggio online per Scrabble e
-          Scarabeo. Questo strumento gratuito ti permette di tenere traccia dei
-          punteggi di tutti i giocatori in modo semplice e intuitivo. Aggiungi
-          parole, calcola i bonus e visualizza il punteggio totale con
-          un'interfaccia moderna e facile da usare.
+          xScrabbler è il miglior porta conto e calcolatore di punteggio online
+          per Scrabble e Scarabeo. Questo porta conti gratuito ti permette di
+          tenere traccia dei punteggi di tutti i giocatori in modo semplice e
+          intuitivo.
         </p>
+        <h3>Calcolatore Punteggio Scrabble</h3>
         <p>
-          Ideale per partite di Scrabble o Scarabeo con amici e familiari,
-          xScrabbler ti aiuta a concentrarti sul gioco senza preoccuparti di
-          calcolare manualmente i punteggi.
+          Cerchi un calcolatore Scrabble online? xScrabbler calcola
+          automaticamente i punti, i bonus parola e lettera, e tiene traccia del
+          punteggio Scrabble di ogni giocatore.
         </p>
-        <h2>Online Scrabble Score Tracker</h2>
+        <h3>Porta Punteggio Scarabeo</h3>
         <p>
-          xScrabbler is a free online score calculator for Scrabble and similar
-          word games. This web application lets you easily track scores, add
-          words, calculate bonuses, and manage game time with a built-in timer.
+          Il nostro porta punteggio Scarabeo è perfetto per le tue partite.
+          Timer Scrabble integrato per partite competitive. Segna punti
+          facilmente con il nostro calcolatore Scarabeo.
         </p>
+        <h3>Timer Scrabble e Timer Scarabeo</h3>
         <p>
-          Perfect for casual games or competitive matches, xScrabbler supports
-          multiple languages including English, Italian, French, Spanish,
-          German, Dutch, Portuguese, and Estonian, making it the ideal companion
-          for your word games.
+          Timer integrato per Scrabble e Scarabeo. Imposta il tempo per turno e
+          gioca partite competitive con amici e familiari.
         </p>
-      </div>
+      </article>
+
+      <article lang="en">
+        <h2>Free Online Scrabble Score Keeper</h2>
+        <p>
+          xScrabbler is the best free Scrabble score keeper and score tracker
+          online. This web application lets you easily track scores, add words,
+          calculate bonuses, and manage game time with a built-in Scrabble
+          timer.
+        </p>
+        <h3>Scrabble Score Tracker Online</h3>
+        <p>
+          Looking for a Scrabble scorecard? xScrabbler is your perfect Scrabble
+          points counter. Track all players' scores, calculate word and letter
+          bonuses automatically.
+        </p>
+        <h3>Word Game Score Keeper</h3>
+        <p>
+          The ultimate word game score keeper online. Perfect for Scrabble,
+          Words with Friends, and similar word games. Free Scrabble score
+          calculator with multiplayer support.
+        </p>
+      </article>
+
+      <article lang="fr">
+        <h2>Compteur de Points Scrabble Gratuit</h2>
+        <p>
+          xScrabbler est le meilleur compteur Scrabble en ligne gratuit.
+          Compte-points Scrabble automatique avec minuteur intégré. Calculez
+          facilement les scores de tous les joueurs.
+        </p>
+        <h3>Compteur Points Scrabble en Ligne</h3>
+        <p>
+          Notre compteur de points Scrabble calcule automatiquement les bonus de
+          mots et de lettres. Parfait pour vos parties de Scrabble en famille ou
+          entre amis.
+        </p>
+      </article>
+
+      <article lang="es">
+        <h2>Contador de Puntos Scrabble Gratis</h2>
+        <p>
+          xScrabbler es el mejor contador Scrabble online gratuito. Marcador
+          Scrabble con temporizador integrado. Calcula la puntuación Scrabble de
+          todos los jugadores.
+        </p>
+        <h3>Marcador Scrabble Online</h3>
+        <p>
+          Nuestro contador de puntos Scrabble calcula automáticamente los bonos
+          de palabras y letras. Perfecto para tus partidas de Scrabble con
+          familia y amigos.
+        </p>
+      </article>
+
+      <article lang="de">
+        <h2>Scrabble Punktezähler Kostenlos</h2>
+        <p>
+          xScrabbler ist der beste Scrabble Punktezähler online. Scrabble
+          Punktestand automatisch berechnen mit integriertem Timer. Verfolgen
+          Sie die Punkte aller Spieler.
+        </p>
+        <h3>Scrabble Punkte Online Zählen</h3>
+        <p>
+          Unser Scrabble Punktezähler online berechnet automatisch Wort- und
+          Buchstabenboni. Perfekt für Ihre Scrabble-Spiele mit Familie und
+          Freunden.
+        </p>
+      </article>
+
+      <article lang="nl">
+        <h2>Scrabble Scorebord Gratis</h2>
+        <p>
+          xScrabbler is het beste Scrabble scorebord online. Scrabble punten
+          teller met geïntegreerde timer. Houd de score van alle spelers bij.
+        </p>
+      </article>
+
+      <article lang="pt">
+        <h2>Contador de Pontos Scrabble Grátis</h2>
+        <p>
+          xScrabbler é o melhor placar Scrabble online gratuito. Pontuação
+          Scrabble com cronômetro integrado. Calcule os pontos de todos os
+          jogadores.
+        </p>
+      </article>
+
+      <article lang="et">
+        <h2>Scrabble Punktiarvestus Tasuta</h2>
+        <p>
+          xScrabbler on parim Scrabble punktiarvestus veebis. Scrabble punktid
+          ja taimer integreeritud. Jälgige kõigi mängijate tulemusi.
+        </p>
+      </article>
     </section>
   </div>
 </template>

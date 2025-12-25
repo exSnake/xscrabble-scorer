@@ -61,6 +61,19 @@ export default {
       "Usa il calcolatore rapido per inserire velocemente parole e punteggi. Ideale per partite veloci o quando preferisci calcolare manualmente i punteggi. Più semplice e diretto, perfetto per chi vuole concentrarsi sul gioco senza distrazioni.",
     tryBoard: "Prova il Tabellone",
     tryScorer: "Prova il Calcolatore",
+    faqTitle: "Domande Frequenti",
+    faq1Question: "Cos'è un porta conto per Scrabble e Scarabeo?",
+    faq1Answer:
+      "Un porta conto (o porta punteggio) è uno strumento che ti aiuta a tenere traccia dei punteggi durante una partita di Scrabble o Scarabeo. xScrabbler è un porta conti digitale gratuito che calcola automaticamente i punti, i bonus e gestisce il timer per ogni turno.",
+    faq2Question: "Come funziona il calcolatore punteggio Scrabble?",
+    faq2Answer:
+      "Il calcolatore Scrabble di xScrabbler ti permette di inserire le parole giocate e calcola automaticamente il punteggio considerando i bonus lettera (DL, TL) e parola (DP, TP). Puoi anche usare il tabellone interattivo per posizionare le parole visivamente.",
+    faq3Question: "C'è un timer per Scrabble integrato?",
+    faq3Answer:
+      "Sì! xScrabbler include un timer Scrabble (e timer Scarabeo) integrato che puoi personalizzare nelle impostazioni. Perfetto per partite competitive dove ogni giocatore ha un tempo limitato per il proprio turno.",
+    faq4Question: "Posso usare xScrabbler anche per Scarabeo?",
+    faq4Answer:
+      "Assolutamente sì! xScrabbler funziona perfettamente come calcolatore Scarabeo e porta punteggio Scarabeo. Supporta i valori delle lettere italiane e i bonus del gioco Scarabeo.",
   },
 
   // Common

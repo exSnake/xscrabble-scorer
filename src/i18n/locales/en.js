@@ -61,6 +61,19 @@ export default {
       "Use the quick scorer to rapidly enter words and scores. Ideal for fast games or when you prefer to calculate scores manually. Simpler and more direct, perfect for those who want to focus on the game without distractions.",
     tryBoard: "Try the Board",
     tryScorer: "Try the Scorer",
+    faqTitle: "Frequently Asked Questions",
+    faq1Question: "What is a Scrabble score keeper?",
+    faq1Answer:
+      "A Scrabble score keeper (or score tracker) is a tool that helps you track scores during a Scrabble game. xScrabbler is a free digital scorecard that automatically calculates points, bonuses, and manages the timer for each turn.",
+    faq2Question: "How does the Scrabble score calculator work?",
+    faq2Answer:
+      "The xScrabbler score calculator lets you enter played words and automatically calculates the score considering letter bonuses (DL, TL) and word bonuses (DW, TW). You can also use the interactive board to place words visually.",
+    faq3Question: "Is there a built-in Scrabble timer?",
+    faq3Answer:
+      "Yes! xScrabbler includes a built-in Scrabble timer that you can customize in settings. Perfect for competitive games where each player has limited time for their turn.",
+    faq4Question: "Can I use xScrabbler for other word games?",
+    faq4Answer:
+      "Absolutely! xScrabbler works perfectly as a word game score keeper for Scrabble, Scarabeo (Italian Scrabble), Words with Friends, and similar games. It supports multiple languages and scoring systems.",
   },
 
   // Common
