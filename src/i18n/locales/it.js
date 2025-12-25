@@ -314,7 +314,7 @@ export default {
     nameLabel: "Il tuo nome",
     namePlaceholder: "Mario Rossi",
     emailLabel: "Indirizzo email",
-    emailPlaceholder: "mario@esempio.com",
+    emailPlaceholder: "mario{'@'}esempio.com",
     messageLabel: "Messaggio",
     messagePlaceholder:
       "Condividi suggerimenti, segnala bug o semplicemente salutaci...",

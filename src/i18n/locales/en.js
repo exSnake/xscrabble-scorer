@@ -308,7 +308,7 @@ export default {
     nameLabel: "Your Name",
     namePlaceholder: "John Doe",
     emailLabel: "Email Address",
-    emailPlaceholder: "john@example.com",
+    emailPlaceholder: "john{'@'}example.com",
     messageLabel: "Message",
     messagePlaceholder:
       "Share your suggestions, report bugs, or just say hello...",
