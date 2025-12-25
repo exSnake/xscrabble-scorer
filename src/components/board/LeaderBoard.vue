@@ -82,19 +82,42 @@ const handleResetConfirm = (confirmed) => {
       {{ t("boardView.ranking") }}
     </h3>
 
-    <!-- Add Player Form -->
-    <div v-if="canAddPlayer" class="mb-3">
+    <!-- Add Player Form - Enfatizzato quando non ci sono giocatori -->
+    <div
+      v-if="canAddPlayer"
+      class="mb-3 p-3 rounded-lg transition-all duration-300"
+      :class="{
+        'bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-900/30 dark:to-orange-900/30 border-2 border-amber-400 dark:border-amber-500 ring-2 ring-amber-200 dark:ring-amber-900/50 animate-pulse-slow':
+          players.length === 0,
+        'bg-transparent border-0': players.length > 0,
+      }"
+    >
+      <div v-if="players.length === 0" class="mb-2 text-center">
+        <p class="text-xs font-semibold text-amber-700 dark:text-amber-400">
+          👇 Aggiungi il primo giocatore
+        </p>
+      </div>
       <div class="flex gap-2">
         <input
           v-model="newPlayerName"
           type="text"
           placeholder="Player name..."
-          class="flex-1 px-3 py-2 text-sm bg-gray-50 dark:bg-gray-600 dark:text-white border border-gray-300 dark:border-gray-500 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-300"
+          class="flex-1 px-3 py-2 text-sm bg-white dark:bg-gray-600 dark:text-white border border-gray-300 dark:border-gray-500 rounded-lg focus:outline-none transition-all duration-200"
+          :class="{
+            'focus:border-amber-500 focus:ring-2 focus:ring-amber-300':
+              players.length === 0,
+            'focus:border-blue-500 focus:ring-1 focus:ring-blue-300':
+              players.length > 0,
+          }"
           @keyup.enter="handleAddPlayer"
         />
         <button
           :disabled="!newPlayerName.trim()"
-          class="px-3 py-2 bg-blue-500 hover:bg-blue-600 text-white text-sm rounded-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          class="px-3 py-2 text-white text-sm rounded-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          :class="{
+            'bg-amber-500 hover:bg-amber-600': players.length === 0,
+            'bg-blue-500 hover:bg-blue-600': players.length > 0,
+          }"
           @click="handleAddPlayer"
         >
           ➕
@@ -181,3 +204,19 @@ const handleResetConfirm = (confirmed) => {
     />
   </div>
 </template>
+
+<style scoped>
+@keyframes pulse-slow {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+</style>

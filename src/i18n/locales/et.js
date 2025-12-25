@@ -134,6 +134,8 @@ export default {
     resetBoard: "Lähtesta Laud",
     players: "Mängijad",
     addPlayerToStart: "Lisa mängija, et alustada",
+    addPlayersPrompt: "Kasuta 'Edetabel' paneeli, et lisada 1 kuni 4 mängijat",
+    addMorePlayers: "Lisa rohkem mängijaid",
     resetBoardTitle: "Lähtesta Laud",
     resetBoardMessage:
       "Kas olete kindel, et soovite lauda lähtestada? Kõik sõnad kustutatakse ja laud lähtestatakse.",
@@ -200,7 +202,8 @@ export default {
     timer: "Taimer",
     seconds: "(sekundit)",
     scoringDictionary: "Scrabble Sõnastik",
-    scoringDictionaryHint: "Määrab tähtede punktiväärtused teie mänguversiooni jaoks",
+    scoringDictionaryHint:
+      "Määrab tähtede punktiväärtused teie mänguversiooni jaoks",
     points: "(punkti)",
     bonus: "Boonus",
     maxWordLength: "Maksimaalne Sõna Pikkus",

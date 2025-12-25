@@ -136,6 +136,9 @@ export default {
     resetBoard: "Reiniciar Tablero",
     players: "Jugadores",
     addPlayerToStart: "Añade un jugador para comenzar",
+    addPlayersPrompt:
+      "Usa el panel 'Clasificación' para añadir de 1 a 4 jugadores",
+    addMorePlayers: "Añadir más jugadores",
     resetBoardTitle: "Reiniciar Tablero",
     resetBoardMessage:
       "¿Estás seguro de que quieres reiniciar el tablero? Todas las palabras serán eliminadas y el tablero se reiniciará.",
@@ -202,7 +205,8 @@ export default {
     timer: "Temporizador",
     seconds: "(segundos)",
     scoringDictionary: "Diccionario Scrabble",
-    scoringDictionaryHint: "Determina los puntos de las letras según la versión del juego",
+    scoringDictionaryHint:
+      "Determina los puntos de las letras según la versión del juego",
     points: "(puntos)",
     bonus: "Bonus",
     maxWordLength: "Longitud Máxima de Palabra",

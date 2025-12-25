@@ -2,6 +2,7 @@
 import { useI18n } from "vue-i18n";
 import { useRoute } from "vue-router";
 import { computed } from "vue";
+import ContactForm from "./ContactForm.vue";
 
 const { t } = useI18n();
 const route = useRoute();
@@ -476,6 +477,9 @@ const localePath = (path) => {
         </div>
       </div>
     </section>
+
+    <!-- Contact Form Section -->
+    <ContactForm />
 
     <!-- Call to Action Section -->
     <section class="py-20 px-6 relative overflow-hidden">

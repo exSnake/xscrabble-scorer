@@ -136,6 +136,9 @@ export default {
     resetBoard: "Réinitialiser Plateau",
     players: "Joueurs",
     addPlayerToStart: "Ajoutez un joueur pour commencer",
+    addPlayersPrompt:
+      "Utilisez le panneau 'Classement' pour ajouter 1 à 4 joueurs",
+    addMorePlayers: "Ajouter plus de joueurs",
     resetBoardTitle: "Réinitialiser Plateau",
     resetBoardMessage:
       "Êtes-vous sûr de vouloir réinitialiser le plateau? Tous les mots seront effacés et le plateau sera réinitialisé.",
@@ -202,7 +205,8 @@ export default {
     timer: "Minuteur",
     seconds: "(secondes)",
     scoringDictionary: "Dictionnaire Scrabble",
-    scoringDictionaryHint: "Détermine la valeur des lettres selon la version du jeu",
+    scoringDictionaryHint:
+      "Détermine la valeur des lettres selon la version du jeu",
     points: "(points)",
     bonus: "Bonus",
     maxWordLength: "Longueur Maximale du Mot",

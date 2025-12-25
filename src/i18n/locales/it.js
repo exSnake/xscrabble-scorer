@@ -134,6 +134,9 @@ export default {
     resetBoard: "Reset Scacchiera",
     players: "Giocatori",
     addPlayerToStart: "Aggiungi un giocatore per iniziare",
+    addPlayersPrompt:
+      "Usa il pannello 'Classifica' per aggiungere da 1 a 4 giocatori",
+    addMorePlayers: "Aggiungi altri giocatori",
     resetBoardTitle: "Reset Scacchiera",
     resetBoardMessage:
       "Sei sicuro di voler resettare la scacchiera? Tutte le parole verranno cancellate e la scacchiera verrà resettata.",
@@ -172,7 +175,8 @@ export default {
     addPlayersFirst: "Prima aggiungi dei giocatori per iniziare",
     selectPlayerFirst: "Seleziona un giocatore per aggiungere parole",
     noPlayersYet: "Nessun giocatore ancora",
-    clickBelowToAdd: "Usa il modulo qui sotto per aggiungere il primo giocatore",
+    clickBelowToAdd:
+      "Usa il modulo qui sotto per aggiungere il primo giocatore",
   },
 
   // Scorer Add Word
@@ -200,7 +204,8 @@ export default {
     timer: "Timer",
     seconds: "(secondi)",
     scoringDictionary: "Dizionario Scrabble",
-    scoringDictionaryHint: "Determina i punti delle lettere per la versione del gioco",
+    scoringDictionaryHint:
+      "Determina i punti delle lettere per la versione del gioco",
     points: "(punti)",
     bonus: "Bonus",
     maxWordLength: "Lunghezza Massima Parola",
@@ -299,5 +304,30 @@ export default {
       "Utilizziamo cookie analitici per migliorare la tua esperienza e analizzare il traffico del sito. Accettando, ci aiuti a migliorare xScrabbler.",
     accept: "Accetta",
     refuse: "Rifiuta",
+  },
+
+  // Contact Form
+  contact: {
+    title: "Contattaci",
+    subtitle:
+      "Hai suggerimenti, feedback o hai trovato un bug? Faccelo sapere!",
+    nameLabel: "Il tuo nome",
+    namePlaceholder: "Mario Rossi",
+    emailLabel: "Indirizzo email",
+    emailPlaceholder: "mario@esempio.com",
+    messageLabel: "Messaggio",
+    messagePlaceholder:
+      "Condividi suggerimenti, segnala bug o semplicemente salutaci...",
+    messageHint: "Minimo 10 caratteri",
+    submit: "Invia messaggio",
+    sending: "Invio in corso...",
+    successTitle: "Messaggio inviato!",
+    successMessage:
+      "Grazie per il tuo feedback. Ti risponderemo al più presto!",
+    errorTitle: "Ops! Qualcosa è andato storto",
+    errorGeneric: "Impossibile inviare il messaggio. Riprova più tardi.",
+    errorNetwork: "Errore di rete. Controlla la connessione e riprova.",
+    privacyNote:
+      "Le tue informazioni saranno utilizzate solo per rispondere al tuo messaggio.",
   },
 };

@@ -27,7 +27,7 @@ let focusTimeout = null;
 // Watch for word changes to update preview and play sounds
 watch(word, (newWord, oldWord) => {
   updatePreviewWord(newWord);
-  
+
   // Suona quando si aggiunge una lettera
   if (newWord.length > (oldWord?.length || 0)) {
     playTilePlace(newWord.length - 1);

@@ -131,6 +131,8 @@ export default {
     resetBoard: "Reset Board",
     players: "Players",
     addPlayerToStart: "Add a player to start",
+    addPlayersPrompt: "Use the 'Ranking' panel to add 1 to 4 players",
+    addMorePlayers: "Add more players",
     resetBoardTitle: "Reset Board",
     resetBoardMessage:
       "Are you sure you want to reset the board? All words will be cleared and the board will be reset to empty.",
@@ -197,7 +199,8 @@ export default {
     timer: "Timer",
     seconds: "(seconds)",
     scoringDictionary: "Scrabble Dictionary",
-    scoringDictionaryHint: "Determines letter point values for your game version",
+    scoringDictionaryHint:
+      "Determines letter point values for your game version",
     points: "(points)",
     bonus: "Bonus",
     maxWordLength: "Max Word Length",
@@ -295,5 +298,29 @@ export default {
       "We use analytics cookies to improve your experience and analyze site traffic. By accepting, you help us improve xScrabbler.",
     accept: "Accept",
     refuse: "Refuse",
+  },
+
+  // Contact Form
+  contact: {
+    title: "Get in Touch",
+    subtitle:
+      "Have suggestions, feedback, or found a bug? We'd love to hear from you!",
+    nameLabel: "Your Name",
+    namePlaceholder: "John Doe",
+    emailLabel: "Email Address",
+    emailPlaceholder: "john@example.com",
+    messageLabel: "Message",
+    messagePlaceholder:
+      "Share your suggestions, report bugs, or just say hello...",
+    messageHint: "Minimum 10 characters",
+    submit: "Send Message",
+    sending: "Sending...",
+    successTitle: "Message sent!",
+    successMessage: "Thank you for your feedback. We'll get back to you soon!",
+    errorTitle: "Oops! Something went wrong",
+    errorGeneric: "Unable to send the message. Please try again later.",
+    errorNetwork: "Network error. Please check your connection and try again.",
+    privacyNote:
+      "Your information will only be used to respond to your message.",
   },
 };

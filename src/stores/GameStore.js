@@ -76,6 +76,12 @@ export const useGameStore = defineStore("game", () => {
       return;
     }
 
+    // Safety guard: ensure there's an active player
+    if (!activePlayer.value) {
+      toast.error(i18n.global.t("store.noActivePlayer"));
+      return;
+    }
+
     activePlayer.value.words.push({
       id: activePlayer.value.words.length + 1,
       text: word.text,

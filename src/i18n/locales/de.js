@@ -136,6 +136,9 @@ export default {
     resetBoard: "Brett zurücksetzen",
     players: "Spieler",
     addPlayerToStart: "Fügen Sie einen Spieler hinzu, um zu beginnen",
+    addPlayersPrompt:
+      "Verwenden Sie das 'Rangliste'-Panel, um 1 bis 4 Spieler hinzuzufügen",
+    addMorePlayers: "Weitere Spieler hinzufügen",
     resetBoardTitle: "Brett zurücksetzen",
     resetBoardMessage:
       "Sind Sie sicher, dass Sie das Brett zurücksetzen möchten? Alle Wörter werden gelöscht und das Brett wird zurückgesetzt.",
@@ -169,13 +172,15 @@ export default {
     step1: "Schritt 1: Spieler Hinzufügen",
     step1Desc: "Verwenden Sie das Formular, um 1 bis 4 Spieler hinzuzufügen",
     step2: "Schritt 2: Spieler Auswählen",
-    step2Desc: "Klicken Sie auf einen Spieler, um ihn zu aktivieren und zu spielen",
+    step2Desc:
+      "Klicken Sie auf einen Spieler, um ihn zu aktivieren und zu spielen",
     step3: "Schritt 3: Wörter Hinzufügen",
     step3Desc: "Geben Sie Wörter und Punkte für den aktiven Spieler ein",
     addPlayersFirst: "Fügen Sie zuerst Spieler hinzu, um zu beginnen",
     selectPlayerFirst: "Wählen Sie einen Spieler aus, um Wörter hinzuzufügen",
     noPlayersYet: "Noch keine Spieler",
-    clickBelowToAdd: "Verwenden Sie das Formular, um den ersten Spieler hinzuzufügen",
+    clickBelowToAdd:
+      "Verwenden Sie das Formular, um den ersten Spieler hinzuzufügen",
   },
 
   // Scorer Add Word
@@ -203,7 +208,8 @@ export default {
     timer: "Timer",
     seconds: "(Sekunden)",
     scoringDictionary: "Scrabble-Wörterbuch",
-    scoringDictionaryHint: "Bestimmt die Buchstabenpunkte für Ihre Spielversion",
+    scoringDictionaryHint:
+      "Bestimmt die Buchstabenpunkte für Ihre Spielversion",
     points: "(Punkte)",
     bonus: "Bonus",
     maxWordLength: "Maximale Wortlänge",

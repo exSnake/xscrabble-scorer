@@ -4,16 +4,17 @@ import { useI18n } from "vue-i18n";
 import { useAnalytics } from "@/composables/useAnalytics";
 
 const { t } = useI18n();
-const { initGA, hasConsent } = useAnalytics();
+const { initGA } = useAnalytics();
 
 const showBanner = ref(false);
 const isVisible = ref(false);
 
 const CONSENT_KEY = "cookie_consent";
+const ANIMATION_DURATION = 300; // ms
 
 onMounted(() => {
   const consent = localStorage.getItem(CONSENT_KEY);
-  
+
   if (consent === null) {
     // No decision yet, show banner
     showBanner.value = true;
@@ -43,7 +44,7 @@ const closeBanner = () => {
   isVisible.value = false;
   setTimeout(() => {
     showBanner.value = false;
-  }, 300);
+  }, ANIMATION_DURATION);
 };
 </script>
 
@@ -94,14 +95,14 @@ const closeBanner = () => {
             <!-- Buttons -->
             <div class="flex flex-col sm:flex-row gap-2 md:flex-shrink-0">
               <button
-                @click="refuseCookies"
                 class="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg transition-colors"
+                @click="refuseCookies"
               >
                 {{ t("cookies.refuse") }}
               </button>
               <button
-                @click="acceptCookies"
                 class="px-4 py-2 text-sm font-medium text-white bg-rose-600 hover:bg-rose-700 rounded-lg transition-colors shadow-md"
+                @click="acceptCookies"
               >
                 {{ t("cookies.accept") }}
               </button>
@@ -125,4 +126,3 @@ const closeBanner = () => {
   opacity: 0;
 }
 </style>
-

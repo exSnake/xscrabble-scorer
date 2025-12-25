@@ -13,6 +13,10 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const boardGame = useBoardGameStore();
@@ -25,6 +29,9 @@ const gridSize = computed(() => props.grid?.length || 15);
 const centerPosition = computed(() => Math.floor(gridSize.value / 2));
 
 function handleCellClick(row, col) {
+  // Don't allow clicks if board is disabled
+  if (props.disabled) return;
+
   // Allow selection even if cell is occupied (to start words from existing letters)
   selectCell(row, col);
   playCellSelect();

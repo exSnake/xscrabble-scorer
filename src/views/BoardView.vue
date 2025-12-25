@@ -104,9 +104,56 @@ onMounted(() => {
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
         <!-- Left: Board (spans 2 columns on large screens) -->
         <div
-          class="lg:col-span-2 bg-white dark:bg-gray-700 rounded-xl shadow-lg p-4"
+          class="lg:col-span-2 bg-white dark:bg-gray-700 rounded-xl shadow-lg p-4 relative"
         >
-          <div class="mx-auto w-fit">
+          <!-- Overlay quando non ci sono giocatori -->
+          <div
+            v-if="players.length === 0"
+            class="absolute inset-0 bg-white/90 dark:bg-gray-700/90 backdrop-blur-sm rounded-xl flex flex-col items-center justify-center z-10"
+          >
+            <div
+              class="bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-900/30 dark:to-orange-900/30 border-2 border-amber-400 dark:border-amber-600 rounded-xl p-6 shadow-xl max-w-md mx-4"
+            >
+              <div class="text-center">
+                <div
+                  class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-amber-500 mb-4"
+                >
+                  <svg
+                    class="w-8 h-8 text-white"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
+                    />
+                  </svg>
+                </div>
+                <h3
+                  class="text-xl font-bold text-gray-900 dark:text-white mb-2"
+                >
+                  {{ t("boardView.addPlayerToStart") }}
+                </h3>
+                <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                  {{ t("boardView.addPlayersPrompt") }}
+                </p>
+                <div
+                  class="flex items-center justify-center gap-2 text-amber-600 dark:text-amber-400"
+                >
+                  <span class="text-2xl">→</span>
+                  <span class="font-semibold">Ranking</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="mx-auto w-fit"
+            :class="{ 'opacity-30': players.length === 0 }"
+          >
             <!-- Header aligned to board edges -->
             <div class="flex justify-between items-center mb-3">
               <h2
@@ -131,6 +178,7 @@ onMounted(() => {
               v-if="currentBoardConfig"
               :grid="boardGrid"
               :board-config="currentBoardConfig"
+              :disabled="players.length === 0"
             />
             <div v-else class="w-full flex items-center justify-center p-8">
               <div class="text-gray-500 dark:text-gray-400">
@@ -191,8 +239,9 @@ onMounted(() => {
         </div>
       </div>
 
-      <!-- Floating Word Input (appears when cell is selected) -->
+      <!-- Floating Word Input (appears when cell is selected AND there are players) -->
       <BoardWordPlacement
+        v-if="players.length > 0"
         :enabled="activePlayer != null"
         @place="handlePlaceWord"
       />
@@ -219,5 +268,19 @@ onMounted(() => {
 .v-enter-from,
 .v-leave-to {
   opacity: 0;
+}
+
+@keyframes pulse-slow {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 </style>

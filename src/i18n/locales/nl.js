@@ -135,6 +135,9 @@ export default {
     resetBoard: "Bord Resetten",
     players: "Spelers",
     addPlayerToStart: "Voeg een speler toe om te beginnen",
+    addPlayersPrompt:
+      "Gebruik het 'Ranglijst' paneel om 1 tot 4 spelers toe te voegen",
+    addMorePlayers: "Voeg meer spelers toe",
     resetBoardTitle: "Bord Resetten",
     resetBoardMessage:
       "Weet je zeker dat je het bord wilt resetten? Alle woorden worden gewist en het bord wordt gereset.",

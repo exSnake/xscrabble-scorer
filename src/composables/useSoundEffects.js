@@ -44,7 +44,10 @@ export const playSoundError = async () => {
     const gainNode = ctx.createGain();
 
     oscillator.frequency.setValueAtTime(300, ctx.currentTime);
-    oscillator.frequency.exponentialRampToValueAtTime(150, ctx.currentTime + 0.2);
+    oscillator.frequency.exponentialRampToValueAtTime(
+      150,
+      ctx.currentTime + 0.2,
+    );
     oscillator.type = "sawtooth";
 
     gainNode.gain.setValueAtTime(0, ctx.currentTime);
@@ -72,7 +75,10 @@ export const playSoundUndo = async () => {
     const gainNode = ctx.createGain();
 
     oscillator.frequency.setValueAtTime(600, ctx.currentTime);
-    oscillator.frequency.exponentialRampToValueAtTime(200, ctx.currentTime + 0.15);
+    oscillator.frequency.exponentialRampToValueAtTime(
+      200,
+      ctx.currentTime + 0.15,
+    );
     oscillator.type = "triangle";
 
     gainNode.gain.setValueAtTime(0, ctx.currentTime);
@@ -217,7 +223,10 @@ export function useSoundEffects() {
       const gainNode = ctx.createGain();
 
       oscillator.frequency.setValueAtTime(300, ctx.currentTime);
-      oscillator.frequency.exponentialRampToValueAtTime(150, ctx.currentTime + 0.2);
+      oscillator.frequency.exponentialRampToValueAtTime(
+        150,
+        ctx.currentTime + 0.2,
+      );
       oscillator.type = "sawtooth";
 
       gainNode.gain.setValueAtTime(0, ctx.currentTime);
@@ -279,7 +288,10 @@ export function useSoundEffects() {
 
       // Sweep discendente veloce
       oscillator.frequency.setValueAtTime(600, ctx.currentTime);
-      oscillator.frequency.exponentialRampToValueAtTime(200, ctx.currentTime + 0.15);
+      oscillator.frequency.exponentialRampToValueAtTime(
+        200,
+        ctx.currentTime + 0.15,
+      );
       oscillator.type = "triangle";
 
       gainNode.gain.setValueAtTime(0, ctx.currentTime);
@@ -310,7 +322,10 @@ export function useSoundEffects() {
       const gainNode = ctx.createGain();
 
       oscillator.frequency.setValueAtTime(400, ctx.currentTime);
-      oscillator.frequency.exponentialRampToValueAtTime(250, ctx.currentTime + 0.1);
+      oscillator.frequency.exponentialRampToValueAtTime(
+        250,
+        ctx.currentTime + 0.1,
+      );
       oscillator.type = "sine";
 
       gainNode.gain.setValueAtTime(0, ctx.currentTime);
@@ -347,4 +362,3 @@ export function useSoundEffects() {
     playClear,
   };
 }
-
