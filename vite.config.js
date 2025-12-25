@@ -25,12 +25,13 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: (id) => {
-          // Separare Vue core e runtime
           if (id.includes("node_modules")) {
+            // Vue, vue-router, pinia DEVONO stare insieme per evitare
+            // errori di inizializzazione in produzione
             if (id.includes("vue") && !id.includes("vue3-toastify")) {
-              if (id.includes("vue-router") || id.includes("pinia")) {
-                return "vue-vendor";
-              }
+              return "vue-core";
+            }
+            if (id.includes("pinia")) {
               return "vue-core";
             }
             // Separare le librerie di UI
