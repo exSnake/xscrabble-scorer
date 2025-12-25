@@ -2,9 +2,11 @@
 import { ref, watch, onBeforeUnmount } from "vue";
 import { storeToRefs } from "pinia";
 import { useBoardGameStore } from "@/stores/BoardGameStore";
+import { useSoundEffects } from "@/composables/useSoundEffects";
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
+const { playTilePlace, playWordConfirm, playClear } = useSoundEffects();
 
 defineProps({
   enabled: Boolean,
@@ -22,9 +24,14 @@ const showInstructions = ref(false);
 const hasBonus = ref(false); // Toggle per il bonus (bingo - tutte le tessere usate)
 let focusTimeout = null;
 
-// Watch for word changes to update preview
-watch(word, (newWord) => {
+// Watch for word changes to update preview and play sounds
+watch(word, (newWord, oldWord) => {
   updatePreviewWord(newWord);
+  
+  // Suona quando si aggiunge una lettera
+  if (newWord.length > (oldWord?.length || 0)) {
+    playTilePlace(newWord.length - 1);
+  }
 });
 
 // Auto-focus input when cell is selected or direction changes
@@ -78,6 +85,7 @@ function handlePlace() {
   }
 
   placeWordFromPreview(hasBonus.value);
+  playWordConfirm();
 
   // Reset
   word.value = "";
@@ -88,6 +96,7 @@ function handleClear() {
   word.value = "";
   hasBonus.value = false;
   clearSelection();
+  playClear();
 }
 </script>
 

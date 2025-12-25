@@ -4,6 +4,7 @@ import { useTimer } from "vue-timer-hook";
 import { useStorage } from "@vueuse/core";
 import { toast } from "vue3-toastify";
 import i18n from "@/i18n";
+import { playSoundError, playSoundUndo } from "@/composables/useSoundEffects";
 
 export const useBoardGameStore = defineStore("boardGame", () => {
   //#region State - Reusing from GameStore pattern
@@ -374,6 +375,7 @@ export const useBoardGameStore = defineStore("boardGame", () => {
     );
     if (!validation.valid) {
       toast.error(validation.error);
+      playSoundError();
       return;
     }
 
@@ -589,6 +591,7 @@ export const useBoardGameStore = defineStore("boardGame", () => {
   function undoLastMove() {
     if (moveHistory.value.length === 0) {
       toast.error(i18n.global.t("store.noMovesToUndo"));
+      playSoundError();
       return;
     }
 
@@ -613,6 +616,7 @@ export const useBoardGameStore = defineStore("boardGame", () => {
     // Remove last move from history
     moveHistory.value.pop();
 
+    playSoundUndo();
     toast.success(
       i18n.global.t("store.moveUndone", {
         word: lastMove.word,

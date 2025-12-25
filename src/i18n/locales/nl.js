@@ -7,6 +7,8 @@ export default {
     settings: "Instellingen",
     darkMode: "Donkere modus",
     lightMode: "Lichte modus",
+    soundOn: "Geluidseffecten ingeschakeld",
+    soundOff: "Geluidseffecten uitgeschakeld",
   },
 
   // General

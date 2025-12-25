@@ -7,6 +7,8 @@ export default {
     settings: "Einstellungen",
     darkMode: "Dunkler Modus",
     lightMode: "Hellmodus",
+    soundOn: "Soundeffekte aktiviert",
+    soundOff: "Soundeffekte deaktiviert",
   },
 
   // General

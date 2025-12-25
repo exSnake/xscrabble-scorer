@@ -1,6 +1,7 @@
 <script setup>
 import { computed } from "vue";
 import { useBoardGameStore } from "@/stores/BoardGameStore";
+import { useSoundEffects } from "@/composables/useSoundEffects";
 import { storeToRefs } from "pinia";
 
 const props = defineProps({
@@ -18,12 +19,15 @@ const boardGame = useBoardGameStore();
 const { selectedCell, direction, previewCells } = storeToRefs(boardGame);
 const { selectCell, getMultiplierAtPosition, getCharacterPoints } = boardGame;
 
+const { playCellSelect } = useSoundEffects();
+
 const gridSize = computed(() => props.grid?.length || 15);
 const centerPosition = computed(() => Math.floor(gridSize.value / 2));
 
 function handleCellClick(row, col) {
   // Allow selection even if cell is occupied (to start words from existing letters)
   selectCell(row, col);
+  playCellSelect();
 }
 
 function isCellSelected(row, col) {

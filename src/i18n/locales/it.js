@@ -7,6 +7,8 @@ export default {
     settings: "Impostazioni",
     darkMode: "Modalità scura",
     lightMode: "Modalità chiara",
+    soundOn: "Effetti sonori attivi",
+    soundOff: "Effetti sonori disattivati",
   },
 
   // General

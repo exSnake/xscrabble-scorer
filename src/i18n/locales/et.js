@@ -7,6 +7,8 @@ export default {
     settings: "Seaded",
     darkMode: "Tume režiim",
     lightMode: "Heled režiim",
+    soundOn: "Heliefektid lubatud",
+    soundOff: "Heliefektid keelatud",
   },
 
   // General
