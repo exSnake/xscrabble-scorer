@@ -3,7 +3,7 @@ export default {
   nav: {
     home: "Home",
     scorer: "Scorer",
-    boardGame: "Board Game",
+    boardGame: "Board",
     settings: "Settings",
     darkMode: "Dark mode",
     lightMode: "Light mode",
@@ -51,12 +51,23 @@ export default {
       "xScrabbler is a modern score calculator for Scrabble, Scarabeo and similar word games. It allows you to track scores, apply bonuses and manage game time.",
     footer: "Made with ❤️ for word game lovers",
     madeBy: "Created by",
+    twoWaysTitle: "Two ways to play",
+    twoWaysSubtitle: "Choose the method you prefer",
+    boardModeTitle: "Board Game",
+    boardModeDesc:
+      "Use the interactive board for a complete visualization of the game. Perfect for competitive matches where you want to see all placed words, verify word connections, and have full visual control of the game. The board automatically calculates bonuses and validates word positions.",
+    scorerModeTitle: "Scorer",
+    scorerModeDesc:
+      "Use the quick scorer to rapidly enter words and scores. Ideal for fast games or when you prefer to calculate scores manually. Simpler and more direct, perfect for those who want to focus on the game without distractions.",
+    tryBoard: "Try the Board",
+    tryScorer: "Try the Scorer",
   },
 
   // Common
   common: {
     oneWord: "word",
     words: "words",
+    points: "points",
   },
 
   // Board Word Placement
@@ -193,5 +204,56 @@ export default {
     insertNonEmptyWord: "Insert a non empty word",
     wordPlaced: 'Word "{text}" placed! +{points} points',
     pointsUpdated: "Points updated successfully",
+    noMovesToUndo: "No moves to undo",
+    moveUndone: 'Move undone: "{word}" by {player}',
+    importError: "Error importing game",
+  },
+
+  // Game Stats
+  gameStats: {
+    title: "Statistics",
+    noStats: "No statistics available. Start playing!",
+    global: "Global",
+    totalWords: "Total words",
+    totalScore: "Total score",
+    averageScore: "Average score",
+    letters: "letters",
+    longestWord: "Longest word",
+    highestScoringWord: "Highest scoring word",
+    by: "by",
+    byPlayer: "By Player",
+    words: "Words",
+    total: "Total",
+    average: "Average",
+    longest: "Longest",
+    bestWord: "Best word",
+    bestWords: "Best Words",
+    topPlayers: "Top Players",
+  },
+
+  // Move History
+  moveHistory: {
+    title: "Move History",
+    noMoves: "No moves yet. Start playing!",
+    undo: "Undo",
+    position: "Position",
+  },
+
+  // Game Export/Import
+  gameExportImport: {
+    export: "Export",
+    import: "Import",
+    share: "Share",
+    exportSuccess: "Game exported successfully",
+    exportError: "Error exporting game",
+    importTitle: "Import Game",
+    importFile: "Import from file",
+    importLink: "Import from link",
+    linkPlaceholder: "Paste game link...",
+    importSuccess: "Game imported successfully",
+    importError: "Error importing. Please verify the file or link is valid.",
+    linkCopied: "Link copied to clipboard!",
+    linkError: "Error generating link",
+    emptyLink: "Please enter a valid link",
   },
 };

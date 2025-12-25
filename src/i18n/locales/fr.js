@@ -3,7 +3,7 @@ export default {
   nav: {
     home: "Accueil",
     scorer: "Calculateur",
-    boardGame: "Jeu de Plateau",
+    boardGame: "Tablier",
     settings: "Paramètres",
     darkMode: "Mode sombre",
     lightMode: "Mode clair",
@@ -52,12 +52,23 @@ export default {
       "xScrabbler est un calculateur de score moderne pour Scrabble, Scarabeo et jeux de mots similaires. Il vous permet de suivre les scores, de calculer les bonus et de suivre le progresse du jeu.",
     footer: "Développé avec ❤️ pour les amateurs de jeux de mots",
     madeBy: "Développé par",
+    twoWaysTitle: "Deux façons de jouer",
+    twoWaysSubtitle: "Choisissez la méthode que vous préférez",
+    boardModeTitle: "Tablier",
+    boardModeDesc:
+      "Utilisez le tablier interactif pour une visualisation complète du jeu. Parfait pour les matchs compétitifs où vous voulez voir tous les mots placés, vérifier les connexions entre les mots et avoir un contrôle visuel complet du jeu. Le tablier calcule automatiquement les bonus et valide les positions des mots.",
+    scorerModeTitle: "Calculateur",
+    scorerModeDesc:
+      "Utilisez le calculateur rapide pour entrer rapidement les mots et les scores. Idéal pour les parties rapides ou lorsque vous préférez calculer les scores manuellement. Plus simple et plus direct, parfait pour ceux qui veulent se concentrer sur le jeu sans distractions.",
+    tryBoard: "Essayer le Tablier",
+    tryScorer: "Essayer le Calculateur",
   },
 
   // Common
   common: {
     oneWord: "mot",
     words: "mots",
+    points: "points",
   },
 
   // Board Word Placement
@@ -198,5 +209,57 @@ export default {
     insertNonEmptyWord: "Entrez un mot non vide",
     wordPlaced: 'Mot "{text}" placé! +{points} points',
     pointsUpdated: "Points mis à jour avec succès",
+    noMovesToUndo: "Aucun mouvement à annuler",
+    moveUndone: 'Mouvement annulé: "{word}" de {player}',
+    importError: "Erreur lors de l'importation de la partie",
+  },
+
+  // Game Stats
+  gameStats: {
+    title: "Statistiques",
+    noStats: "Aucune statistique disponible. Commencez à jouer!",
+    global: "Globales",
+    totalWords: "Mots totaux",
+    totalScore: "Score total",
+    averageScore: "Score moyen",
+    letters: "lettres",
+    longestWord: "Mot le plus long",
+    highestScoringWord: "Mot avec le score le plus élevé",
+    by: "de",
+    byPlayer: "Par Joueur",
+    words: "Mots",
+    total: "Total",
+    average: "Moyenne",
+    longest: "Plus long",
+    bestWord: "Meilleur mot",
+    bestWords: "Meilleurs Mots",
+    topPlayers: "Top Joueurs",
+  },
+
+  // Move History
+  moveHistory: {
+    title: "Historique des Mouvements",
+    noMoves: "Aucun mouvement pour le moment. Commencez à jouer!",
+    undo: "Annuler",
+    position: "Position",
+  },
+
+  // Game Export/Import
+  gameExportImport: {
+    export: "Exporter",
+    import: "Importer",
+    share: "Partager",
+    exportSuccess: "Partie exportée avec succès",
+    exportError: "Erreur lors de l'exportation de la partie",
+    importTitle: "Importer une Partie",
+    importFile: "Importer depuis un fichier",
+    importLink: "Importer depuis un lien",
+    linkPlaceholder: "Collez le lien de la partie...",
+    importSuccess: "Partie importée avec succès",
+    importError:
+      "Erreur lors de l'importation. Veuillez vérifier que le fichier ou le lien est valide.",
+    linkCopied: "Lien copié dans le presse-papiers!",
+    linkError: "Erreur lors de la génération du lien",
+    emptyLink: "Veuillez entrer un lien valide",
   },
 };

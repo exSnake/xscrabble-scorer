@@ -51,12 +51,23 @@ export default {
       "xScrabbler on kaasaegne skoori arvuti Scrabble, Scarabeo ja sarnaste sõnamängude jaoks. See võimaldab teil jälgida skoore, rakendada boonuseid ja hallata mängu aega.",
     footer: "Loodud ❤️-ga sõnamängude armastajatele",
     madeBy: "Loodud",
+    twoWaysTitle: "Kaks viisi mängimiseks",
+    twoWaysSubtitle: "Valige endale sobiv meetod",
+    boardModeTitle: "Lauamäng",
+    boardModeDesc:
+      "Kasutage interaktiivset lauda täielikuks mängu visualiseerimiseks. Ideaalselt võistlusmängude jaoks, kus soovite näha kõiki paigutatud sõnu, kontrollida sõnadevahelisi ühendusi ja omada täielikku visuaalset kontrolli mängu üle. Laud arvutab automaatselt boonused ja valideerib sõnade positsioone.",
+    scorerModeTitle: "Skoorimine",
+    scorerModeDesc:
+      "Kasutage kiiret skoorimist sõnade ja punktide kiireks sisestamiseks. Ideaalne kiirete mängude jaoks või kui eelistate punktide käsitsi arvutamist. Lihtsam ja otsesem, ideaalne neile, kes tahavad keskenduda mängule ilma häireta.",
+    tryBoard: "Proovige Lauamängu",
+    tryScorer: "Proovige Skoorimist",
   },
 
   // Common
   common: {
     oneWord: "sõna",
     words: "sõnad",
+    points: "punkti",
   },
 
   // Board Word Placement
@@ -196,5 +207,57 @@ export default {
     insertNonEmptyWord: "Sisesta mittetühi sõna",
     wordPlaced: 'Sõna "{text}" paigutatud! +{points} punkti',
     pointsUpdated: "Punktid edukalt uuendatud",
+    noMovesToUndo: "Pole käike tagasi võtta",
+    moveUndone: 'Käik tagasi võetud: "{word}" mängija {player} poolt',
+    importError: "Viga mängu importimisel",
+  },
+
+  // Game Stats
+  gameStats: {
+    title: "Statistika",
+    noStats: "Statistikat pole saadaval. Alusta mängimist!",
+    global: "Globaalne",
+    totalWords: "Sõnu kokku",
+    totalScore: "Kogupunktid",
+    averageScore: "Keskmine punktisumma",
+    letters: "tähte",
+    longestWord: "Pikim sõna",
+    highestScoringWord: "Kõrgeima punktisummaga sõna",
+    by: "mängija",
+    byPlayer: "Mängija järgi",
+    words: "Sõnad",
+    total: "Kokku",
+    average: "Keskmine",
+    longest: "Pikim",
+    bestWord: "Parim sõna",
+    bestWords: "Parimad Sõnad",
+    topPlayers: "Parimad Mängijad",
+  },
+
+  // Move History
+  moveHistory: {
+    title: "Käikude ajalugu",
+    noMoves: "Käike pole veel. Alusta mängimist!",
+    undo: "Tühista",
+    position: "Positsioon",
+  },
+
+  // Game Export/Import
+  gameExportImport: {
+    export: "Ekspordi",
+    import: "Impordi",
+    share: "Jaga",
+    exportSuccess: "Mäng edukalt eksporditud",
+    exportError: "Viga mängu eksportimisel",
+    importTitle: "Impordi mäng",
+    importFile: "Impordi failist",
+    importLink: "Impordi lingist",
+    linkPlaceholder: "Kleebi mängu link...",
+    importSuccess: "Mäng edukalt imporditud",
+    importError:
+      "Viga importimisel. Palun kontrolli, kas fail või link on kehtiv.",
+    linkCopied: "Link kopeeritud lõikelauale!",
+    linkError: "Viga lingi genereerimisel",
+    emptyLink: "Palun sisesta kehtiv link",
   },
 };

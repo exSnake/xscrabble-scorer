@@ -51,12 +51,23 @@ export default {
       "xScrabbler ist ein moderner Punktesteller für Scrabble, Scarabeo und ähnliche Wortspiele. Es ermöglicht es Ihnen, die Punktzahlen zu verfolgen, Bonusse zu berechnen und den Spielverlauf zu verfolgen.",
     footer: "Entwickelt mit ❤️ für Wortspielbegeisterte",
     madeBy: "Entwickelt von",
+    twoWaysTitle: "Zwei Spielweisen",
+    twoWaysSubtitle: "Wählen Sie die Methode, die Sie bevorzugen",
+    boardModeTitle: "Brettspiel",
+    boardModeDesc:
+      "Verwenden Sie das interaktive Brett für eine vollständige Visualisierung des Spiels. Perfekt für Wettspiele, bei denen Sie alle platzierten Wörter sehen, Wortverbindungen überprüfen und vollständige visuelle Kontrolle über das Spiel haben möchten. Das Brett berechnet automatisch Bonusse und validiert Wortpositionen.",
+    scorerModeTitle: "Punktesteller",
+    scorerModeDesc:
+      "Verwenden Sie den schnellen Punktesteller, um schnell Wörter und Punkte einzugeben. Ideal für schnelle Spiele oder wenn Sie es vorziehen, Punkte manuell zu berechnen. Einfacher und direkter, perfekt für diejenigen, die sich ohne Ablenkungen auf das Spiel konzentrieren möchten.",
+    tryBoard: "Brettspiel ausprobieren",
+    tryScorer: "Punktesteller ausprobieren",
   },
 
   // Common
   common: {
     oneWord: "Wort",
     words: "Wörter",
+    points: "Punkte",
   },
 
   // Board Word Placement
@@ -199,5 +210,57 @@ export default {
     insertNonEmptyWord: "Geben Sie ein nicht leeres Wort ein",
     wordPlaced: 'Wort "{text}" platziert! +{points} Punkte',
     pointsUpdated: "Punkte erfolgreich aktualisiert",
+    noMovesToUndo: "Keine Züge zum Rückgängigmachen",
+    moveUndone: 'Zug rückgängig gemacht: "{word}" von {player}',
+    importError: "Fehler beim Importieren des Spiels",
+  },
+
+  // Game Stats
+  gameStats: {
+    title: "Statistiken",
+    noStats: "Keine Statistiken verfügbar. Beginnen Sie zu spielen!",
+    global: "Global",
+    totalWords: "Gesamtwörter",
+    totalScore: "Gesamtpunktzahl",
+    averageScore: "Durchschnittspunktzahl",
+    letters: "Buchstaben",
+    longestWord: "Längstes Wort",
+    highestScoringWord: "Wort mit höchster Punktzahl",
+    by: "von",
+    byPlayer: "Nach Spieler",
+    words: "Wörter",
+    total: "Gesamt",
+    average: "Durchschnitt",
+    longest: "Längste",
+    bestWord: "Bestes Wort",
+    bestWords: "Beste Wörter",
+    topPlayers: "Top Spieler",
+  },
+
+  // Move History
+  moveHistory: {
+    title: "Zugverlauf",
+    noMoves: "Noch keine Züge. Beginnen Sie zu spielen!",
+    undo: "Rückgängig",
+    position: "Position",
+  },
+
+  // Game Export/Import
+  gameExportImport: {
+    export: "Exportieren",
+    import: "Importieren",
+    share: "Teilen",
+    exportSuccess: "Spiel erfolgreich exportiert",
+    exportError: "Fehler beim Exportieren des Spiels",
+    importTitle: "Spiel importieren",
+    importFile: "Aus Datei importieren",
+    importLink: "Aus Link importieren",
+    linkPlaceholder: "Spiel-Link einfügen...",
+    importSuccess: "Spiel erfolgreich importiert",
+    importError:
+      "Fehler beim Importieren. Bitte überprüfen Sie, ob die Datei oder der Link gültig ist.",
+    linkCopied: "Link in die Zwischenablage kopiert!",
+    linkError: "Fehler beim Generieren des Links",
+    emptyLink: "Bitte geben Sie einen gültigen Link ein",
   },
 };

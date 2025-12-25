@@ -4,8 +4,13 @@ import BoardWordPlacement from "@/components/board/BoardWordPlacement.vue";
 import CircularTimer from "@/components/board/CircularTimer.vue";
 import LeaderBoard from "@/components/board/LeaderBoard.vue";
 import PlayerDetailsModal from "@/components/board/PlayerDetailsModal.vue";
+import GlobalStats from "@/components/board/GlobalStats.vue";
+import BestWords from "@/components/board/BestWords.vue";
+import TopPlayers from "@/components/board/TopPlayers.vue";
+import MoveHistory from "@/components/board/MoveHistory.vue";
+import GameExportImport from "@/components/board/GameExportImport.vue";
 import { useBoardGameStore } from "@/stores/BoardGameStore";
-import { ref, watch } from "vue";
+import { ref, watch, onMounted } from "vue";
 import { storeToRefs } from "pinia";
 import { useI18n } from "vue-i18n";
 
@@ -80,11 +85,21 @@ watch(
   },
   { immediate: true },
 );
+
+// Import from URL on mount (if present)
+onMounted(() => {
+  // Import is handled in store's onMounted, but we can add additional logic here if needed
+});
 </script>
 
 <template>
   <div class="bg-white dark:bg-gray-800 min-h-screen p-4">
     <div class="max-w-[1600px] mx-auto">
+      <!-- Export/Import Controls -->
+      <div class="mb-4 flex justify-end">
+        <GameExportImport />
+      </div>
+
       <!-- Main Layout: Board left, Timer and LeaderBoard right -->
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
         <!-- Left: Board (spans 2 columns on large screens) -->
@@ -125,10 +140,10 @@ watch(
           </div>
         </div>
 
-        <!-- Right: Timer and LeaderBoard (stack vertically) -->
+        <!-- Right: Timer, LeaderBoard, Stats, and History (stack vertically) -->
         <div class="space-y-4 flex flex-col">
-          <!-- Timer (top right quadrant) -->
-          <div class="flex-1">
+          <!-- Timer -->
+          <div class="flex-1 min-h-[200px]">
             <CircularTimer
               :timer="timer"
               :total-seconds="seconds"
@@ -137,8 +152,8 @@ watch(
             />
           </div>
 
-          <!-- LeaderBoard (bottom right quadrant) -->
-          <div class="flex-1">
+          <!-- LeaderBoard -->
+          <div class="flex-1 min-h-[200px]">
             <LeaderBoard
               :players="players"
               :active-player="activePlayer"
@@ -150,6 +165,29 @@ watch(
               @reset-board="handleResetBoard"
             />
           </div>
+
+          <!-- Move History -->
+          <div class="flex-1 min-h-[200px]">
+            <MoveHistory />
+          </div>
+        </div>
+      </div>
+
+      <!-- Statistics Cards (below board, flex layout) -->
+      <div class="mt-4 flex flex-wrap gap-4">
+        <!-- Global Stats -->
+        <div class="flex-1 min-w-[300px]">
+          <GlobalStats />
+        </div>
+
+        <!-- Best Words -->
+        <div class="flex-1 min-w-[300px]">
+          <BestWords />
+        </div>
+
+        <!-- Top Players -->
+        <div class="flex-1 min-w-[300px]">
+          <TopPlayers />
         </div>
       </div>
 

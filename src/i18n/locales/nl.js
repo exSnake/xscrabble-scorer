@@ -51,12 +51,23 @@ export default {
       "xScrabbler is een moderne scorecalculator voor Scrabble, Scarabeo en vergelijkbare woordspellen. Het stelt je in staat om scores bij te houden, bonussen toe te passen en de speeltijd te beheren.",
     footer: "Ontwikkeld met ❤️ voor liefhebbers van woordspellen",
     madeBy: "Gemaakt door",
+    twoWaysTitle: "Twee manieren om te spelen",
+    twoWaysSubtitle: "Kies de methode die je voorkeur heeft",
+    boardModeTitle: "Bordspel",
+    boardModeDesc:
+      "Gebruik het interactieve bord voor een complete visualisatie van het spel. Perfect voor competitieve spellen waar je alle geplaatste woorden wilt zien, woordverbindingen wilt verifiëren en volledige visuele controle over het spel wilt hebben. Het bord berekent automatisch bonussen en valideert woordposities.",
+    scorerModeTitle: "Scorecalculator",
+    scorerModeDesc:
+      "Gebruik de snelle scorecalculator om snel woorden en scores in te voeren. Ideaal voor snelle spellen of wanneer je de voorkeur geeft aan handmatige scoreberekening. Eenvoudiger en directer, perfect voor degenen die zich willen concentreren op het spel zonder afleiding.",
+    tryBoard: "Probeer het Bordspel",
+    tryScorer: "Probeer de Scorecalculator",
   },
 
   // Common
   common: {
     oneWord: "woord",
     words: "woorden",
+    points: "punten",
   },
 
   // Board Word Placement
@@ -197,5 +208,57 @@ export default {
     insertNonEmptyWord: "Voer een niet-leeg woord in",
     wordPlaced: 'Woord "{text}" geplaatst! +{points} punten',
     pointsUpdated: "Punten succesvol bijgewerkt",
+    noMovesToUndo: "Geen zetten om ongedaan te maken",
+    moveUndone: 'Zet ongedaan gemaakt: "{word}" van {player}',
+    importError: "Fout bij importeren van spel",
+  },
+
+  // Game Stats
+  gameStats: {
+    title: "Statistieken",
+    noStats: "Geen statistieken beschikbaar. Begin met spelen!",
+    global: "Globaal",
+    totalWords: "Totaal aantal woorden",
+    totalScore: "Totale score",
+    averageScore: "Gemiddelde score",
+    letters: "letters",
+    longestWord: "Langste woord",
+    highestScoringWord: "Woord met hoogste score",
+    by: "van",
+    byPlayer: "Per Speler",
+    words: "Woorden",
+    total: "Totaal",
+    average: "Gemiddelde",
+    longest: "Langste",
+    bestWord: "Beste woord",
+    bestWords: "Beste Woorden",
+    topPlayers: "Top Spelers",
+  },
+
+  // Move History
+  moveHistory: {
+    title: "Zetgeschiedenis",
+    noMoves: "Nog geen zetten. Begin met spelen!",
+    undo: "Ongedaan maken",
+    position: "Positie",
+  },
+
+  // Game Export/Import
+  gameExportImport: {
+    export: "Exporteren",
+    import: "Importeren",
+    share: "Delen",
+    exportSuccess: "Spel succesvol geëxporteerd",
+    exportError: "Fout bij exporteren van spel",
+    importTitle: "Spel importeren",
+    importFile: "Importeren vanuit bestand",
+    importLink: "Importeren vanuit link",
+    linkPlaceholder: "Plak spel link...",
+    importSuccess: "Spel succesvol geïmporteerd",
+    importError:
+      "Fout bij importeren. Controleer of het bestand of de link geldig is.",
+    linkCopied: "Link gekopieerd naar klembord!",
+    linkError: "Fout bij genereren van link",
+    emptyLink: "Voer een geldige link in",
   },
 };

@@ -106,33 +106,55 @@ const handlePlayerClick = () => {
         <div
           v-for="word in player.words"
           :key="word.id"
-          class="flex justify-between items-center px-4 sm:px-6 py-3 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors duration-150"
+          class="px-4 sm:px-6 py-3 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors duration-150"
         >
-          <div class="flex-1">
-            <div
-              class="uppercase font-semibold text-sm sm:text-base"
-              :class="{
-                'text-gray-900 dark:text-white': player.active,
-                'text-gray-700 dark:text-gray-300': !player.active,
-              }"
-            >
-              {{ word.text }}
+          <div class="flex justify-between items-center">
+            <div class="flex-1">
+              <div
+                class="uppercase font-semibold text-sm sm:text-base"
+                :class="{
+                  'text-gray-900 dark:text-white': player.active,
+                  'text-gray-700 dark:text-gray-300': !player.active,
+                }"
+              >
+                {{ word.text }}
+              </div>
+            </div>
+            <div class="flex items-center gap-3">
+              <input
+                v-model="word.points"
+                class="w-16 sm:w-20 px-2 py-1.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-right text-sm sm:text-base font-semibold focus:ring-2 focus:ring-rose-500 focus:border-transparent transition-all duration-200"
+                type="number"
+                @click.stop
+              />
+              <button
+                class="p-1.5 sm:p-2 rounded-lg bg-red-500 hover:bg-red-600 text-white transition-colors duration-200 flex items-center justify-center"
+                :title="t('playerDetails.delete')"
+                @click.stop="() => handleDeleteWord(word.id)"
+              >
+                <LucideX class="w-4 h-4" />
+              </button>
             </div>
           </div>
-          <div class="flex items-center gap-3">
-            <input
-              v-model="word.points"
-              class="w-16 sm:w-20 px-2 py-1.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-right text-sm sm:text-base font-semibold focus:ring-2 focus:ring-rose-500 focus:border-transparent transition-all duration-200"
-              type="number"
-              @click.stop
-            />
-            <button
-              class="p-1.5 sm:p-2 rounded-lg bg-red-500 hover:bg-red-600 text-white transition-colors duration-200 flex items-center justify-center"
-              :title="t('playerDetails.delete')"
-              @click.stop="() => handleDeleteWord(word.id)"
+          <!-- Breakdown details if available -->
+          <div
+            v-if="
+              word.breakdown &&
+              word.breakdown.secondaryWords &&
+              word.breakdown.secondaryWords.length > 0
+            "
+            class="mt-1 text-xs text-gray-500 dark:text-gray-400"
+          >
+            <span class="font-medium"
+              >{{ word.breakdown.mainWord.text }}:
+              {{ word.breakdown.mainWord.points }}</span
             >
-              <LucideX class="w-4 h-4" />
-            </button>
+            <span v-for="(sw, idx) in word.breakdown.secondaryWords" :key="idx">
+              + {{ sw.text }}: {{ sw.points }}
+            </span>
+            <span v-if="word.breakdown.hasBonus">
+              + Bonus: {{ word.breakdown.bonusValue }}</span
+            >
           </div>
         </div>
       </div>

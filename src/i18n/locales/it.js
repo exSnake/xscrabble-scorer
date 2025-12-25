@@ -2,8 +2,8 @@ export default {
   // Navigation
   nav: {
     home: "Home",
-    scorer: "Scorer",
-    boardGame: "Tavolo di Gioco",
+    scorer: "Calcolatore",
+    boardGame: "Tabellone",
     settings: "Impostazioni",
     darkMode: "Modalità scura",
     lightMode: "Modalità chiara",
@@ -51,12 +51,23 @@ export default {
       "xScrabbler è un calcolatore di punteggi moderno per Scrabble, Scarabeo e giochi di parole simili. Ti permette di tracciare i punteggi, applicare bonus e gestire il tempo di gioco.",
     footer: "Fatto con ❤️ per gli amanti dei giochi di parole",
     madeBy: "Creato da",
+    twoWaysTitle: "Due modi per giocare",
+    twoWaysSubtitle: "Scegli il metodo che preferisci",
+    boardModeTitle: "Tabellone",
+    boardModeDesc:
+      "Usa il tabellone interattivo per una visualizzazione completa della scacchiera. Perfetto per partite competitive dove vuoi vedere tutte le parole posizionate, verificare le connessioni tra le parole e avere un controllo visivo completo della partita. Il tabellone calcola automaticamente i bonus e valida le posizioni delle parole.",
+    scorerModeTitle: "Calcolatore",
+    scorerModeDesc:
+      "Usa il calcolatore rapido per inserire velocemente parole e punteggi. Ideale per partite veloci o quando preferisci calcolare manualmente i punteggi. Più semplice e diretto, perfetto per chi vuole concentrarsi sul gioco senza distrazioni.",
+    tryBoard: "Prova il Tabellone",
+    tryScorer: "Prova il Calcolatore",
   },
 
   // Common
   common: {
     oneWord: "parola",
     words: "parole",
+    points: "punti",
   },
 
   // Board Word Placement
@@ -196,5 +207,57 @@ export default {
     insertNonEmptyWord: "Inserisci una parola non vuota",
     wordPlaced: 'Parola "{text}" posizionata! +{points} punti',
     pointsUpdated: "Punti aggiornati con successo",
+    noMovesToUndo: "Nessuna mossa da annullare",
+    moveUndone: 'Mossa annullata: "{word}" di {player}',
+    importError: "Errore durante l'importazione della partita",
+  },
+
+  // Game Stats
+  gameStats: {
+    title: "Statistiche",
+    noStats: "Nessuna statistica disponibile. Inizia a giocare!",
+    global: "Globali",
+    totalWords: "Parole totali",
+    totalScore: "Punteggio totale",
+    averageScore: "Punteggio medio",
+    letters: "lettere",
+    longestWord: "Parola più lunga",
+    highestScoringWord: "Parola con punteggio più alto",
+    by: "di",
+    byPlayer: "Per Giocatore",
+    words: "Parole",
+    total: "Totale",
+    average: "Media",
+    longest: "Più lunga",
+    bestWord: "Migliore parola",
+    bestWords: "Migliori Parole",
+    topPlayers: "Top Giocatori",
+  },
+
+  // Move History
+  moveHistory: {
+    title: "Cronologia Mosse",
+    noMoves: "Nessuna mossa ancora. Inizia a giocare!",
+    undo: "Annulla",
+    position: "Posizione",
+  },
+
+  // Game Export/Import
+  gameExportImport: {
+    export: "Esporta",
+    import: "Importa",
+    share: "Condividi",
+    exportSuccess: "Partita esportata con successo",
+    exportError: "Errore durante l'esportazione",
+    importTitle: "Importa Partita",
+    importFile: "Importa da file",
+    importLink: "Importa da link",
+    linkPlaceholder: "Incolla il link della partita...",
+    importSuccess: "Partita importata con successo",
+    importError:
+      "Errore durante l'importazione. Verifica che il file o il link siano validi.",
+    linkCopied: "Link copiato negli appunti!",
+    linkError: "Errore durante la generazione del link",
+    emptyLink: "Inserisci un link valido",
   },
 };

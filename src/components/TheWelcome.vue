@@ -324,6 +324,75 @@ const localePath = (path) => {
       </div>
     </section>
 
+    <!-- Two Ways to Play Section -->
+    <section class="py-16 px-6 bg-gray-50 dark:bg-gray-900">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-12">
+          <h2
+            class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4"
+          >
+            {{ t("home.twoWaysTitle") }}
+          </h2>
+          <p class="text-lg text-gray-600 dark:text-gray-400 mb-2">
+            {{ t("home.twoWaysSubtitle") }}
+          </p>
+          <div class="w-20 h-1 bg-rose-600 mx-auto" />
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          <!-- Board Mode -->
+          <div
+            class="bg-white dark:bg-gray-800 rounded-xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-200 dark:border-gray-700"
+          >
+            <div
+              class="w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center mb-6"
+            >
+              <LucideGrid class="w-8 h-8 text-blue-600 dark:text-blue-400" />
+            </div>
+            <h3
+              class="text-2xl font-semibold text-gray-900 dark:text-white mb-4"
+            >
+              {{ t("home.boardModeTitle") }}
+            </h3>
+            <p class="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+              {{ t("home.boardModeDesc") }}
+            </p>
+            <router-link
+              :to="localePath('board')"
+              class="inline-flex items-center justify-center py-3 px-6 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-medium transition-colors duration-300 shadow-md hover:shadow-lg"
+            >
+              {{ t("home.tryBoard") }}
+            </router-link>
+          </div>
+
+          <!-- Scorer Mode -->
+          <div
+            class="bg-white dark:bg-gray-800 rounded-xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-200 dark:border-gray-700"
+          >
+            <div
+              class="w-16 h-16 bg-rose-100 dark:bg-rose-900 rounded-lg flex items-center justify-center mb-6"
+            >
+              <LucideStar class="w-8 h-8 text-rose-600 dark:text-rose-400" />
+            </div>
+            <h3
+              class="text-2xl font-semibold text-gray-900 dark:text-white mb-4"
+            >
+              {{ t("home.scorerModeTitle") }}
+            </h3>
+            <p class="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+              {{ t("home.scorerModeDesc") }}
+            </p>
+            <router-link
+              :to="localePath('scorer')"
+              class="inline-flex items-center justify-center py-3 px-6 rounded-lg bg-rose-600 hover:bg-rose-700 text-white font-medium transition-colors duration-300 shadow-md hover:shadow-lg"
+            >
+              {{ t("home.tryScorer") }}
+            </router-link>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Call to Action Section -->
     <section class="py-20 px-6 relative overflow-hidden">
       <div

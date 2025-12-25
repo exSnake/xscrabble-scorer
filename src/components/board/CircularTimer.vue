@@ -28,6 +28,11 @@ const soundsPlayed = ref({
 
 const GREEN_PERCENTAGE = 50;
 const AMBER_PERCENTAGE = 25;
+const CIRCLE_RADIUS = 45;
+const VOLUME_INCREMENT = 0.02;
+const FREQUENCY_BASE = 800;
+const FREQUENCY_INCREMENT = 40;
+const END_SOUND_DELAY = 700;
 
 const totalRemainingSeconds = computed(() => {
   if (!props.timer) return 0;
@@ -50,7 +55,7 @@ const strokeColor = computed(() => {
   return "red";
 });
 
-const circumference = 2 * Math.PI * 45; // radius = 45
+const circumference = 2 * Math.PI * CIRCLE_RADIUS;
 
 const strokeDashoffset = computed(() => {
   return circumference - (percentage.value / 100) * circumference;
@@ -63,6 +68,25 @@ const timeDisplay = computed(() => {
   return `${minutes}:${seconds.toString().padStart(2, "0")}`;
 });
 
+const playEndSound = () => {
+  if (!endSound.value) return;
+
+  endSound.value.volume = 1;
+  endSound.value.load();
+  endSound.value.play().catch((error) => {
+    console.error("Errore nella riproduzione MP3:", error);
+  });
+
+  setTimeout(() => {
+    if (endSound.value) {
+      endSound.value.load();
+      endSound.value.play().catch((error) => {
+        console.error("Errore nella seconda riproduzione MP3:", error);
+      });
+    }
+  }, END_SOUND_DELAY);
+};
+
 const playTickSound = () => {
   if (!audioContext.value) return;
 
@@ -74,8 +98,10 @@ const playTickSound = () => {
     let frequency = 600;
 
     if (totalRemainingSeconds.value <= 10) {
-      volume = 0.1 + (10 - totalRemainingSeconds.value) * 0.02;
-      frequency = 800 + (10 - totalRemainingSeconds.value) * 40;
+      volume = 0.1 + (10 - totalRemainingSeconds.value) * VOLUME_INCREMENT;
+      frequency =
+        FREQUENCY_BASE +
+        (10 - totalRemainingSeconds.value) * FREQUENCY_INCREMENT;
     }
 
     oscillator.type = "sine";
@@ -114,7 +140,7 @@ onMounted(() => {
     console.error("Web Audio API non supportata:", error);
   }
 
-  if (endSound.value) endSound.value.volume = 1.0;
+  if (endSound.value) endSound.value.volume = 1;
 });
 
 onBeforeUnmount(() => {
@@ -124,6 +150,46 @@ onBeforeUnmount(() => {
     });
   }
 });
+
+const handleTimerStopped = (newTimer, seconds, isTimerFinished) => {
+  if (seconds === 0 && !isTimerFinished) {
+    return;
+  }
+
+  if (seconds !== 0) {
+    soundsPlayed.value = {
+      tenSeconds: false,
+      end: false,
+      lastSecond: null,
+    };
+  }
+};
+
+const handleTimerRunning = (newTimer, seconds) => {
+  if (seconds === 10 && !soundsPlayed.value.tenSeconds) {
+    tenSecondsSound.value?.play();
+    soundsPlayed.value.tenSeconds = true;
+  }
+
+  // Tick ogni secondo
+  if (seconds !== soundsPlayed.value.lastSecond) {
+    if (audioContext.value && audioContext.value.state === "suspended") {
+      audioContext.value.resume();
+    }
+
+    playTickSound();
+    soundsPlayed.value.lastSecond = seconds;
+  }
+};
+
+const handleTimerReset = (newTimer, oldTimer) => {
+  if (
+    newTimer.minutes === oldTimer?.minutes &&
+    newTimer.seconds > oldTimer?.seconds
+  ) {
+    soundsPlayed.value = { tenSeconds: false, end: false, lastSecond: null };
+  }
+};
 
 watch(
   () => props.timer,
@@ -144,59 +210,17 @@ watch(
 
     // Riproduci suoni di fine
     if (seconds === 0 && !soundsPlayed.value.end) {
-      if (endSound.value) {
-        endSound.value.volume = 1.0;
-        endSound.value.load();
-        endSound.value.play().catch((error) => {
-          console.error("Errore nella riproduzione MP3:", error);
-        });
-
-        setTimeout(() => {
-          if (endSound.value) {
-            endSound.value.load();
-            endSound.value.play().catch((error) => {
-              console.error("Errore nella seconda riproduzione MP3:", error);
-            });
-          }
-        }, 700);
-      }
-
+      playEndSound();
       soundsPlayed.value.end = true;
     }
 
     if (!newTimer.isRunning) {
-      if (!isTimerFinished && seconds !== 0) {
-        soundsPlayed.value = {
-          tenSeconds: false,
-          end: false,
-          lastSecond: null,
-        };
-      }
+      handleTimerStopped(newTimer, seconds, isTimerFinished);
       return;
     }
 
-    if (seconds === 10 && !soundsPlayed.value.tenSeconds) {
-      tenSecondsSound.value?.play();
-      soundsPlayed.value.tenSeconds = true;
-    }
-
-    // Tick ogni secondo
-    if (newTimer.isRunning && seconds !== soundsPlayed.value.lastSecond) {
-      if (audioContext.value && audioContext.value.state === "suspended") {
-        audioContext.value.resume();
-      }
-
-      playTickSound();
-      soundsPlayed.value.lastSecond = seconds;
-    }
-
-    // Reset suoni al riavvio
-    if (
-      newTimer.minutes === oldTimer?.minutes &&
-      newTimer.seconds > oldTimer?.seconds
-    ) {
-      soundsPlayed.value = { tenSeconds: false, end: false, lastSecond: null };
-    }
+    handleTimerRunning(newTimer, seconds);
+    handleTimerReset(newTimer, oldTimer);
   },
   { deep: true },
 );
@@ -212,7 +236,7 @@ watch(
         <circle
           cx="64"
           cy="64"
-          r="45"
+          :r="CIRCLE_RADIUS"
           stroke="currentColor"
           stroke-width="8"
           fill="none"
@@ -222,7 +246,7 @@ watch(
         <circle
           cx="64"
           cy="64"
-          r="45"
+          :r="CIRCLE_RADIUS"
           :stroke="strokeColor"
           stroke-width="8"
           fill="none"

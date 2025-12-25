@@ -6,10 +6,22 @@ import ConfirmationModal from "@/components/ui/ConfirmationModal.vue";
 const { t } = useI18n();
 
 const props = defineProps({
-  players: Array,
-  activePlayer: Object,
-  canAddPlayer: Boolean,
-  canResetBoard: Boolean,
+  players: {
+    type: Array,
+    default: () => [],
+  },
+  activePlayer: {
+    type: Object,
+    default: () => null,
+  },
+  canAddPlayer: {
+    type: Boolean,
+    default: false,
+  },
+  canResetBoard: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const emit = defineEmits([

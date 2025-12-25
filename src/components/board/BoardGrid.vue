@@ -21,9 +21,8 @@ const { selectCell, getMultiplierAtPosition, getCharacterPoints } = boardGame;
 const gridSize = computed(() => props.grid?.length || 15);
 const centerPosition = computed(() => Math.floor(gridSize.value / 2));
 
-function handleCellClick(row, col, cell) {
-  // Don't allow selection if cell is already occupied
-  if (cell.letter) return;
+function handleCellClick(row, col) {
+  // Allow selection even if cell is occupied (to start words from existing letters)
   selectCell(row, col);
 }
 
@@ -58,7 +57,11 @@ function getCellClass(row, col, cell) {
 
   // If cell has a placed letter
   if (cell.letter) {
-    classes += " bg-amber-200 text-gray-800 dark:bg-amber-300 cursor-default";
+    classes += " bg-amber-200 text-gray-800 dark:bg-amber-300 cursor-pointer";
+    // Add ring if this cell is selected
+    if (isCellSelected(row, col)) {
+      classes += " ring-2 ring-yellow-500";
+    }
   }
   // If cell is in preview
   else if (isCellInPreview(row, col)) {
@@ -96,9 +99,9 @@ function getCellClass(row, col, cell) {
   return classes;
 }
 
-function getMultiplierLabel(row, col) {
-  // If cell is selected, show direction arrow
-  if (isCellSelected(row, col)) {
+function getMultiplierLabel(row, col, cell) {
+  // If cell is selected and empty, show direction arrow
+  if (isCellSelected(row, col) && !cell?.letter) {
     return direction.value === "horizontal" ? "→" : "↓";
   }
 
@@ -183,7 +186,7 @@ function getColLabel(index) {
           v-for="(cell, colIndex) in row"
           :key="`cell-${rowIndex}-${colIndex}`"
           :class="getCellClass(rowIndex, colIndex, cell)"
-          @click="handleCellClick(rowIndex, colIndex, cell)"
+          @click="handleCellClick(rowIndex, colIndex)"
         >
           <!-- Placed letter with multiplier badge and points -->
           <template v-if="cell.letter">
@@ -204,6 +207,13 @@ function getColLabel(index) {
             >
               {{ getCharacterPoints(cell.letter) }}
             </span>
+            <!-- Direction indicator when occupied cell is selected -->
+            <span
+              v-if="isCellSelected(rowIndex, colIndex)"
+              class="absolute top-0 left-0 text-xs px-1 bg-yellow-500 text-white rounded-br font-bold"
+            >
+              {{ direction === "horizontal" ? "→" : "↓" }}
+            </span>
           </template>
 
           <!-- Preview letter -->
@@ -221,7 +231,7 @@ function getColLabel(index) {
                 ? 'text-2xl sm:text-3xl opacity-60'
                 : 'text-3xs sm:text-2xs opacity-70'
             "
-            >{{ getMultiplierLabel(rowIndex, colIndex) }}</span
+            >{{ getMultiplierLabel(rowIndex, colIndex, cell) }}</span
           >
         </div>
       </div>

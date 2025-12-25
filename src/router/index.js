@@ -1,7 +1,4 @@
 import { createRouter, createWebHistory } from "vue-router";
-import HomeView from "../views/HomeView.vue";
-import ScorerView from "../views/ScorerView.vue";
-import SettingsView from "../views/SettingsView.vue";
 
 const supportedLanguages = ["en", "it", "fr", "es", "de", "nl", "et", "pt"];
 
@@ -710,7 +707,7 @@ const metaData = {
   board: {
     title: {
       en: "Board Game - xScrabbler",
-      it: "Tavolo di Gioco - xScrabbler",
+      it: "Tabellone - xScrabbler",
       fr: "Jeu de Plateau - xScrabbler",
       es: "Juego de Mesa - xScrabbler",
       de: "Brettspiel - xScrabbler",
@@ -937,45 +934,45 @@ routes.push({
 });
 
 supportedLanguages.forEach((lang) => {
-  routes.push({
-    path: `/${lang}`,
-    name: lang,
-    component: HomeView,
-    meta: {
-      ...metaData.home,
-      lang,
+  const langRoutes = [
+    {
+      path: `/${lang}`,
+      name: lang,
+      component: () => import("../views/HomeView.vue"),
+      meta: {
+        ...metaData.home,
+        lang,
+      },
     },
-  });
-
-  routes.push({
-    path: `/${lang}/scorer`,
-    name: `scorer-${lang}`,
-    component: ScorerView,
-    meta: {
-      ...metaData.scorer,
-      lang,
+    {
+      path: `/${lang}/scorer`,
+      name: `scorer-${lang}`,
+      component: () => import("../views/ScorerView.vue"),
+      meta: {
+        ...metaData.scorer,
+        lang,
+      },
     },
-  });
-
-  routes.push({
-    path: `/${lang}/settings`,
-    name: `settings-${lang}`,
-    component: SettingsView,
-    meta: {
-      ...metaData.settings,
-      lang,
+    {
+      path: `/${lang}/settings`,
+      name: `settings-${lang}`,
+      component: () => import("../views/SettingsView.vue"),
+      meta: {
+        ...metaData.settings,
+        lang,
+      },
     },
-  });
-
-  routes.push({
-    path: `/${lang}/board`,
-    name: `board-${lang}`,
-    component: () => import("../views/BoardView.vue"),
-    meta: {
-      ...metaData.board,
-      lang,
+    {
+      path: `/${lang}/board`,
+      name: `board-${lang}`,
+      component: () => import("../views/BoardView.vue"),
+      meta: {
+        ...metaData.board,
+        lang,
+      },
     },
-  });
+  ];
+  routes.push(...langRoutes);
 });
 
 routes.push({
@@ -1024,21 +1021,21 @@ router.beforeEach((to, from, next) => {
   const canonicalLink = document.createElement("link");
   canonicalLink.rel = "canonical";
   canonicalLink.href = canonicalUrl;
-  canonicalLink.setAttribute("data-vue-router-controlled", "");
+  canonicalLink.dataset.vueRouterControlled = "";
   document.head.appendChild(canonicalLink);
 
   // Add og:url
   const ogUrlTag = document.createElement("meta");
   ogUrlTag.setAttribute("property", "og:url");
   ogUrlTag.setAttribute("content", canonicalUrl);
-  ogUrlTag.setAttribute("data-vue-router-controlled", "");
+  ogUrlTag.dataset.vueRouterControlled = "";
   document.head.appendChild(ogUrlTag);
 
   // Add twitter:url
   const twitterUrlTag = document.createElement("meta");
   twitterUrlTag.setAttribute("name", "twitter:url");
   twitterUrlTag.setAttribute("content", canonicalUrl);
-  twitterUrlTag.setAttribute("data-vue-router-controlled", "");
+  twitterUrlTag.dataset.vueRouterControlled = "";
   document.head.appendChild(twitterUrlTag);
 
   if (to.meta.metaTags) {
@@ -1060,7 +1057,7 @@ router.beforeEach((to, from, next) => {
         tag.setAttribute(key, metaTag[key]);
       });
 
-      tag.setAttribute("data-vue-router-controlled", "");
+      tag.dataset.vueRouterControlled = "";
 
       document.head.appendChild(tag);
     });
