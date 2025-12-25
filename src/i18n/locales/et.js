@@ -158,6 +158,21 @@ export default {
     addPlayerToStart: "Lisa mängija mängu alustamiseks",
     players: "Mängijad",
     selectPlayerToAddWord: "Vali mängija sõna lisamiseks",
+
+    // Onboarding UX
+    pageSubtitle: "Lisa sõnu ja jälgi mängijate punkte",
+    welcomeTitle: "Tere tulemast xScrabbler'isse!",
+    welcomeSubtitle: "Alusta neid lihtsaid samme järgides",
+    step1: "Samm 1: Lisa Mängijad",
+    step1Desc: "Kasuta vormi, et lisada 1 kuni 4 mängijat",
+    step2: "Samm 2: Vali Mängija",
+    step2Desc: "Klõpsa mängijal, et aktiveerida teda ja alustada mängimist",
+    step3: "Samm 3: Lisa Sõnad",
+    step3Desc: "Sisesta sõnad ja punktid aktiivse mängija jaoks",
+    addPlayersFirst: "Lisa esmalt mängijad, et alustada",
+    selectPlayerFirst: "Vali mängija, et lisada sõnu",
+    noPlayersYet: "Mängijaid pole veel",
+    clickBelowToAdd: "Kasuta vormi, et lisada esimene mängija",
   },
 
   // Scorer Add Word
@@ -275,5 +290,14 @@ export default {
     linkCopied: "Link kopeeritud lõikelauale!",
     linkError: "Viga lingi genereerimisel",
     emptyLink: "Palun sisesta kehtiv link",
+  },
+
+  // Cookie Consent
+  cookies: {
+    title: "Kasutame küpsiseid",
+    description:
+      "Kasutame analüütilisi küpsiseid teie kogemuse parandamiseks ja veebisaidi liikluse analüüsimiseks. Nõustudes aitate meil xScrabblerit paremaks muuta.",
+    accept: "Nõustu",
+    refuse: "Keeldu",
   },
 };

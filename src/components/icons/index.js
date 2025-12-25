@@ -50,3 +50,4 @@ export const LucideChevronDown = createIcon("lucide:chevron-down");
 export const LucideChevronUp = createIcon("lucide:chevron-up");
 export const LucideMaximize2 = createIcon("lucide:maximize-2");
 export const LucideGrid = createIcon("lucide:grid");
+export const LucideInfo = createIcon("lucide:info");

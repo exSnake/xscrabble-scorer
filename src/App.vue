@@ -4,9 +4,17 @@ import { watch, computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { Analytics } from "@vercel/analytics/vue";
 import NavBar from "@/components/NavBar.vue";
+import CookieConsent from "@/components/CookieConsent.vue";
+import { useAnalytics } from "@/composables/useAnalytics";
 
 const { t, locale } = useI18n();
 const route = useRoute();
+const { trackPageView, hasConsent, initGA } = useAnalytics();
+
+// Initialize GA if consent was already given
+if (hasConsent()) {
+  initGA();
+}
 
 // Ottieni la lingua corrente dalla route
 const currentLang = computed(() => route.path.split("/")[1] || "en");
@@ -22,6 +30,14 @@ watch(
   },
   { immediate: true },
 );
+
+// Track page views on route change
+watch(
+  () => route.fullPath,
+  (newPath) => {
+    trackPageView(newPath, document.title);
+  },
+);
 </script>
 
 <template>
@@ -29,6 +45,9 @@ watch(
     class="min-h-screen flex flex-col bg-gradient-to-b from-white to-gray-50 dark:from-gray-800 dark:to-gray-900"
   >
     <Analytics />
+
+    <!-- Cookie Consent Banner -->
+    <CookieConsent />
 
     <!-- NavBar -->
     <NavBar />

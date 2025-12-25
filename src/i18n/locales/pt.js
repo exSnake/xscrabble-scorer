@@ -159,6 +159,21 @@ export default {
     addPlayerToStart: "Adicione um jogador para iniciar o jogo",
     players: "Jogadores",
     selectPlayerToAddWord: "Selecione um jogador para adicionar uma palavra",
+
+    // Onboarding UX
+    pageSubtitle: "Adicione palavras e acompanhe as pontuações",
+    welcomeTitle: "Bem-vindo ao xScrabbler!",
+    welcomeSubtitle: "Comece seguindo estes passos simples",
+    step1: "Passo 1: Adicionar Jogadores",
+    step1Desc: "Use o formulário para adicionar de 1 a 4 jogadores",
+    step2: "Passo 2: Selecionar um Jogador",
+    step2Desc: "Clique num jogador para o ativar e começar a jogar",
+    step3: "Passo 3: Adicionar Palavras",
+    step3Desc: "Introduza palavras e pontuações para o jogador ativo",
+    addPlayersFirst: "Adicione jogadores primeiro para começar",
+    selectPlayerFirst: "Selecione um jogador para adicionar palavras",
+    noPlayersYet: "Ainda sem jogadores",
+    clickBelowToAdd: "Use o formulário para adicionar o primeiro jogador",
   },
 
   // Scorer Add Word
@@ -275,5 +290,14 @@ export default {
     linkCopied: "Link copiado para a área de transferência!",
     linkError: "Erro ao gerar o link",
     emptyLink: "Por favor, insira um link válido",
+  },
+
+  // Cookie Consent
+  cookies: {
+    title: "Usamos cookies",
+    description:
+      "Usamos cookies analíticos para melhorar sua experiência e analisar o tráfego do site. Ao aceitar, você nos ajuda a melhorar o xScrabbler.",
+    accept: "Aceitar",
+    refuse: "Recusar",
   },
 };

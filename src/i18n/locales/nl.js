@@ -159,6 +159,21 @@ export default {
     addPlayerToStart: "Voeg een speler toe om het spel te beginnen",
     players: "Spelers",
     selectPlayerToAddWord: "Selecteer een speler om een woord toe te voegen",
+
+    // Onboarding UX
+    pageSubtitle: "Voeg woorden toe en volg spelerpunten",
+    welcomeTitle: "Welkom bij xScrabbler!",
+    welcomeSubtitle: "Begin met deze eenvoudige stappen",
+    step1: "Stap 1: Spelers Toevoegen",
+    step1Desc: "Gebruik het formulier om 1 tot 4 spelers toe te voegen",
+    step2: "Stap 2: Selecteer een Speler",
+    step2Desc: "Klik op een speler om deze te activeren en te beginnen spelen",
+    step3: "Stap 3: Woorden Toevoegen",
+    step3Desc: "Voer woorden en punten in voor de actieve speler",
+    addPlayersFirst: "Voeg eerst spelers toe om te beginnen",
+    selectPlayerFirst: "Selecteer een speler om woorden toe te voegen",
+    noPlayersYet: "Nog geen spelers",
+    clickBelowToAdd: "Gebruik het formulier om de eerste speler toe te voegen",
   },
 
   // Scorer Add Word
@@ -276,5 +291,14 @@ export default {
     linkCopied: "Link gekopieerd naar klembord!",
     linkError: "Fout bij genereren van link",
     emptyLink: "Voer een geldige link in",
+  },
+
+  // Cookie Consent
+  cookies: {
+    title: "We gebruiken cookies",
+    description:
+      "We gebruiken analytische cookies om uw ervaring te verbeteren en het websiteverkeer te analyseren. Door te accepteren helpt u ons xScrabbler te verbeteren.",
+    accept: "Accepteren",
+    refuse: "Weigeren",
   },
 };
