@@ -32,7 +32,7 @@ export default {
   home: {
     title: "XSCRABBLER",
     subtitle: "SCORE TRACKER",
-    quickStart: "QUICK START",
+    quickStart: "PLAY NOW FREE",
     features: "Features",
     multipleLanguages: "Multilingual",
     multipleLanguagesDesc:
@@ -47,10 +47,10 @@ export default {
     customizableDesc: "Customize bonuses, timer and other settings",
     openSource: "Open Source",
     openSourceDesc: "Contribute to the project on GitHub",
-    getStarted: "Get Started",
-    aboutTitle: "What is xScrabbler?",
+    getStarted: "Play Now",
+    aboutTitle: "Ready to play?",
     aboutDesc:
-      "xScrabbler is a modern score calculator for Scrabble, Scarabeo and similar word games. It allows you to track scores, apply bonuses and manage game time.",
+      "Join thousands of players who use xScrabbler for their games. Start tracking scores the easy and fun way right now!",
     footer: "Made with ❤️ for word game lovers",
     madeBy: "Created by",
     twoWaysTitle: "Two ways to play",

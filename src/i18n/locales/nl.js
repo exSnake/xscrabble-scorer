@@ -32,7 +32,7 @@ export default {
   home: {
     title: "XSCRABBLER",
     subtitle: "SCORE CALCULATOR",
-    quickStart: "SNEL STARTEN",
+    quickStart: "GRATIS SPELEN",
     features: "Kenmerken",
     multipleLanguages: "Meerdere talen",
     multipleLanguagesDesc:
@@ -47,10 +47,10 @@ export default {
     customizableDesc: "Pas bonussen, timer en andere instellingen aan",
     openSource: "Open Source",
     openSourceDesc: "Draag bij aan het project op GitHub",
-    getStarted: "Begin nu",
-    aboutTitle: "Wat is xScrabbler?",
+    getStarted: "Speel Nu",
+    aboutTitle: "Klaar om te spelen?",
     aboutDesc:
-      "xScrabbler is een moderne scorecalculator voor Scrabble, Scarabeo en vergelijkbare woordspellen. Het stelt je in staat om scores bij te houden, bonussen toe te passen en de speeltijd te beheren.",
+      "Sluit je aan bij duizenden spelers die xScrabbler gebruiken voor hun spellen. Begin nu met het bijhouden van scores op een gemakkelijke en leuke manier!",
     footer: "Ontwikkeld met ❤️ voor liefhebbers van woordspellen",
     madeBy: "Gemaakt door",
     twoWaysTitle: "Twee manieren om te spelen",

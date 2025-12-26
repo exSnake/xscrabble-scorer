@@ -32,7 +32,7 @@ export default {
   home: {
     title: "XSCRABBLER",
     subtitle: "SKOORI ARVUTI",
-    quickStart: "KIIRE ALGUS",
+    quickStart: "MÄNGI TASUTA KOHE",
     features: "Funktsioonid",
     multipleLanguages: "Mitmekeelne",
     multipleLanguagesDesc:
@@ -47,10 +47,10 @@ export default {
     customizableDesc: "Kohanda boonuseid, taimerit ja muid seadeid",
     openSource: "Avatud lähtekood",
     openSourceDesc: "Aita projekti GitHubis",
-    getStarted: "Alusta kohe",
-    aboutTitle: "Mis on xScrabbler?",
+    getStarted: "Mängi Kohe",
+    aboutTitle: "Valmis mängima?",
     aboutDesc:
-      "xScrabbler on kaasaegne skoori arvuti Scrabble, Scarabeo ja sarnaste sõnamängude jaoks. See võimaldab teil jälgida skoore, rakendada boonuseid ja hallata mängu aega.",
+      "Liitu tuhandete mängijatega, kes kasutavad xScrabblerit oma mängudeks. Alusta kohe tulemuste jälgimist lihtsal ja lõbusal viisil!",
     footer: "Loodud ❤️-ga sõnamängude armastajatele",
     madeBy: "Loodud",
     twoWaysTitle: "Kaks viisi mängimiseks",

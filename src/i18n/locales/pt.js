@@ -32,7 +32,7 @@ export default {
   home: {
     title: "XSCRABBLER",
     subtitle: "CALCULADORA DE PONTUAÇÃO",
-    quickStart: "INÍCIO RÁPIDO",
+    quickStart: "JOGAR GRÁTIS AGORA",
     features: "Características",
     multipleLanguages: "Múltiplos idiomas",
     multipleLanguagesDesc:
@@ -47,10 +47,10 @@ export default {
     customizableDesc: "Personalize bônus, temporizador e outras configurações",
     openSource: "Código Aberto",
     openSourceDesc: "Contribua para o projeto no GitHub",
-    getStarted: "Comece agora",
-    aboutTitle: "O que é xScrabbler?",
+    getStarted: "Jogar Agora",
+    aboutTitle: "Pronto para jogar?",
     aboutDesc:
-      "xScrabbler é uma calculadora de pontuação moderna para Scrabble, Scarabeo e jogos de palavras similares. Permite-lhe acompanhar pontuações, aplicar bônus e gerenciar o tempo de jogo.",
+      "Junte-se a milhares de jogadores que usam xScrabbler para seus jogos. Comece a rastrear pontuações de forma fácil e divertida agora mesmo!",
     footer: "Desenvolvido com ❤️ para os amantes de jogos de palavras",
     madeBy: "Criado por",
     twoWaysTitle: "Duas formas de jogar",

@@ -32,7 +32,7 @@ export default {
   home: {
     title: "XSCRABBLER",
     subtitle: "PUNKTESTELLER",
-    quickStart: "SCHNELLSTART",
+    quickStart: "JETZT KOSTENLOS SPIELEN",
     features: "Funktionen",
     multipleLanguages: "Mehrere Sprachen",
     multipleLanguagesDesc:
@@ -47,10 +47,10 @@ export default {
     customizableDesc: "Anpassen Sie Bonus, Timer und andere Einstellungen",
     openSource: "Open Source",
     openSourceDesc: "Beitragen Sie zum Projekt auf GitHub",
-    getStarted: "Jetzt starten",
-    aboutTitle: "Was ist xScrabbler?",
+    getStarted: "Jetzt Spielen",
+    aboutTitle: "Bereit zu spielen?",
     aboutDesc:
-      "xScrabbler ist ein moderner Punktesteller für Scrabble, Scarabeo und ähnliche Wortspiele. Es ermöglicht es Ihnen, die Punktzahlen zu verfolgen, Bonusse zu berechnen und den Spielverlauf zu verfolgen.",
+      "Schließen Sie sich Tausenden von Spielern an, die xScrabbler für ihre Spiele nutzen. Beginnen Sie jetzt mit der einfachen und unterhaltsamen Punkteverfolgung!",
     footer: "Entwickelt mit ❤️ für Wortspielbegeisterte",
     madeBy: "Entwickelt von",
     twoWaysTitle: "Zwei Spielweisen",

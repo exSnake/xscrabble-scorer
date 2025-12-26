@@ -32,7 +32,7 @@ export default {
   home: {
     title: "XSCRABBLER",
     subtitle: "CALCULATEUR DE SCORE",
-    quickStart: "DÉMARRAGE RAPIDE",
+    quickStart: "JOUER GRATUITEMENT",
     features: "Caractéristiques",
     multipleLanguages: "Langues multiples",
     multipleLanguagesDesc:
@@ -48,10 +48,10 @@ export default {
       "Personnalisez les bonus, le minuteur et d'autres paramètres",
     openSource: "Code source ouvert",
     openSourceDesc: "Contribuez au projet sur GitHub",
-    getStarted: "Commencez maintenant",
-    aboutTitle: "Qu'est-ce que xScrabbler?",
+    getStarted: "Jouer Maintenant",
+    aboutTitle: "Prêt à jouer?",
     aboutDesc:
-      "xScrabbler est un calculateur de score moderne pour Scrabble, Scarabeo et jeux de mots similaires. Il vous permet de suivre les scores, de calculer les bonus et de suivre le progresse du jeu.",
+      "Rejoignez des milliers de joueurs qui utilisent xScrabbler pour leurs parties. Commencez à suivre vos scores de manière simple et amusante!",
     footer: "Développé avec ❤️ pour les amateurs de jeux de mots",
     madeBy: "Développé par",
     twoWaysTitle: "Deux façons de jouer",
