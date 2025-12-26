@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 
 const supportedLanguages = ["en", "it", "fr", "es", "de", "nl", "et", "pt"];
 
-const baseUrl = "https://scrabble.exsnake.com";
+const baseUrl = "https://scrabble.giaqui.com";
 const ogImage = `${baseUrl}/xscrabbler-preview.png`;
 
 const metaData = {

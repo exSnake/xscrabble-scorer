@@ -24,7 +24,7 @@ The application is fully responsive and works on:
 
 ## 🌐 Demo
 
-Try xScrabbler: [https://scrabble.exsnake.com](https://scrabble.exsnake.com)
+Try xScrabbler: [https://scrabble.giaqui.com](https://scrabble.giaqui.com)
 
 ## 🛠️ Technologies Used
 

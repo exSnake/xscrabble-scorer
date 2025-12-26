@@ -3,4 +3,4 @@ User-agent: *
 Allow: /
 
 # Sitemap location
-Sitemap: https://scrabble.exsnake.com/sitemap.xml 
+Sitemap: https://scrabble.giaqui.com/sitemap.xml 
