@@ -330,7 +330,7 @@ onBeforeUnmount(() => {
             aria-label="Toggle menu"
             :aria-expanded="isMenuOpen"
             aria-controls="navbar-menu"
-            @click="toggleMenu"
+            @click.stop="toggleMenu"
           >
             <LucideX
               v-if="isMenuOpen"
