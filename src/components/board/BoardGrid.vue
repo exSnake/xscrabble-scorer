@@ -20,10 +20,16 @@ const props = defineProps({
 });
 
 const boardGame = useBoardGameStore();
-const { selectedCell, direction, previewCells } = storeToRefs(boardGame);
-const { selectCell, getMultiplierAtPosition, getCharacterPoints } = boardGame;
+const { selectedCell, direction, previewCells, getCharacterPoints } =
+  storeToRefs(boardGame);
+const { selectCell, getMultiplierAtPosition } = boardGame;
 
 const { playCellSelect } = useSoundEffects();
+
+// Helper function to get character points (accessing the computed from store)
+function getCharPoints(letter) {
+  return getCharacterPoints.value(letter);
+}
 
 const gridSize = computed(() => props.grid?.length || 15);
 const centerPosition = computed(() => Math.floor(gridSize.value / 2));
@@ -216,7 +222,7 @@ function getColLabel(index) {
             <span
               class="absolute bottom-0 right-0 text-3xs px-1 bg-gray-800 text-white rounded-tl"
             >
-              {{ getCharacterPoints(cell.letter) }}
+              {{ getCharPoints(cell.letter) }}
             </span>
             <!-- Direction indicator when occupied cell is selected -->
             <span

@@ -4,7 +4,7 @@ import { useGameStore } from "@/stores/GameStore";
 import { useBoardGameStore } from "@/stores/BoardGameStore";
 import BoardConfigSelector from "@/components/board/BoardConfigSelector.vue";
 import { storeToRefs } from "pinia";
-import { computed, watch } from "vue";
+import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import {
   LucideClock,
@@ -20,23 +20,7 @@ const game = useGameStore();
 const { bonus, language, maxWordLength, settings, seconds } = storeToRefs(game);
 
 const boardGame = useBoardGameStore();
-const {
-  seconds: boardSeconds,
-  bonus: boardBonus,
-  language: boardLanguage,
-} = storeToRefs(boardGame);
-
-// Sync language changes to board game store
-watch(language, (newLanguage, oldLanguage) => {
-  console.log(
-    "[SettingsView] Language changed from",
-    oldLanguage,
-    "to",
-    newLanguage,
-  );
-  boardLanguage.value = newLanguage;
-  console.log("[SettingsView] boardLanguage set to:", boardLanguage.value);
-});
+const { seconds: boardSeconds, bonus: boardBonus } = storeToRefs(boardGame);
 
 const bonusComputed = computed({
   get: () => bonus.value,

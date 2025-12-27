@@ -8,7 +8,7 @@ const { t } = useI18n();
 const props = defineProps({
   player: {
     type: Object,
-    required: true,
+    default: null,
   },
   show: {
     type: Boolean,

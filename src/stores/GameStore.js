@@ -36,6 +36,14 @@ export const useGameStore = defineStore("game", () => {
     return players.value.find((player) => player.active);
   });
 
+  // Computed function that returns a reactive getCharacterPoints function
+  const getCharacterPoints = computed(() => {
+    return (char) => {
+      if (!settings.value || !language.value) return 0;
+      return settings.value.letters[language.value]?.[char] ?? 0;
+    };
+  });
+
   //#endregion Computed properties
 
   //#region Actions
@@ -108,10 +116,6 @@ export const useGameStore = defineStore("game", () => {
     if (index > -1) {
       player.words.splice(index, 1);
     }
-  }
-
-  function getCharacterPoints(char) {
-    return settings.value.letters[language.value][char] ?? 0;
   }
 
   function isRunning() {

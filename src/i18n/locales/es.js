@@ -149,6 +149,7 @@ export default {
     confirmReset:
       "¿Estás seguro de que quieres reiniciar el tablero? Todas las palabras serán eliminadas.",
     playerTurn: "Es el turno de {name}",
+    turnAnnouncerLabel: "Es el turno de",
   },
 
   // Scorer
@@ -243,6 +244,8 @@ export default {
     wordNotInDictionary: "Palabra no en el diccionario",
     insertNonEmptyWord: "Introduce una palabra no vacía",
     wordPlaced: 'Palabra "{text}" colocada! +{points} puntos',
+    wordPlacedWithPlayer: '{player}: "{text}" +{points} puntos',
+    playerTurn: "Es el turno de {name}",
     pointsUpdated: "Puntos actualizados con éxito",
     noMovesToUndo: "No hay movimientos para deshacer",
     moveUndone: 'Movimiento deshecho: "{word}" de {player}',

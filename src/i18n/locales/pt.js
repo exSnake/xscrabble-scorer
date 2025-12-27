@@ -148,6 +148,7 @@ export default {
     confirmReset:
       "Tem certeza de que deseja reiniciar o tabuleiro? Todas as palavras serão apagadas.",
     playerTurn: "É a vez de {name}",
+    turnAnnouncerLabel: "É a vez de",
   },
 
   // Scorer
@@ -242,6 +243,8 @@ export default {
     wordNotInDictionary: "Palavra não está no dicionário",
     insertNonEmptyWord: "Insira uma palavra não vazia",
     wordPlaced: 'Palavra "{text}" colocada! +{points} pontos',
+    wordPlacedWithPlayer: '{player}: "{text}" +{points} pontos',
+    playerTurn: "É a vez de {name}",
     pointsUpdated: "Pontos atualizados com sucesso",
     noMovesToUndo: "Nenhum movimento para desfazer",
     moveUndone: 'Movimento desfeito: "{word}" de {player}',

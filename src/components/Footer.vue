@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <script setup>
 import { useI18n } from "vue-i18n";
 
@@ -8,7 +9,9 @@ const { t } = useI18n();
   <footer
     class="w-full py-6 px-6 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700"
   >
-    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+    <div
+      class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4"
+    >
       <div></div>
       <div class="flex flex-col items-center sm:items-center">
         <p class="text-gray-600 dark:text-gray-300 text-sm mb-2">
@@ -38,4 +41,3 @@ const { t } = useI18n();
     </div>
   </footer>
 </template>
-

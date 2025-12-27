@@ -148,6 +148,7 @@ export default {
     confirmReset:
       "Weet je zeker dat je het bord wilt resetten? Alle woorden worden gewist.",
     playerTurn: "Het is de beurt van {name}",
+    turnAnnouncerLabel: "Nu speelt",
   },
 
   // Scorer
@@ -241,6 +242,8 @@ export default {
     wordNotInDictionary: "Woord niet in woordenboek",
     insertNonEmptyWord: "Voer een niet-leeg woord in",
     wordPlaced: 'Woord "{text}" geplaatst! +{points} punten',
+    wordPlacedWithPlayer: '{player}: "{text}" +{points} punten',
+    playerTurn: "{name} is aan de beurt",
     pointsUpdated: "Punten succesvol bijgewerkt",
     noMovesToUndo: "Geen zetten om ongedaan te maken",
     moveUndone: 'Zet ongedaan gemaakt: "{word}" van {player}',

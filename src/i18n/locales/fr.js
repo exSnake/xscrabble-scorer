@@ -149,6 +149,7 @@ export default {
     confirmReset:
       "Êtes-vous sûr de vouloir réinitialiser le plateau? Tous les mots seront effacés.",
     playerTurn: "C'est au tour de {name}",
+    turnAnnouncerLabel: "C'est au tour de",
   },
 
   // Scorer
@@ -243,6 +244,8 @@ export default {
     wordNotInDictionary: "Mot non dans le dictionnaire",
     insertNonEmptyWord: "Entrez un mot non vide",
     wordPlaced: 'Mot "{text}" placé! +{points} points',
+    wordPlacedWithPlayer: '{player}: "{text}" +{points} points',
+    playerTurn: "C'est au tour de {name}",
     pointsUpdated: "Points mis à jour avec succès",
     noMovesToUndo: "Aucun mouvement à annuler",
     moveUndone: 'Mouvement annulé: "{word}" de {player}',

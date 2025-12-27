@@ -66,11 +66,14 @@ const isBonusEquals = (index, value) => {
 };
 
 watchEffect(() => {
+  // Explicitly track language to ensure reactivity when language changes
+  const getPoints = getCharacterPoints.value;
+
   let points = 0;
   for (const [i, char] of [...word.value.text].entries()) {
     points +=
       Number.parseInt(bonusArray.value[i]) *
-      Number.parseInt(getCharacterPoints(char.toUpperCase()));
+      Number.parseInt(getPoints(char.toUpperCase()));
   }
   points = points * wordBonus.value;
   points += superBonus.value ? bonus.value : 0;
@@ -229,7 +232,7 @@ onMounted(() => {
                   'text-gray-400 dark:text-gray-500': isBonusEquals(index, 0),
                 }"
               >
-                {{ getCharacterPoints(char) }}
+                {{ getCharacterPoints.value(char) }}
               </div>
               <!-- Jolly Indicator -->
               <div

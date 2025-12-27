@@ -147,6 +147,7 @@ export default {
     confirmReset:
       "Sei sicuro di voler resettare la scacchiera? Tutte le parole verranno cancellate.",
     playerTurn: "E' il turno di {name}",
+    turnAnnouncerLabel: "È il turno di",
   },
 
   // Scorer
@@ -242,6 +243,8 @@ export default {
     wordNotInDictionary: "Parola non nel dizionario",
     insertNonEmptyWord: "Inserisci una parola non vuota",
     wordPlaced: 'Parola "{text}" posizionata! +{points} punti',
+    wordPlacedWithPlayer: '{player}: "{text}" +{points} punti',
+    playerTurn: "È il turno di {name}",
     pointsUpdated: "Punti aggiornati con successo",
     noMovesToUndo: "Nessuna mossa da annullare",
     moveUndone: 'Mossa annullata: "{word}" di {player}',

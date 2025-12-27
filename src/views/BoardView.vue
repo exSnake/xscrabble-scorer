@@ -9,6 +9,7 @@ import BestWords from "@/components/board/BestWords.vue";
 import TopPlayers from "@/components/board/TopPlayers.vue";
 import MoveHistory from "@/components/board/MoveHistory.vue";
 import GameExportImport from "@/components/board/GameExportImport.vue";
+import TurnAnnouncer from "@/components/board/TurnAnnouncer.vue";
 import { useBoardGameStore } from "@/stores/BoardGameStore";
 import { ref, watch, onMounted } from "vue";
 import { storeToRefs } from "pinia";
@@ -29,6 +30,7 @@ const {
   pauseTimer,
   restartTimer,
   resetBoard,
+  completeTurnAnnouncement,
 } = boardGame;
 
 const {
@@ -40,6 +42,7 @@ const {
   canAddPlayer,
   canResetBoard,
   seconds,
+  turnAnnouncement,
 } = storeToRefs(boardGame);
 
 const handleDeleteWord = ({ id, player }) => {
@@ -102,9 +105,19 @@ onMounted(() => {
 
       <!-- Main Layout: Board left, Timer and LeaderBoard right -->
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <!-- Timer (first on mobile, inside right column on desktop) -->
+        <div class="order-1 lg:hidden">
+          <CircularTimer
+            :timer="timer"
+            :total-seconds="seconds"
+            @pause="pauseTimer"
+            @restart="restartTimer"
+          />
+        </div>
+
         <!-- Left: Board (spans 2 columns on large screens) -->
         <div
-          class="lg:col-span-2 bg-white dark:bg-gray-700 rounded-xl shadow-lg p-4 relative"
+          class="lg:col-span-2 order-2 lg:order-1 bg-white dark:bg-gray-700 rounded-xl shadow-lg py-4 lg:p-4 relative"
         >
           <!-- Overlay quando non ci sono giocatori -->
           <div
@@ -188,10 +201,12 @@ onMounted(() => {
           </div>
         </div>
 
-        <!-- Right: Timer, LeaderBoard, Stats, and History (stack vertically) -->
-        <div class="space-y-4 flex flex-col">
-          <!-- Timer -->
-          <div class="flex-1 min-h-[200px]">
+        <!-- Right: Timer, LeaderBoard and History (stack vertically on desktop) -->
+        <div
+          class="gap-2 lg:gap-0 lg:space-y-4 mb-4 flex flex-col order-3 lg:order-2"
+        >
+          <!-- Timer (hidden on mobile, shown here on desktop) -->
+          <div class="hidden lg:block">
             <CircularTimer
               :timer="timer"
               :total-seconds="seconds"
@@ -201,7 +216,7 @@ onMounted(() => {
           </div>
 
           <!-- LeaderBoard -->
-          <div class="flex-1 min-h-[200px]">
+          <div class="flex-1 min-h-[250px]">
             <LeaderBoard
               :players="players"
               :active-player="activePlayer"
@@ -215,7 +230,7 @@ onMounted(() => {
           </div>
 
           <!-- Move History -->
-          <div class="flex-1 min-h-[200px]">
+          <div class="h-[200px] md:h-[200px] flex-shrink-0 mt-0 lg:mt-0">
             <MoveHistory />
           </div>
         </div>
@@ -254,6 +269,13 @@ onMounted(() => {
         @delete-word="handleDeleteWord"
         @delete-player="handleDeletePlayer"
         @update-word-points="handleUpdateWordPoints"
+      />
+
+      <!-- Fullscreen Turn Announcement -->
+      <TurnAnnouncer
+        :player-name="turnAnnouncement.playerName"
+        :show="turnAnnouncement.show"
+        @animation-complete="completeTurnAnnouncement"
       />
     </div>
   </div>

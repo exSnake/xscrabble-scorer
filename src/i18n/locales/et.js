@@ -146,6 +146,7 @@ export default {
     confirmReset:
       "Kas olete kindel, et soovite lauda lähtestada? Kõik sõnad kustutatakse.",
     playerTurn: "{name} kord",
+    turnAnnouncerLabel: "Nüüd mängib",
   },
 
   // Scorer
@@ -240,6 +241,8 @@ export default {
     wordNotInDictionary: "Sõna pole sõnastikus",
     insertNonEmptyWord: "Sisesta mittetühi sõna",
     wordPlaced: 'Sõna "{text}" paigutatud! +{points} punkti',
+    wordPlacedWithPlayer: '{player}: "{text}" +{points} punkti',
+    playerTurn: "On {name} kord",
     pointsUpdated: "Punktid edukalt uuendatud",
     noMovesToUndo: "Pole käike tagasi võtta",
     moveUndone: 'Käik tagasi võetud: "{word}" mängija {player} poolt',

@@ -34,7 +34,7 @@ const handleUndo = () => {
 
 <template>
   <div
-    class="bg-white dark:bg-gray-700 rounded-xl shadow-lg p-4 flex flex-col h-full"
+    class="bg-white dark:bg-gray-700 rounded-xl shadow-lg p-4 flex flex-col h-full overflow-hidden"
   >
     <div class="flex justify-between items-center mb-3">
       <h3 class="text-sm font-bold uppercase text-gray-700 dark:text-gray-300">

@@ -149,6 +149,7 @@ export default {
     confirmReset:
       "Sind Sie sicher, dass Sie das Brett zurücksetzen möchten? Alle Wörter werden gelöscht.",
     playerTurn: "{name} ist dran",
+    turnAnnouncerLabel: "Jetzt spielt",
   },
 
   // Scorer
@@ -246,6 +247,8 @@ export default {
     wordNotInDictionary: "Wort nicht im Wörterbuch",
     insertNonEmptyWord: "Geben Sie ein nicht leeres Wort ein",
     wordPlaced: 'Wort "{text}" platziert! +{points} Punkte',
+    wordPlacedWithPlayer: '{player}: "{text}" +{points} Punkte',
+    playerTurn: "{name} ist an der Reihe",
     pointsUpdated: "Punkte erfolgreich aktualisiert",
     noMovesToUndo: "Keine Züge zum Rückgängigmachen",
     moveUndone: 'Zug rückgängig gemacht: "{word}" von {player}',

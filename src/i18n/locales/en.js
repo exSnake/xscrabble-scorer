@@ -143,6 +143,7 @@ export default {
     confirmReset:
       "Are you sure you want to reset the board? All words will be cleared.",
     playerTurn: "{name}'s turn",
+    turnAnnouncerLabel: "It's your turn",
   },
 
   // Scorer
@@ -237,6 +238,8 @@ export default {
     wordNotInDictionary: "Word not in dictionary",
     insertNonEmptyWord: "Insert a non empty word",
     wordPlaced: 'Word "{text}" placed! +{points} points',
+    wordPlacedWithPlayer: '{player}: "{text}" +{points} points',
+    playerTurn: "It's {name}'s turn",
     pointsUpdated: "Points updated successfully",
     noMovesToUndo: "No moves to undo",
     moveUndone: 'Move undone: "{word}" by {player}',

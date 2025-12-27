@@ -1,8 +1,5 @@
 <script setup>
 import { computed, ref, watch, onMounted, onBeforeUnmount } from "vue";
-import { useI18n } from "vue-i18n";
-
-const { t } = useI18n();
 
 const props = defineProps({
   timer: {
@@ -34,6 +31,8 @@ const FREQUENCY_BASE = 800;
 const FREQUENCY_INCREMENT = 40;
 const END_SOUND_DELAY = 700;
 
+const circumference = 2 * Math.PI * CIRCLE_RADIUS;
+
 const totalRemainingSeconds = computed(() => {
   if (!props.timer) return 0;
   return props.timer.seconds + props.timer.minutes * 60;
@@ -55,8 +54,6 @@ const strokeColor = computed(() => {
   return "red";
 });
 
-const circumference = 2 * Math.PI * CIRCLE_RADIUS;
-
 const strokeDashoffset = computed(() => {
   return circumference - (percentage.value / 100) * circumference;
 });
@@ -73,22 +70,46 @@ const playEndSound = () => {
 
   endSound.value.volume = 1;
   endSound.value.load();
-  endSound.value.play().catch((error) => {
-    console.error("Errore nella riproduzione MP3:", error);
+  endSound.value.play().catch(() => {
+    // Ignora errori di autoplay - il suono verrà riprodotto dopo un'interazione
   });
 
   setTimeout(() => {
     if (endSound.value) {
       endSound.value.load();
-      endSound.value.play().catch((error) => {
-        console.error("Errore nella seconda riproduzione MP3:", error);
+      endSound.value.play().catch(() => {
+        // Ignora errori di autoplay
       });
     }
   }, END_SOUND_DELAY);
 };
 
-const playTickSound = () => {
-  if (!audioContext.value) return;
+const playTickSound = async () => {
+  // Crea AudioContext solo se non esiste e solo dopo un'interazione
+  if (!audioContext.value) {
+    try {
+      globalThis.AudioContext =
+        globalThis.AudioContext || globalThis.webkitAudioContext;
+      audioContext.value = new AudioContext();
+      // Se è sospeso, prova a riprendere (richiede interazione utente)
+      if (audioContext.value.state === "suspended") {
+        await audioContext.value.resume();
+      }
+    } catch (error) {
+      console.error("Web Audio API non supportata:", error);
+      return;
+    }
+  }
+
+  // Se l'AudioContext è sospeso, prova a riprendere
+  if (audioContext.value.state === "suspended") {
+    try {
+      await audioContext.value.resume();
+    } catch {
+      // Se non può essere ripreso, esci silenziosamente
+      return;
+    }
+  }
 
   try {
     const oscillator = audioContext.value.createOscillator();
@@ -132,15 +153,10 @@ onMounted(() => {
   tenSecondsSound.value = new Audio("/sounds/countdown.mp3");
   endSound.value = new Audio("/sounds/timer-end.mp3");
 
-  try {
-    globalThis.AudioContext =
-      globalThis.AudioContext || globalThis.webkitAudioContext;
-    audioContext.value = new AudioContext();
-  } catch (error) {
-    console.error("Web Audio API non supportata:", error);
-  }
-
   if (endSound.value) endSound.value.volume = 1;
+
+  // AudioContext verrà creato solo dopo un'interazione dell'utente
+  // Non crearlo qui per evitare errori di autoplay policy
 });
 
 onBeforeUnmount(() => {
@@ -165,19 +181,17 @@ const handleTimerStopped = (newTimer, seconds, isTimerFinished) => {
   }
 };
 
-const handleTimerRunning = (newTimer, seconds) => {
+const handleTimerRunning = async (newTimer, seconds) => {
   if (seconds === 10 && !soundsPlayed.value.tenSeconds) {
-    tenSecondsSound.value?.play();
+    tenSecondsSound.value?.play().catch(() => {
+      // Ignora errori di autoplay
+    });
     soundsPlayed.value.tenSeconds = true;
   }
 
   // Tick ogni secondo
   if (seconds !== soundsPlayed.value.lastSecond) {
-    if (audioContext.value && audioContext.value.state === "suspended") {
-      audioContext.value.resume();
-    }
-
-    playTickSound();
+    await playTickSound();
     soundsPlayed.value.lastSecond = seconds;
   }
 };
@@ -228,11 +242,29 @@ watch(
 
 <template>
   <div
-    class="bg-white dark:bg-gray-700 rounded-xl shadow-lg p-6 flex flex-col items-center justify-center h-full"
+    class="bg-white dark:bg-gray-700 rounded-xl shadow-lg p-2 lg:p-4 flex flex-row items-center justify-center gap-2 lg:gap-3 h-full"
   >
-    <div class="relative w-32 h-32 mb-4">
+    <!-- Pause/Resume Button (left) -->
+    <button
+      class="px-3 py-2 rounded-lg font-semibold transition-colors flex-shrink-0"
+      :class="
+        timer?.isRunning
+          ? 'bg-amber-500 hover:bg-amber-600 text-white'
+          : 'bg-green-500 hover:bg-green-600 text-white'
+      "
+      @click="emit('pause')"
+    >
+      <span>{{ timer?.isRunning ? "⏸" : "▶" }}</span>
+    </button>
+
+    <!-- Timer Circle -->
+    <div class="relative w-24 h-24 lg:w-28 lg:h-28 flex-shrink-0">
       <!-- Background circle -->
-      <svg class="transform -rotate-90 w-full h-full">
+      <svg
+        class="transform -rotate-90 w-full h-full"
+        viewBox="0 0 128 128"
+        preserveAspectRatio="xMidYMid meet"
+      >
         <circle
           cx="64"
           cy="64"
@@ -258,35 +290,20 @@ watch(
       </svg>
       <!-- Time display -->
       <div class="absolute inset-0 flex items-center justify-center">
-        <span class="text-3xl font-bold text-gray-800 dark:text-white">
+        <span
+          class="text-xl lg:text-2xl font-bold text-gray-800 dark:text-white"
+        >
           {{ timeDisplay }}
         </span>
       </div>
     </div>
 
-    <!-- Controls -->
-    <div class="flex gap-2">
-      <button
-        class="px-4 py-2 rounded-lg font-semibold transition-colors"
-        :class="
-          timer?.isRunning
-            ? 'bg-amber-500 hover:bg-amber-600 text-white'
-            : 'bg-green-500 hover:bg-green-600 text-white'
-        "
-        @click="emit('pause')"
-      >
-        {{
-          timer?.isRunning
-            ? `⏸ ${t("timer.pause")}`
-            : `▶ ${t("timer.resume")}`
-        }}
-      </button>
-      <button
-        class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-semibold transition-colors"
-        @click="emit('restart')"
-      >
-        🔄 {{ t("timer.restart") }}
-      </button>
-    </div>
+    <!-- Restart Button (right) -->
+    <button
+      class="px-3 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-semibold transition-colors flex-shrink-0"
+      @click="emit('restart')"
+    >
+      <span>🔄</span>
+    </button>
   </div>
 </template>

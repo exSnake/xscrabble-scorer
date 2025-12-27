@@ -4,13 +4,19 @@ import { useTimer } from "vue-timer-hook";
 import { useStorage } from "@vueuse/core";
 import { toast } from "vue3-toastify";
 import i18n from "@/i18n";
-import { playSoundError, playSoundUndo } from "@/composables/useSoundEffects";
+import {
+  playSoundError,
+  playSoundUndo,
+  playSoundBonus30,
+  playSoundBonus40,
+} from "@/composables/useSoundEffects";
 
 export const useBoardGameStore = defineStore("boardGame", () => {
   //#region State - Reusing from GameStore pattern
 
   const bonus = ref(useStorage("board_bonus", 50));
-  const language = ref(useStorage("board_language", "en"));
+  // Use same localStorage key as GameStore to stay in sync
+  const language = ref(useStorage("language", "it"));
   const players = ref(
     useStorage("board_players", [], localStorage, { deep: true }),
   );
@@ -39,6 +45,12 @@ export const useBoardGameStore = defineStore("boardGame", () => {
 
   // Move history (not persisted, only in memory)
   const moveHistory = ref([]);
+
+  // Turn announcement state (for fullscreen flash)
+  const turnAnnouncement = ref({
+    show: false,
+    playerName: "",
+  });
 
   //#endregion Board-specific State
 
@@ -439,12 +451,23 @@ export const useBoardGameStore = defineStore("boardGame", () => {
       },
     });
 
-    // Show toast with breakdown if there are secondary words
+    // Suono bonus basato sul punteggio della parola
+    if (scoreResult.total > 40) {
+      playSoundBonus40(); // Suono epico per punteggi altissimi
+    } else if (scoreResult.total > 30) {
+      playSoundBonus30(); // Suono bonus per punteggi alti
+    }
+
+    // Show toast with breakdown if there are secondary words (include player name)
+    const currentPlayerName = activePlayer.value.name;
     if (scoreResult.secondaryWords.length > 0) {
-      toast.success(scoreResult.breakdown, { autoClose: 5000 });
+      toast.success(`${currentPlayerName}: ${scoreResult.breakdown}`, {
+        autoClose: 5000,
+      });
     } else {
       toast.success(
-        i18n.global.t("store.wordPlaced", {
+        i18n.global.t("store.wordPlacedWithPlayer", {
+          player: currentPlayerName,
           text: text.toUpperCase(),
           points: scoreResult.total,
         }),
@@ -467,8 +490,27 @@ export const useBoardGameStore = defineStore("boardGame", () => {
       snapshot,
     });
 
-    nextPlayer();
-    restartTimer(true); // Auto-resume se il timer era attivo
+    // Get next player info before switching
+    const currentIndex = players.value.indexOf(activePlayer.value);
+    const nextIndex =
+      currentIndex === players.value.length - 1 ? 0 : currentIndex + 1;
+    const nextPlayerName = players.value[nextIndex].name;
+
+    // Switch to next player after a small delay and show fullscreen turn announcement
+    setTimeout(() => {
+      nextPlayer();
+      // Show fullscreen turn announcement (timer will start after animation completes)
+      turnAnnouncement.value = {
+        show: true,
+        playerName: nextPlayerName,
+      };
+    }, 800);
+  }
+
+  // Called when the turn announcement animation completes
+  function completeTurnAnnouncement() {
+    turnAnnouncement.value.show = false;
+    restartTimer(true); // Start timer after animation
   }
 
   function validateWordPlacement(text, startRow, startCol, direction) {
@@ -778,7 +820,7 @@ export const useBoardGameStore = defineStore("boardGame", () => {
     let wordMultiplier = 1;
 
     for (const pos of positions) {
-      let letterValue = getCharacterPoints(pos.letter);
+      let letterValue = getCharacterPoints.value(pos.letter);
 
       // Check if this is a new letter (multipliers only apply to new letters)
       if (pos.isNew) {
@@ -820,8 +862,9 @@ export const useBoardGameStore = defineStore("boardGame", () => {
       };
     }
 
-    // Build positions array for main word, marking which letters are new
-    const mainWordPositions = [];
+    // Build positions array for the letters being placed
+    const newLetterPositions = new Set();
+    const placedPositions = [];
     for (let i = 0; i < letters.length; i++) {
       const row = direction === "horizontal" ? startRow : startRow + i;
       const col = direction === "horizontal" ? startCol + i : startCol;
@@ -829,16 +872,123 @@ export const useBoardGameStore = defineStore("boardGame", () => {
       const existingLetter = boardGrid.value[row]?.[col]?.letter;
       const isNew = !existingLetter;
 
-      mainWordPositions.push({
+      placedPositions.push({
         row,
         col,
         letter: letters[i],
         isNew,
       });
+
+      if (isNew) {
+        newLetterPositions.add(`${row},${col}`);
+      }
     }
 
-    // Calculate main word score
-    const mainWordResult = calculateSingleWordScore(mainWordPositions, config);
+    // Now extend the word to include adjacent existing letters in the same direction
+    const rowDelta = direction === "vertical" ? 1 : 0;
+    const colDelta = direction === "horizontal" ? 1 : 0;
+
+    // Find actual start by scanning backwards from the first placed letter
+    let actualStartRow = startRow;
+    let actualStartCol = startCol;
+
+    while (true) {
+      const prevRow = actualStartRow - rowDelta;
+      const prevCol = actualStartCol - colDelta;
+
+      if (
+        prevRow < 0 ||
+        prevCol < 0 ||
+        prevRow >= boardSize.value ||
+        prevCol >= boardSize.value
+      ) {
+        break;
+      }
+
+      const cell = boardGrid.value[prevRow]?.[prevCol];
+      if (!cell?.letter) {
+        break;
+      }
+
+      actualStartRow = prevRow;
+      actualStartCol = prevCol;
+    }
+
+    // Find actual end by scanning forward from the last placed letter
+    const lastPlaced = placedPositions[placedPositions.length - 1];
+    let actualEndRow = lastPlaced.row;
+    let actualEndCol = lastPlaced.col;
+
+    while (true) {
+      const nextRow = actualEndRow + rowDelta;
+      const nextCol = actualEndCol + colDelta;
+
+      if (
+        nextRow < 0 ||
+        nextCol < 0 ||
+        nextRow >= boardSize.value ||
+        nextCol >= boardSize.value
+      ) {
+        break;
+      }
+
+      const cell = boardGrid.value[nextRow]?.[nextCol];
+      if (!cell?.letter) {
+        break;
+      }
+
+      actualEndRow = nextRow;
+      actualEndCol = nextCol;
+    }
+
+    // Build the complete main word positions array
+    const mainWordPositions = [];
+    let mainWordText = "";
+    let currentRow = actualStartRow;
+    let currentCol = actualStartCol;
+
+    while (true) {
+      // Check if this position is one of the new letters being placed
+      const posKey = `${currentRow},${currentCol}`;
+      const isNewLetter = newLetterPositions.has(posKey);
+
+      // Get the letter at this position
+      let letter;
+      if (isNewLetter) {
+        // Find the letter from placedPositions
+        const placed = placedPositions.find(
+          (p) => p.row === currentRow && p.col === currentCol,
+        );
+        letter = placed.letter;
+      } else {
+        const cell = boardGrid.value[currentRow]?.[currentCol];
+        letter = cell?.letter;
+      }
+
+      if (!letter) break;
+
+      mainWordPositions.push({
+        row: currentRow,
+        col: currentCol,
+        letter: letter,
+        isNew: isNewLetter,
+      });
+      mainWordText += letter;
+
+      // Check if we've reached the end
+      if (currentRow === actualEndRow && currentCol === actualEndCol) {
+        break;
+      }
+
+      currentRow += rowDelta;
+      currentCol += colDelta;
+    }
+
+    // Calculate main word score (only if word has more than 1 letter)
+    const isMainWordValid = mainWordText.length > 1;
+    const mainWordResult = isMainWordValid
+      ? calculateSingleWordScore(mainWordPositions, config)
+      : { score: 0, wordMultiplier: 1 };
     const mainWordPoints = mainWordResult.score;
 
     // Find and calculate perpendicular words
@@ -877,19 +1027,47 @@ export const useBoardGameStore = defineStore("boardGame", () => {
     }
 
     // Build breakdown string
-    let breakdown = `${text.toUpperCase()}: ${mainWordPoints}`;
-    for (const sw of secondaryWords) {
-      breakdown += ` + ${sw.text}: ${sw.points}`;
+    // If main word is only 1 letter, show perpendicular words as main
+    let breakdown = "";
+    if (isMainWordValid) {
+      breakdown = `${mainWordText}: ${mainWordPoints}`;
+      for (const sw of secondaryWords) {
+        breakdown += ` + ${sw.text}: ${sw.points}`;
+      }
+    } else if (secondaryWords.length > 0) {
+      // Single letter placed, show perpendicular words
+      breakdown = secondaryWords
+        .map((sw) => `${sw.text}: ${sw.points}`)
+        .join(" + ");
+    } else {
+      // Single letter with no connections (shouldn't happen in valid game)
+      breakdown = `${mainWordText}: ${mainWordPoints}`;
     }
+
     if (hasBonus) {
       breakdown += ` + Bonus: ${bonus.value}`;
     }
     breakdown += ` = ${total}`;
 
+    // Determine main word for return value
+    let returnMainWord;
+    if (isMainWordValid) {
+      returnMainWord = { text: mainWordText, points: mainWordPoints };
+    } else if (secondaryWords.length > 0) {
+      returnMainWord = {
+        text: secondaryWords[0].text,
+        points: secondaryWords[0].points,
+      };
+    } else {
+      returnMainWord = { text: mainWordText, points: 0 };
+    }
+
     return {
       total,
-      mainWord: { text: text.toUpperCase(), points: mainWordPoints },
-      secondaryWords,
+      mainWord: returnMainWord,
+      secondaryWords: isMainWordValid
+        ? secondaryWords
+        : secondaryWords.slice(1),
       breakdown,
     };
   }
@@ -905,11 +1083,15 @@ export const useBoardGameStore = defineStore("boardGame", () => {
     return { type: "none", value: 1 };
   }
 
-  function getCharacterPoints(char) {
-    // Blank/jolly tile (underscore) is worth 0 points
-    if (char === "_") return 0;
-    return settings.value?.letters[language.value][char] ?? 0;
-  }
+  // Computed function that returns a reactive getCharacterPoints function
+  const getCharacterPoints = computed(() => {
+    return (char) => {
+      // Blank/jolly tile (underscore) is worth 0 points
+      if (char === "_") return 0;
+      if (!settings.value || !language.value) return 0;
+      return settings.value.letters[language.value]?.[char] ?? 0;
+    };
+  });
 
   //#endregion Actions - Scoring
 
@@ -930,14 +1112,15 @@ export const useBoardGameStore = defineStore("boardGame", () => {
       "autoResume:",
       autoResume,
     );
-    const wasRunning = timer.value?.isRunning;
     const time = new Date();
     time.setSeconds(time.getSeconds() + seconds.value);
     timer.value.restart(time);
 
-    // Se autoResume è true e il timer era in esecuzione, mantienilo attivo
+    // Se autoResume è true, riparti sempre il timer (anche se era scaduto)
     // Altrimenti metti in pausa (comportamento default per il pulsante restart)
-    if (!(autoResume && wasRunning)) {
+    if (autoResume) {
+      timer.value.resume();
+    } else {
       timer.value.pause();
     }
   }
@@ -1260,6 +1443,7 @@ export const useBoardGameStore = defineStore("boardGame", () => {
     longestWord,
     highestScoringWord,
     playerStats,
+    turnAnnouncement,
 
     // Actions
     activatePlayer,
@@ -1289,5 +1473,6 @@ export const useBoardGameStore = defineStore("boardGame", () => {
     importGameState,
     generateShareableLink,
     importFromUrl,
+    completeTurnAnnouncement,
   };
 });
